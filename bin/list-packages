@@ -1,0 +1,3 @@
+#!/bin/sh
+pacman -Qe > ~/list_packages.txt
+

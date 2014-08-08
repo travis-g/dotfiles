@@ -1,0 +1,79 @@
+#!/bin/sh
+
+##############################################
+# Fonts
+##############################################
+
+UUSHI="-*-uushi-medium-r-normal--11-90-75-75-p-58-iso10646-1"
+LEMON="-benis-lemon-*-*-*-*-*-*-*-*-*-*-*-*"
+TEWI="-lucy-Tewi-medium-*-normal--11-90-75-75-p-58-iso10646-1"
+LIME="-*-lime-*-*-*-*-*-*-*-*-*-*-*-*"
+TERMINUS="-*-terminus-medium-r-normal-*-12-*-*-*-c-*-*-1"
+STLARCH="-*-stlarch-*-*-*-*-*-*-*-*-*-*-*-*"
+ANON_PRO="-*-Anonymous Pro-medium-*-*-*-11-*-*-*-*-*-*-*"
+DWEEP="-*-dweep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*"
+
+
+##############################################
+# Color definitions
+##############################################
+# ARGB hex format
+BK0='#FF2D2D2D'
+BK1='#FF393939'
+GY0='#FF515151'
+GY1='#FF747369'
+GY2='#FFA09F93'
+GY3='#FFD3D0C8'
+WT0='#FFE8E6DF'
+WT1='#FFF2F0EC'
+RD='#FFF2777A'
+OR='#FFF99157'
+YL='#FFFFCC66'
+GN='#FF99CC99'
+CY='#FF66CCCC'
+BL='#FF6699CC'
+MG='#FFCC99CC'
+CL='#00FFFFFF'
+
+##############################################
+# panel/bar
+##############################################
+
+PANEL_HEIGHT=12
+
+COLOR_FG=$GY2
+COLOR_BG=$BK0
+
+COLOR_FOCUSED_FG=$WT0
+
+COLOR_OCCUPIED_FG=$GY2
+COLOR_FREE_FG=$GY0
+COLOR_URGENT_FG=$RD
+
+COLOR_LAYOUT_FG=$GY0
+COLOR_TITLE_FG=$GY2
+
+COLOR_STATUS_FG=$GY2
+COLOR_WARN=$RD
+COLOR_NULL=$GY0
+COLOR_GOOD=$GN
+
+
+##############################################
+# bspwm
+##############################################
+
+SPLIT_RATIO=0.4
+BORDER_WIDTH=2
+
+argb2rgb(){ # remove alpha channel from hex color
+	echo $(echo $1 | sed 's/#../#/')
+}
+COLOR_BORDER=$(argb2rgb $BK0)
+COLOR_BORDER_FOCUSED=$(argb2rgb $BK1)
+COLOR_BORDER_ACTIVE=$(argb2rgb $BK1)
+COLOR_BORDER_PRESEL=$(argb2rgb $WT1)
+COLOR_BORDER_LOCKED=$(argb2rgb $YL)
+COLOR_BORDER_STICKY=$(argb2rgb $MG)
+COLOR_BORDER_PRIVATE=$(argb2rgb $CY)
+COLOR_BORDER_URGENT=$(argb2rgb $RD)

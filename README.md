@@ -22,7 +22,7 @@ case $HOSTNAME in
 esac
 ```
 
-- *Master variable file at ``/.vars-master``.* Colors for bspwm and bar are both in there, as well as variables like `$PANEL_HEIGHT`, font definitions, &c. The ``argb2rgb()`` function is in there too.
+- *Master variable file at `/.vars-master`.* Colors for bspwm and bar are both in there, as well as variables like `$PANEL_HEIGHT`, font definitions, &c. The ``argb2rgb()`` function is in there too.
 
 
 MIT License

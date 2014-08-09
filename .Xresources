@@ -3,6 +3,8 @@
 ! #########################################
 
 ! Font settings
+URxvt*font: xft:tewi:pixelsize=9:antialias=true:hinting=true
+URxvt*boldFont: xft:tewi:pixelsize=9:antialias=true:hinting=true
 
 !URxvt*font: -*-neep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*
 !URxvt*boldFont: -*-neep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*
@@ -14,23 +16,20 @@
 !URxvt*italicFont: xft:uushi:pixelsize=9:antialias=true:hinting=true
 !URxvt*bolditalicFont: xft:uushi:pixelsize=9:antialias=true:hinting=true
 
-URxvt*font: xft:tewi:pixelsize=9:antialias=true:hinting=true
-URxvt*boldFont: xft:tewi:pixelsize=9:antialias=true:hinting=true
-
-
-URxvt*urgentOnBell: true
+! Appearance
+URxvt*cursorUnderline: 1
+URxvt*cursorBlink: true
 URxvt*scrollBar: false
-URxvt.savelines: 3000
-urxvt*internalBorder: 5
+URxvt*internalBorder: 5
 
-! URL clicking
-URxvt.colorURL: #4682B4
+! Behavior
 URxvt.perl-ext-common: default,matcher
-URxvt.url-launcher: firefox
-URxvt.matcher.button: 1
-URxvt.url-select.launcher:  firefox
+URxvt.url-launcher: /usr/bin/firefox
+URxvt.matcher.button: 2
+URxvt*urgentOnBell: true
+URxvt.savelines: 3000
 
-! Font configs
+! XFont configs
 Xft.antialias: true
 Xft.autohint: true
 Xft.hinting: true
@@ -38,3 +37,10 @@ Xft.hintstyle: hintslight
 Xft.lcdfilter: lcdlight
 Xft.rgba: rgb
 Xft.dpi: 96
+
+! Xclock
+!xclock*majorColor:
+!xclock*minorColor:
+!xclock*minuteColor:
+!xclock*hourColor:
+!xclock*secondColor:

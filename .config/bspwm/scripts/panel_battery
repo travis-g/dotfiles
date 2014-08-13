@@ -7,6 +7,20 @@ STATE=$(acpi --battery | cut -d' ' -f3 | sed 's/,//')
 VALUE=$(acpi --battery | cut -d' ' -f4 | sed 's/%,//')
 SIGN=
 ICON=
+NUMERIC="no"
+
+OPTIND=1
+while getopts "nh" arg; do
+case $arg in
+    h) echo -e "Usage: $(basename $0) [OPTION]..."
+        echo -e "Battery status panel script.\n"
+        echo -e " -n \tnumeric only (no symbols)"
+        echo -e " -h \thelp (this screen).\n"
+        exit 0;;
+    n) NUMERIC="yes";;
+    esac
+done
+
 
 if [ "$VALUE" -gt 69 ]; then
 	ICON=""
@@ -29,4 +43,8 @@ else
 	SIGN="±"
 fi
 
-echo $ICON $VALUE$SIGN
+if [ "$NUMERIC" == "yes" ];
+    then echo $VALUE$SIGN
+elif [ "$NUMERIC" == "no" ];
+    then echo $ICON $VALUE$SIGN
+fi

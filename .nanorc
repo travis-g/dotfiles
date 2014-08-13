@@ -1,0 +1,40 @@
+## OPTIONS
+## set tabsize
+set tabsize 4
+## indent with spaces
+set tabstospaces
+## stop hard-wrapping
+set nowrap
+## warnings timemout quickly
+set quickblank
+## set whitespace chars
+# ◇◆●␣
+set whitespace "◆◇"
+## set mouse support
+set mouse
+
+## SYNTAX
+## Markdown 
+#include ~/.nano/markdown.nanorc
+## GitHub Flavored Markdown
+include ~/.nano/ghmarkdown.nanorc
+## CSS
+include ~/.nano/css.nanorc
+## HTML
+include ~/.nano/html.nanorc
+## Python
+include ~/.nano/python.nanorc
+## Bash
+include ~/.nano/bash.nanorc
+## Shell
+include ~/.nano/sh.nanorc
+## Conky
+include ~/.nano/conky.nanorc
+## Java
+include ~/.nano/java.nanorc
+## JS
+include ~/.nano/js.nanorc
+## nanorc
+include ~/.nano/nanorc.nanorc
+## Xresources/Xdefaults
+include ~/.nano/xresources.nanorc

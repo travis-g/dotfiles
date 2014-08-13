@@ -23,20 +23,20 @@ URxvt*scrollBar: false
 URxvt*internalBorder: 5
 
 ! Behavior
-URxvt.perl-ext-common: default,matcher
-URxvt.url-launcher: /usr/bin/firefox
-URxvt.matcher.button: 2
+URxvt*perl-ext-common: default,matcher
+URxvt*url-launcher: /usr/bin/firefox
+URxvt*matcher.button: 2
 URxvt*urgentOnBell: true
-URxvt.savelines: 3000
+URxvt*savelines: 3000
 
 ! XFont configs
-Xft.antialias: true
-Xft.autohint: true
-Xft.hinting: true
-Xft.hintstyle: hintslight
-Xft.lcdfilter: lcdlight
-Xft.rgba: rgb
-Xft.dpi: 96
+Xft*antialias: true
+Xft*autohint: true
+Xft*hinting: true
+Xft*hintstyle: hintslight
+Xft*lcdfilter: lcdlight
+Xft*rgba: rgb
+Xft*dpi: 96
 
 ! Xclock
 !xclock*majorColor:

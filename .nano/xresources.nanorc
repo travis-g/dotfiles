@@ -1,0 +1,16 @@
+syntax "xresources" "X(defaults|resources)$"
+
+#color green "^[[:alnum:]]+\*"
+#color brightyellow "\*[[:alnum:]]+\:"
+#color blue "\<[0-9]+\>"
+#color red "[*:=]"
+#color brightcyan "\<(true|false)\>"
+#color black "(^|[[:space:]])#([^{].*)?$"
+
+color magenta "^[[:alnum:]]+\*"
+color blue "\<[0-9]+\>"
+color yellow "\*[^*:]+\:"
+color red "[*:=]"
+color cyan "\<(true|false)\>"
+color brightblack "^!.*$"
+color cyan "^#.*$"

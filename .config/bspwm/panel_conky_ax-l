@@ -1,0 +1,20 @@
+format_human_readable true
+background yes
+out_to_console yes
+out_to_x no
+short_units yes
+temperature_unit fahrenheit
+update_interval 2
+cpu_avg_samples 1
+net_avg_samples 2
+
+
+TEXT
+S⮃ \
+ ${cpu}%% \
+${execi 1 ./scripts/panel_cpu -f}  \
+ ${execi 1 ./scripts/panel_gpu -u}%% \
+${execi 1 ./scripts/panel_gpu -ft}  \
+ ${memperc}%%  \
+${execi 1 ./scripts/panel_volume}  \
+⭧ ${execi 1 ./scripts/panel_clock} \

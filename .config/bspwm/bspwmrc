@@ -1,0 +1,80 @@
+#! /bin/sh
+
+. /home/t/.vars_master # source master config file
+
+bspc desktop -n 1
+
+##############################################
+# Set desktop defaults
+##############################################
+
+# Appearance
+##############################################
+bspc config split_ratio				$SPLIR_RATIO
+bspc config border_width			$BORDER_WIDTH
+bspc config top_padding				$PANEL_HEIGHT
+bspc config window_gap				5
+
+
+# Behavior
+##############################################
+bspc config borderless_monocle		true
+bspc config gapless_monocle			true
+bspc config focus_follows_pointer	true
+bspc config auto_alternate			true
+bspc config auto_cancel				true
+
+# Colors
+##############################################
+# normal
+bspc config normal_border_color					$COLOR_BORDER
+bspc config focused_border_color				$COLOR_BORDER_FOCUSED
+bspc config active_border_color					$COLOR_BORDER_ACTIVE
+bspc config presel_border_color					$COLOR_BORDER_PRESEL
+# sticky
+bspc config focused_sticky_border_color			$COLOR_BORDER_STICKY
+bspc config active_sticky_border_color			$COLOR_BORDER_STICKY
+bspc config normal_sticky_border_color			$COLOR_BORDER_STICKY
+# locked
+bspc config focused_locked_border_color			$COLOR_BORDER_LOCKED
+bspc config active_locked_border_color			$COLOR_BORDER_LOCKED
+bspc config normal_locked_border_color			$COLOR_BORDER_LOCKED
+# private
+bspc config focused_private_border_color		$COLOR_BORDER_PRIVATE
+bspc config active_private_border_color			$COLOR_BORDER_PRIVATE
+bspc config normal_private_border_color			$COLOR_BORDER_PRIVATE
+
+##############################################
+# Rules
+##############################################
+bspc rule -a Thunar pseudo_tiled=on
+bspc rule -a MultiMC5 pseudo_tiled=on
+bspc rule -a feh floating=on manage=off
+bspc rule -a lxappearance floating=on manage=on
+
+
+##############################################
+# Create/name desktops
+##############################################
+# limit to 10 for sxhkdrc hotkey use
+case $HOSTNAME in
+	"ax-l")
+		bspc monitor DVI-I-1 -d 0 1
+		bspc monitor HDMI-0 -d 2 3
+		bspc monitor -f primary
+		;;
+	"ken-th")
+		bspc monitor -d 0 1 2 3
+		;;
+esac
+
+# Start panel
+export PATH=$PATH:~/.config/bspwm
+panel &
+
+# set up multi-monitor
+case $HOSTNAME in
+	"ax-l")
+		/home/t/bin/displayconf.sh &
+		;;
+esac

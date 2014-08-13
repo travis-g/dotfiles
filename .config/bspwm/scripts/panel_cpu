@@ -1,0 +1,11 @@
+#!/bin/sh
+
+TEMP=`sensors | grep 'id 0' | cut -c18-19`
+
+OPTIND=1
+while getopts "f" arg; do
+case $arg in
+	f) TEMP=`echo $TEMP*9/5+32 | bc`
+esac;done
+
+echo "$TEMP°"

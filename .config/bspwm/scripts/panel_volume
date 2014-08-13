@@ -1,0 +1,22 @@
+#!/bin/sh
+
+case $HOSTNAME in
+	"ax-l")		NUMID=43;;
+	"ken-th")	NUMID=15;;
+esac
+
+STATUS=$(amixer get Master | tail -n 1 | cut -d '[' -f 4 | sed 's/].*//g')
+AUX=$(amixer -c 0 contents | grep $NUMID -A 2 | awk 'NR==3 { print $2 }' | cut -d '=' -f 2)
+LVL=$(amixer get Master | tail -n 1 | cut -d '[' -f 2 | sed 's/\%].*//g')
+
+if [ "$STATUS" == "on" ] && [ "$AUX" == "off" ];
+	then icon="" 
+elif [ "$STATUS" == "on" ] && [ "$AUX" == "on" ];
+	then icon="" 
+elif [ "$STATUS" == "off" ] && [ "$AUX" == "on" ];
+	then icon="" 
+elif [ "$STATUS" == "off" ] && [ "$AUX" == "off" ];
+	then icon="" 
+fi
+
+echo "$icon" "$LVL%%"

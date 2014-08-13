@@ -1,0 +1,23 @@
+format_human_readable true
+out_to_console yes
+short_units on
+temperature_unit fahrenheit
+
+# samples
+cpu_avg_samples 1
+net_avg_samples 1
+
+# update interval
+update_interval 5
+update_interval_on_battery 10
+
+# ICONS
+# 
+
+TEXT
+S⮃ \
+${cpu}  \
+${memperc}  \
+${execi 10 ./scripts/panel_wifi}  \
+${execi 10 ./scripts/panel_battery}  \
+ ${time %I:%M} \

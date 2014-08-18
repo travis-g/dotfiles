@@ -42,8 +42,8 @@ alt + shift + p
 	bspc window -t private
 
 # Lock a window from closing
-alt + shift + l
-	bspc window -t locked
+#alt + shift + l
+#	bspc window -t locked
 
 # Sticky node
 alt + shift + s

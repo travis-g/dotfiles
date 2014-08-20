@@ -126,7 +126,7 @@ Print
 super + c
 	google-chrome-stable
 super + shift + c
-	google-chrome-stable --incognito
+	google-chrome-dev
 
 super + f
 	firefox

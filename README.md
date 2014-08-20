@@ -18,7 +18,7 @@ Overall appearance:
 + compton - compositing, shadows & transparancy
 + dunst - notification daemon
 
-Colors:
+Colors/Themes:
 + base16-eighties - modified to remove most of the grays
 + Spacegray - Sublime Text 2 theme
 + FlatStudio - GTK2/3 theme
@@ -30,6 +30,7 @@ Things I'll forget I have unless I write them down:
 + ifstatus - network traffic monitor
 + vnstat - network traffic monitor
 + gbdfed - bitmap font editor
++ ranger - commandline filesystem browser
 
 
 Hardware
@@ -47,7 +48,7 @@ case $HOSTNAME in
 esac
 ```
 
-- Master variable file at `/.vars-master`. Color definitions for bspwm and bar are both in there, as well as variables like `$PANEL_HEIGHT`, font definitions, &c. The ``argb2rgb()`` function is in there too.
+- Master variable file at `/.vars-master`. Color definitions for bspwm and bar are both in there, as well as variables like `$PANEL_HEIGHT`, font definitions, &c. The `argb2rgb()` function is in there too.
 
 
 MIT License

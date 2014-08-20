@@ -126,7 +126,7 @@ Print
 super + c
 	google-chrome-stable
 super + shift + c
-	google-chrome-dev
+	google-chrome-unstable
 
 super + f
 	firefox

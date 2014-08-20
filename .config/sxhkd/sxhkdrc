@@ -1,5 +1,3 @@
-# vim: set ft=sxhkdrc:
-#
 # bspwm hotkeys
 #
 # source master config file
@@ -126,9 +124,9 @@ Print
 	scrot -q 100
 
 super + c
-	chromium
+	google-chrome-stable
 super + shift + c
-	chromium --incognito
+	google-chrome-stable --incognito
 
 super + f
 	firefox

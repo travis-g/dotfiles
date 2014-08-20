@@ -38,3 +38,5 @@ include ~/.nano/js.nanorc
 include ~/.nano/nanorc.nanorc
 ## Xresources/Xdefaults
 include ~/.nano/xdefaults.nanorc
+## sxhkdrc
+include ~/.nano/sxhkdrc.nanorc

@@ -1,0 +1,5 @@
+## edited by travis-g
+syntax "sxhkdrc" "sxhkdrc$"
+
+# comments
+color black "#.*$"

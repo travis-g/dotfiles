@@ -17,4 +17,4 @@ ${execi 1 ./scripts/panel_cpu -f}  \
 ${execi 1 ./scripts/panel_gpu -ft}  \
  ${memperc}%%  \
 ${execi 1 ./scripts/panel_volume}  \
-⭧ ${execi 1 ./scripts/panel_clock} \
+ ${execi 1 ./scripts/panel_clock} \

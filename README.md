@@ -7,9 +7,9 @@ Software
 --------
 
 Window manager-related:
-+ bspwm - tiling WM
-+ sxhkd - hotkey daemon for bspwm
-+ bar - lightweight status bar/panel
++ [bspwm](https://github.com/baskerville/bspwm) - tiling WM
++ [sxhkd](https://github.com/baskerville/sxhkd) - hotkey daemon for bspwm
++ [bar](https://github.com/LemonBoy/bar) - lightweight status bar/panel
 + conky - system stats in panel
 + xdo - moving floating windows via hotkeys
 
@@ -26,12 +26,12 @@ Colors/Themes:
 
 ### Other
 Things I'll forget I have unless I write them down:
-+ homepage.py - simple, python-generated HTML homepage
++ [homepage.py](https://github.com/ok100/homepage.py) - simple, python-generated HTML homepage
 + ifstatus - network traffic monitor
 + vnstat - network traffic monitor
 + gbdfed - bitmap font editor
 + ranger - commandline filesystem browser
-
++ [slap](https://github.com/slap-editor/slap) - Sublime-like terminal-based text editor
 
 Hardware
 --------

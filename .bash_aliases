@@ -17,7 +17,7 @@ alias ports='sudo netstat -tulanp'
 # OTHER ------------------------------------------
 
 # Custom nav prompt
-PS1='❭ '
+PS1='> '
 
 # Make ~/bin files executeable
 export PATH=$PATH:~/bin

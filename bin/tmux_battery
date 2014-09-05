@@ -14,7 +14,9 @@ done
 
 BAT=$(acpi --battery | cut -d' ' -f4 | sed 's/%,//')
 
-if [ $PERCENTAGE ]; then
+if [ "$BAT" == "No support for device type: power_supply" ]; then
+    exit 0
+elif [ $PERCENTAGE ]; then
     echo "$BAT%"
 else
     echo $BAT

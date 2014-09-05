@@ -1,0 +1,21 @@
+#!/bin/sh
+
+OPTIND=1
+while getopts "ph" arg; do
+case $arg in
+    h) echo -e "Usage: $basename $0) [OPTION]..."
+	echo -e "Simple battery status script.\n"
+	echo -e " -p \tappend a percent symbol"
+	echo -e " -h \thelp (this screen).\n"
+	exit 0;;
+    p) PERCENTAGE=true;;
+    esac
+done
+
+BAT=$(acpi --battery | cut -d' ' -f4 | sed 's/%,//')
+
+if [ $PERCENTAGE ]; then
+    echo "$BAT%"
+else
+    echo $BAT
+fi

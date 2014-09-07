@@ -1,23 +1,34 @@
 #!/bin/sh
 
 OPTIND=1
-while getopts "ph" arg; do
+while getopts "apsSvh" arg; do
 case $arg in
     h) echo -e "Usage: $basename $0) [OPTION]..."
 	echo -e "Simple battery status script.\n"
-	echo -e " -p \tappend a percent symbol"
+	echo -e " -a \toutput adapter status"
+	echo -e " -p \toutput percent"
+	echo -e " -s \toutput state (Full|Charging|Discharging)"
+	echo -e " -S \toutput sign, if charging/discharging (+|-)"
+	echo -e " -v \toutput only value"
 	echo -e " -h \thelp (this screen).\n"
 	exit 0;;
-    p) PERCENTAGE=true;;
+    a) a=true;;
+    p) p=true;;
+    s) s=true;;
+    S) S=true;;
+    v) v=true;;
     esac
 done
 
-BAT=$(acpi --battery | cut -d' ' -f4 | sed 's/%,//')
+ADAPTER=$(acpi -Vf | egrep "Adapter" | cut -d' ' -f3) #on-line|off-line
+STATUS=$(acpi --battery | cut -d' ' -f3 | sed 's/,//') #Full|Charging|Discharging
+VAL=$(acpi --battery | cut -d' ' -f4 | sed 's/%,//')
+SIGN=
 
-if [ "$BAT" == "No support for device type: power_supply" ]; then
-    exit 0
-elif [ $PERCENTAGE ]; then
-    echo "$BAT%"
+
+
+if [ $p ]; then
+    echo "$VAL%"
 else
-    echo $BAT
+    echo $VAL
 fi

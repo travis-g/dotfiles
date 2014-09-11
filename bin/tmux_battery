@@ -1,34 +1,29 @@
 #!/bin/sh
 
 OPTIND=1
-while getopts "apsSvh" arg; do
+while getopts "avsh" arg; do
 case $arg in
     h) echo -e "Usage: $basename $0) [OPTION]..."
 	echo -e "Simple battery status script.\n"
 	echo -e " -a \toutput adapter status"
-	echo -e " -p \toutput percent"
 	echo -e " -s \toutput state (Full|Charging|Discharging)"
-	echo -e " -S \toutput sign, if charging/discharging (+|-)"
-	echo -e " -v \toutput only value"
+    echo -e " -v \toutput only value"
 	echo -e " -h \thelp (this screen).\n"
 	exit 0;;
     a) a=true;;
-    p) p=true;;
-    s) s=true;;
-    S) S=true;;
     v) v=true;;
+    s) s=true;;
     esac
 done
 
-ADAPTER=$(acpi -Vf | egrep "Adapter" | cut -d' ' -f3) #on-line|off-line
-STATUS=$(acpi --battery | cut -d' ' -f3 | sed 's/,//') #Full|Charging|Discharging
 VAL=$(acpi --battery | cut -d' ' -f4 | sed 's/%,//')
-SIGN=
 
-
-
-if [ $p ]; then
-    echo "$VAL%"
-else
+if [ $a ]; then
+    ADAPTER=$(acpi -Vf | egrep "Adapter" | cut -d' ' -f3) #on-line|off-line
+    echo $ADAPTER
+elif [ $s ]; then
+    STATUS=$(acpi --battery | cut -d' ' -f3 | sed 's/,//') #Full|Charging|Discharging
+    echo $STATUS
+elif [ $v ]; then
     echo $VAL
 fi

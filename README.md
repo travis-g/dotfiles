@@ -13,6 +13,10 @@ Window manager-related:
 + conky - system stats in panel
 + xdo - moving floating windows via hotkeys
 
+Terminal:
++ rxvt-unicode - emulator itself
++ tmux - greatest terminal multiplexer
+
 Overall appearance:
 + feh - sets wallpaper
 + compton - compositing, shadows & transparancy

@@ -1,0 +1,32 @@
+#!/bin/sh
+
+case $HOSTNAME in
+    "ax-l") NUMID=43;;
+    "ken-th") NUMID=15;;
+esac
+
+OPTIND=1
+while getopts "avsh" arg; do
+case $arg in
+    h) echo -e "Usage: $(basename $0) [OPTION]..."
+        echo -e "Simple volume status script.\n"
+        echo -e " -a \tstate if volume to headphones is on|off."
+        echo -e " -s \toutput state (on|off)."
+        echo -e " -v \toutput volume value."
+        echo -e " -h \thelp (this screen).\n"
+        exit 0;;
+    a) a=true;;
+    s) s=true;;
+    v) v=true;;
+esac; done
+
+if [ $a ]; then
+    AUX=$(amixer -c 0 contents | grep $NUMID -A2 | awk 'NR==3 { print $2 }' | cut -d '=' -f 2)
+    echo $AUX
+elif [ $s ]; then
+    STATUS=$(amixer get Master | tail -n1 | cut -d'[' -f4 | sed 's/]//')
+    echo $STATUS
+elif [ $v ]; then
+    VAL=$(amixer get Master | tail -n1 | cut -d'[' -f2 | sed 's/%]//')
+    echo $VAL
+fi

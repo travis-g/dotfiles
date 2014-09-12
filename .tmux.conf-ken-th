@@ -45,7 +45,7 @@ set -g mouse-resize-pane on
 #--Status-Bar-------------------------------------
 set -g status-bg default
 set -g status-fg white
-set -g status-interval 5
+set -g status-interval 10
 set -g status-left 'Wifi: #(tmux_essid)'
 set -g status-left-length 20
 set -g status-right 'Vol: #(tmux_volume -v)% | #(tmux_battery -v)% | #(date +"%a %-I:%M")'

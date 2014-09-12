@@ -48,7 +48,8 @@ set -g status-fg white
 set -g status-interval 5
 set -g status-left 'Wifi: #(tmux_essid)'
 set -g status-left-length 20
-set -g status-right '#(tmux_battery -v)% | #(date +"%a %-I:%M")'
+set -g status-right '#(tmux_asciibat -s10) #(tmux_battery -v)% | #(date +"%a %-I:%M")'
+set -g status-right-length 40
 set -g status-justify centre
 
 #--Windows----------------------------------------

@@ -1,0 +1,25 @@
+#!/bin/bash
+
+s=10 o="[" c="##" e=" "
+OPTIND=1
+while getopts "s:h" arg; do
+case $arg in
+    s) ((s=(OPTARG>=1)?OPTARG:s));;
+	h) echo -e "Usage: $(basename $0) [OPTION]..."
+    	echo -e "ASCII battery-printing script.\n"
+    	echo -e " -s [1-]\tset size (D=10)."
+    	echo -e " -h \thelp (this screen).\n"
+    	exit 0;;
+    esac
+done
+
+v=$(acpi --battery | cut -d' ' -f4 | sed 's/%,//')
+(( f=v*s/100 ))
+for (( i=0; i<s; i++ )); do
+    if (( i<f )); then
+        o=$o$c
+    else o=$o$e; fi
+done
+
+echo "$o]"
+

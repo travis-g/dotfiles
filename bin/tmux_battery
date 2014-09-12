@@ -3,7 +3,7 @@
 OPTIND=1
 while getopts "avsh" arg; do
 case $arg in
-    h) echo -e "Usage: $basename $0) [OPTION]..."
+    h) echo -e "Usage: $(basename $0) [OPTION]..."
 	echo -e "Simple battery status script.\n"
 	echo -e " -a \toutput adapter status"
 	echo -e " -s \toutput state (Full|Charging|Discharging)"

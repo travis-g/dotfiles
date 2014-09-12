@@ -8,7 +8,6 @@
 # ignore duplicates and entries starting with space
 HISTCONTROL=ignoreboth
 
-export EDITOR=nano
 
 # Append to history file, don't overwrite it
 shopt -s histappend

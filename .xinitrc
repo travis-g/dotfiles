@@ -33,6 +33,7 @@ case $HOSTNAME in
 		compton &
 		dropboxd &
 		udiskie &
+        hsetroot -solid \#2d2d2d -tile ~/Dropbox/Photos/iPhone\ Sync/Wallpaper.simple/wLrSjPe.png
 		;;
 	"ken-th")
 		# Export env variables
@@ -45,15 +46,12 @@ case $HOSTNAME in
 		
 		# Start notification daemon
 		dunst &
+        ./.fehsh 0 &
 		;;
 esac
 
 # Normal cursor
 xsetroot -cursor_name left_ptr &
-
-# Load wallpaper
-./.fehsh 0 &	# wallpaper script
-
 
 # Start bspwm
 export PATH=$PATH:~/.config/bspwm

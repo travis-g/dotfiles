@@ -36,6 +36,7 @@ Things I'll forget I have unless I write them down:
 + gbdfed - bitmap font editor
 + ranger - commandline filesystem browser
 + [slap](https://github.com/slap-editor/slap) - Sublime-like terminal-based text editor
++ dwb - minimal webkit browser
 
 Hardware
 --------

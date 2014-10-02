@@ -33,7 +33,7 @@ case $HOSTNAME in
 		compton &
 		dropboxd &
 		udiskie &
-        hsetroot -solid \#2d2d2d -tile ~/Dropbox/Photos/iPhone\ Sync/Wallpaper.simple/wLrSjPe.png
+        hsetroot -solid \#2d2d2d -tile ~/Dropbox/Photos/iPhone\ Sync/Wallpaper.tiled/wLrSjPe.png
 		;;
 	"ken-th")
 		# Export env variables

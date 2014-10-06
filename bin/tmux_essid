@@ -1,3 +1,11 @@
 #!/bin/bash
-
-echo `iwgetid -r`
+ESSID=`iwgetid -r`
+SIG=`status_signal`
+if [[ $SIG -gt 64 ]]
+then echo "#[fg=green]$ESSID#[fg=default]"
+elif [[ $SIG -lt 65 ]] && [[ $SIG -gt 39 ]]
+then echo "#[fg=yellow]$ESSID#[fg=default]"
+elif [[ $SIG -lt 40 ]]
+then echo "#[fg=red]$ESSID#[fg=default]"
+else echo "#[fg=black]X#[fg=default]"
+fi

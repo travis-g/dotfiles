@@ -12,7 +12,7 @@ bspc desktop -n 1
 ##############################################
 bspc config split_ratio				$SPLIR_RATIO
 bspc config border_width			$BORDER_WIDTH
-bspc config top_padding				$PANEL_HEIGHT
+#bspc config top_padding				$PANEL_HEIGHT
 bspc config window_gap				5
 
 
@@ -48,8 +48,7 @@ bspc config normal_private_border_color			$COLOR_BORDER_PRIVATE
 # Rules
 ##############################################
 bspc rule -a Thunar pseudo_tiled=on
-bspc rule -a MultiMC5 pseudo_tiled=on
-bspc rule -a feh floating=on manage=on
+bspc rule -a multimc5 pseudo_tiled=on
 bspc rule -a lxappearance floating=on manage=on
 
 
@@ -62,19 +61,14 @@ case $HOSTNAME in
 		bspc monitor DVI-I-1 -d 0 1
 		bspc monitor HDMI-0 -d 2 3
 		bspc monitor -f primary
+		# set up montiors
+		/home/t/bin/displayconf.sh &
 		;;
 	"ken-th")
 		bspc monitor -d 0 1 2 3
 		;;
 esac
 
-# Start panel
+# Add panel dir to $PATH
 export PATH=$PATH:~/.config/bspwm
-panel &
-
-# set up multi-monitor
-case $HOSTNAME in
-	"ax-l")
-		/home/t/bin/displayconf.sh &
-		;;
-esac
+#panel &

@@ -16,8 +16,6 @@ update_interval_on_battery 10
 
 TEXT
 S⮃ \
-${cpu}  \
-${memperc}  \
-${execi 10 ./scripts/panel_wifi}  \
-${execi 10 ./scripts/panel_battery}  \
- ${time %I:%M} \
+${execi 1 ./scripts/panel_battery}  \
+${execi 1 ./scripts/panel_volume}  \
+ ${execi 1 ./scripts/panel_clock} \

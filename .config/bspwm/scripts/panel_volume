@@ -12,7 +12,7 @@ LVL=$(amixer get Master | tail -n 1 | cut -d '[' -f 2 | sed 's/\%].*//g')
 if [ "$STATUS" == "on" ] && [ "$AUX" == "off" ];
 	then icon="" 
 elif [ "$STATUS" == "on" ] && [ "$AUX" == "on" ];
-	then icon="" 
+	then icon="" 
 elif [ "$STATUS" == "off" ] && [ "$AUX" == "on" ];
 	then icon="" 
 elif [ "$STATUS" == "off" ] && [ "$AUX" == "off" ];

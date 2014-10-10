@@ -51,8 +51,8 @@ case $HOSTNAME in
 		;;
 	"ken-th")
 		while true; do # continuously refresh and pump the info into $PANEL_FIFO
-			echo "S⮃ "$(./scripts/panel_wifi)"  "$(./scripts/panel_battery)"  "$(./scripts/panel_volume)"  "$(./scripts/panel_clock)" " > "$PANEL_FIFO"
-			sleep 10.0s  # refresh after..
+			echo "S⮃ "$(./scripts/panel_battery)"  "$(./scripts/panel_volume)"   "$(./scripts/panel_clock)" " > "$PANEL_FIFO"
+			sleep 5.0s  # refresh after..
 		done &
 		;;
 esac

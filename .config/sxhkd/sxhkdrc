@@ -1,3 +1,5 @@
+# vim: set ft=sxhkdrc:
+#
 # bspwm hotkeys
 #
 # source master config file
@@ -9,8 +11,8 @@ alt + q
 	bspc config top_padding 12; /home/t/.config/bspwm/panel & }
 
 # Workstation Monitor
-alt + w
-	bspc monitor -f next
+#alt + w
+#	bspc monitor -f next
 
 # Close window
 alt + @F4
@@ -20,17 +22,9 @@ alt + @F4
 alt + shift + @F4
 	bspc window -k
 
-# Toggle floating, fullscreen
+# Toggle tile
 alt + {_,shift +} t
 	bspc window -t {floating,fullscreen}
-
-# Toggle monocle
-alt + space 
-	bspc desktop -l next
-
-# Toggle pseudo-tiled
-alt + shift + space 
-	bspc window -t pseudo_tiled
 
 #
 # Modify window states
@@ -40,8 +34,8 @@ alt + shift + p
 	bspc window -t private
 
 # Lock a window from closing
-#alt + shift + l
-#	bspc window -t locked
+alt + shift + l
+	bspc window -t locked
 
 # Sticky node
 alt + shift + s
@@ -68,35 +62,29 @@ alt + shift + {Left,Right,Up,Down}
     xdo resize {-w -20,-w +20,-h -20,-h +20}
         bspc window -e {left -10,down +10,up -10,right +10} || {right -10,up +10,down -10,left +10}
 
-# Change desktop padding
-alt + {_, shift} + bracketright
-    bspc config -d focused right_padding $((`bspc config -d focused right_padding` {+,-} 20 ))
-
-alt + {_, shift} + bracketleft
-    bspc config -d focused left_padding $((`bspc config -d focused left_padding` {+,-} 20 ))
-
-ctrl + {_, shift} + bracketright
-    bspc config -d focused bottom_padding $((`bspc config -d focused bottom_padding` {+,-} 20 ))
-
-ctrl + {_, shift} + bracketleft
-    bspc config -d focused top_padding $((`bspc config -d focused top_padding` {+,-} 20 ))
-
 # Mirror and flip leaves of tree
 alt + {comma,period}
 	bspc desktop -F {horizontal,vertical}
 
 # Rotate leaves of tree
-alt + shift + {period,comma}
+alt + shift + {comma,period}
 	bspc desktop -R {90,270}
 
 # Select previous / next desktop
 alt + {p,n}
 	bspc desktop -f {prev.occupied,next.occupied} 
 
+# Toggle monocle
+alt + space 
+	bspc desktop -l next
+
+# Toggle pseudotiled (floating in tile)
+alt + shift + space 
+	bspc window -t pseudo_tiled
 
 # Change window gap
 alt + {minus,equal}
-    bspc config -d focused window_gap $((`bspc config -d focused window_gap` {+,-} 10 ))
+    bspc config -d focused window_gap $((`bspc config -d focused window_gap` {+,-} 5 ))
 
 # Focus or move window to desktops
 super + {_,shift + }{1-9,0}
@@ -131,18 +119,18 @@ super + space
 	dmenu_run
 
 ctrl + alt + Delete
-	pkill panel && bspc quit 1 && pkill bar && pkill sxhkd
+	pkill panel; bspc quit 1; pkill bar; pkill sxhkd
 
-Print
-	scrot -q 100
+#Print
+#	scrot -q 100
 
-super + c
-	google-chrome-stable
-super + shift + c
-	google-chrome-unstable
+#super + c
+#	chromium
+#super + shift + c
+#	chromium --incognito
 
-super + f
-	firefox
+#super + f
+#	firefox
 
 #
 # Media keys
@@ -151,13 +139,13 @@ super + f
 XF86Audio{Raise,Lower}Volume
 	amixer set Master {5+,5-}; /home/t/.config/bspwm/scripts/notify-volume
 
-XF86AudioMute
-	/home/t/.config/bspwm/scripts/mute
+#XF86AudioMute
+#	/home/t/.config/bspwm/scripts/mute
 
 #XF86Sleep
 
-XF86WLAN
-	/home/t/.config/bspwm/scripts/notify-wifi
+#XF86WLAN
+#	/home/t/.config/bspwm/scripts/notify-wifi
 
 XF86MonBrightness{Up,Down}
 	/home/t/.config/bspwm/scripts/notify-brightness

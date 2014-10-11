@@ -10,10 +10,10 @@ bspc desktop -n 1
 
 # Appearance
 ##############################################
-bspc config split_ratio				$SPLIR_RATIO
+bspc config split_ratio				$SPLIT_RATIO
 bspc config border_width			$BORDER_WIDTH
 #bspc config top_padding				$PANEL_HEIGHT
-bspc config window_gap				5
+bspc config window_gap				$WINDOW_GAP	
 
 
 # Behavior

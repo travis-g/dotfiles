@@ -37,10 +37,3 @@ Xft*hintstyle: hintslight
 Xft*lcdfilter: lcdlight
 Xft*rgba: rgb
 Xft*dpi: 96
-
-! Xclock
-!xclock*majorColor:
-!xclock*minorColor:
-!xclock*minuteColor:
-!xclock*hourColor:
-!xclock*secondColor:

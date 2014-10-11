@@ -65,6 +65,7 @@ COLOR_GOOD=$GN
 
 SPLIT_RATIO=0.4
 BORDER_WIDTH=2
+WINDOW_GAP=40
 
 argb2rgb(){ # remove alpha channel from hex color
 	echo $(echo $1 | sed 's/#../#/')

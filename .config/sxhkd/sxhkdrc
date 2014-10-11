@@ -121,16 +121,8 @@ super + space
 ctrl + alt + Delete
 	pkill panel; bspc quit 1; pkill bar; pkill sxhkd
 
-#Print
-#	scrot -q 100
-
-#super + c
-#	chromium
-#super + shift + c
-#	chromium --incognito
-
-#super + f
-#	firefox
+super + l
+	slock
 
 #
 # Media keys
@@ -138,14 +130,6 @@ ctrl + alt + Delete
 
 XF86Audio{Raise,Lower}Volume
 	amixer set Master {5+,5-}; /home/t/.config/bspwm/scripts/notify-volume
-
-#XF86AudioMute
-#	/home/t/.config/bspwm/scripts/mute
-
-#XF86Sleep
-
-#XF86WLAN
-#	/home/t/.config/bspwm/scripts/notify-wifi
 
 XF86MonBrightness{Up,Down}
 	/home/t/.config/bspwm/scripts/notify-brightness

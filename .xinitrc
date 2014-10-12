@@ -23,6 +23,8 @@ fi
 # Set Xresources to be sourced
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
+xautolock -time 10 -locker slock &
+
 # Host-specific startups:
 case $HOSTNAME in
 	"ax-l")
@@ -39,13 +41,12 @@ case $HOSTNAME in
 		export BROWSER=luakit
 		
 		# Start daemons
-		compton &
 		dropboxd &
 		udiskie &
 		
 		# Start notification daemon
 		dunst &
-        ./.fehsh 0 &
+	        ./.fehsh 0 &
 		;;
 esac
 

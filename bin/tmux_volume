@@ -1,8 +1,8 @@
 #!/bin/sh
 
 case $HOSTNAME in
-    "ax-l") NUMID=43;;
-    "ken-th") NUMID=15;;
+	"ax-l") NUMID=43;;
+	"ken-th") NUMID=15;;
 esac
 
 OPTIND=1

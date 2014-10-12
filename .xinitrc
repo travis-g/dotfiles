@@ -33,8 +33,9 @@ case $HOSTNAME in
 
 		# Start background programs/daemons
 		dropboxd &
-		ldm -d &
-	        hsetroot -solid \#2d2d2d -tile ~/Dropbox/Photos/iPhone\ Sync/Wallpaper.tiled/wLrSjPe.png
+		ldm -d -g 100 -u 1000 &
+	        nitrogen --restore
+		#hsetroot -solid \#2d2d2d -tile ~/Dropbox/Photos/iPhone\ Sync/Wallpaper.tiled/wLrSjPe.png
 		;;
 	"ken-th")
 		# Export env variables

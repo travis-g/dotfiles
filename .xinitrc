@@ -18,8 +18,6 @@ fi
 # Source .Xresources
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
-#xautolock -time 10 -locker slock &
-
 export BROWSER=luakit
 
 udiskie &

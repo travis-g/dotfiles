@@ -34,7 +34,7 @@ case $HOSTNAME in
 		# Start background programs/daemons
 		dropboxd &
 		ldm -d -g 100 -u 1000 &
-	        nitrogen --restore
+	        nitrogen --restore &
 		#hsetroot -solid \#2d2d2d -tile ~/Dropbox/Photos/iPhone\ Sync/Wallpaper.tiled/wLrSjPe.png
 		;;
 	"ken-th")
@@ -55,9 +55,4 @@ esac
 xsetroot -cursor_name left_ptr &
 
 # Start bspwm
-export PATH=$PATH:~/.config/bspwm
-export DESKTOP_SESSION=bspwm
-sxhkd &
-[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
-mkfifo "$PANEL_FIFO"
-exec bspwm "$PANEL_FIFO" -p W
+wm

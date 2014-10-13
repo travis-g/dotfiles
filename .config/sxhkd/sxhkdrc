@@ -34,7 +34,7 @@ alt + shift + p
 	bspc window -t private
 
 # Lock a window from closing
-alt + shift + l
+alt + Escape
 	bspc window -t locked
 
 # Sticky node
@@ -53,26 +53,22 @@ alt + shift {a,s,d,f}
 alt + {_,shift + }{h,j,k,l}
 	bspc window -{f,s} {left,down,up,right} || bspc window -f {prev, prev, next, next}
 
-# Move floating windows (requires baskerville's xdo)
+# Move floating windows
 alt + {Left,Right,Up,Down}
-    xdo move {-x -20,-x +20,-y -20,-y +20}
+	xdo move {-x -20,-x +20,-y -20,-y +20}
 
 # Resize floating windows
 alt + shift + {Left,Right,Up,Down}
-    xdo resize {-w -20,-w +20,-h -20,-h +20}
-        bspc window -e {left -10,down +10,up -10,right +10} || {right -10,up +10,down -10,left +10}
+	xdo resize {-w -20,-w +20,-h -20,-h +20}
+	bspc window -e {left -10,down +10,up -10,right +10} || {right -10,up +10,down -10,left +10}
 
 # Mirror and flip leaves of tree
 alt + {comma,period}
 	bspc desktop -F {horizontal,vertical}
 
 # Rotate leaves of tree
-alt + shift + {comma,period}
+alt + shift + {period,comma}
 	bspc desktop -R {90,270}
-
-# Select previous / next desktop
-alt + {p,n}
-	bspc desktop -f {prev.occupied,next.occupied} 
 
 # Toggle monocle
 alt + space 
@@ -84,11 +80,23 @@ alt + shift + space
 
 # Change window gap
 alt + {minus,equal}
-    bspc config -d focused window_gap $((`bspc config -d focused window_gap` {+,-} 10 ))
+	bspc config -d focused window_gap $((`bspc config -d focused window_gap` {+,-} 10 ))
 
 # Focus or move window to desktops
 super + {_,shift + }{1-9,0}
-    bspc {desktop -f,window -d} ^{1-9,0}
+	bspc {desktop -f,window -d} ^{1-9,0}
+
+
+# Set split ratio of windows
+alt + ctrl + {1-9}
+	bspc window -r 0.{1-9}
+
+# Change window padding
+#alt + shift + {minus,equal}
+#	bspc config -d focused right_padding $((`bspc config -d focused right_padding` {+,-} 20 )); \
+#	bspc config -d focused left_padding $((`bspc config -d focused left_padding` {+,-} 20 )); \
+#	bspc config -d focused bottom_padding $((`bspc config -d focused bottom_padding` {+,-} 20 )); \
+#	bspc config -d focused top_padding $((`bspc config -d focused top_padding` {+,-} 20 )); \
 
 #
 # mouse bindings
@@ -96,11 +104,11 @@ super + {_,shift + }{1-9,0}
 
 # Move or resize window
 alt + button{1-3}
-	bspc pointer -g {resize_corner,resize_side,move[]}
+	bspc pointer -g {resize_corner,resize_side,move}
+
 # Needed for ^^^^
 alt + !button{1-3}
     bspc pointer -t %i %i
-
 
 super + @button{1-3}
     bspc pointer -u

@@ -1,0 +1,14 @@
+#!/bin/sh
+
+export PATH=$PATH:~/.config/bspwm
+export DESKTOP_SESSION=bspwm
+
+#sxhkd &
+#bspwm
+
+while true; do
+	sxhkd &
+	[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
+	mkfifo "$PANEL_FIFO"
+	bspwm "$PANEL_FIFO" -p W || break
+done

@@ -1,8 +1,0 @@
-## edited by travis-g
-syntax "sxhkdrc" "sxhkdrc$"
-
-# brackets
-#color yellow "[{},]" 
-
-# comments
-color black "#.*$"

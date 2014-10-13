@@ -1,0 +1,54 @@
+! base16-londontube.dark
+! base00	231f20
+! base01	1c3f95
+! base02	5a5758
+! base03	737171
+! base04	959ca1
+! base05	d9d8d8
+! base06	e7e7e8
+! base07	ffffff
+! base08	ee2e24
+! base09	f386a1
+! base0A	ffd204
+! base0B	00853e
+! base0C	85cebc
+! base0D	009ddc
+! base0E	98005d
+! base0F	b06110
+
+! special
+*.foreground:   #ffffff
+*.background:   #231f20
+*.cursorColor:  #ffffff
+
+! black
+*.color0:       #231f20
+*.color8:       #1c3f95
+
+! red
+*.color1:       #ee2e24
+*.color9:       #ee2e24
+
+! green
+*.color2:       #00853e
+*.color10:      #00853e
+
+! yellow
+*.color3:       #ffd204
+*.color11:      #ffd204
+
+! blue
+*.color4:       #009ddc
+*.color12:      #009ddc
+
+! magenta
+*.color5:       #98005d
+*.color13:      #98005d
+
+! cyan
+*.color6:       #85cebc
+*.color14:      #85cebc
+
+! white
+*.color7:       #d9d8d8
+*.color15:      #ffffff

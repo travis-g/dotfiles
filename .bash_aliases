@@ -19,7 +19,8 @@ export EDITOR=vim
 # OTHER ------------------------------------------
 
 # Custom nav prompt
-PS1='» '
+#PS1='» '
+PS1='――⊣ '
 
 # Make ~/bin files executeable
 export PATH=$PATH:~/bin

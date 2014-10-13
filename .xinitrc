@@ -20,8 +20,8 @@ fi
 
 export BROWSER=luakit
 
-udiskie &
-dunst &
+#udiskie &
+#dunst &
 bash ./.fehbg
 
 # Normal cursor

@@ -7,12 +7,8 @@
 
 # Toggle panels
 alt + q
-	{pkill panel; pkill bar; pkill conky; bspc config top_padding 0; bspc exit 0,\
-	bspc config top_padding 12; /home/t/.config/bspwm/panel & }
-
-# Workstation Monitor
-#alt + w
-#	bspc monitor -f next
+	{bspc config top_padding 12; /home/t/.config/bspwm/panel &,\
+	 pkill panel; pkill bar; pkill conky; bspc config top_padding 0; bspc exit 0}
 
 # Close window
 alt + @F4
@@ -120,14 +116,8 @@ super + @button{1-3}
 super + Return
 	urxvt
 
-ctrl + shift + Escape
-	urxvt -e htop
-
 super + space
 	dmenu_run
-
-#ctrl + alt + Delete
-#	pkill panel; bspc quit 1; pkill bar; pkill sxhkd
 
 super + l
 	slock
@@ -137,7 +127,7 @@ super + l
 #
 
 XF86Audio{Raise,Lower}Volume
-	amixer set Master {5+,5-}; /home/t/.config/bspwm/scripts/notify-volume
+	vol_change.sh {up,down}; /home/t/.config/bspwm/scripts/notify-volume
 
 XF86MonBrightness{Up,Down}
 	/home/t/.config/bspwm/scripts/notify-brightness

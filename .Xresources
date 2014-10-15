@@ -1,4 +1,4 @@
-#include "/home/t/.colors/base16-londontube.dark"
+#include "/home/t/.colors/base16-google.dark"
 
 ! #########################################
 
@@ -17,14 +17,14 @@ URxvt*boldFont: xft:tewi:pixelsize=9:antialias=true:hinting=true
 !URxvt*bolditalicFont: xft:uushi:pixelsize=9:antialias=true:hinting=true
 
 ! Appearance
-URxvt*cursorUnderline: 1
+!URxvt*cursorUnderline: 1
 URxvt*cursorBlink: true
 URxvt*scrollBar: false
 URxvt*internalBorder: 5
 
 ! Behavior
 URxvt*perl-ext-common: default,matcher
-URxvt*url-launcher: /usr/bin/firefox
+URxvt*url-launcher: /usr/bin/luakit
 URxvt*matcher.button: 2
 URxvt*urgentOnBell: true
 URxvt*savelines: 3000

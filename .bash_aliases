@@ -1,24 +1,19 @@
-# ALIASES ----------------------------------------
+export PATH=$PATH:~/bin
+export EDITOR=vim
+
+# Custom bash prompt
+PS1='─── '
 
 # Color dir contents:
 alias ls='ls --color=auto'
+alias dir='dir --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
 
 # Package commands:
-alias inst='yaourt'		# prev 'sudo powerpill -S'
-alias search='yaourt'		# prev 'pacman -Ss'
+alias inst='yaourt'
+alias search='yaourt'
 alias remove='sudo pacman -Rns'
 
 alias git='hub'
-
-# Show ALL open ports
-alias ports='sudo netstat -tulanp'
-
-export EDITOR=vim
-
-# OTHER ------------------------------------------
-
-# Custom nav prompt
-PS1='─── '
-
-# Make ~/bin files executeable
-export PATH=$PATH:~/bin

@@ -17,9 +17,9 @@
 ! base0F	b06110
 
 ! special
-*.foreground:   #ffffff
+*.foreground:   #d9d8d8
 *.background:   #231f20
-*.cursorColor:  #ffffff
+*.cursorColor:  #d9d8d8
 
 ! black
 *.color0:       #231f20

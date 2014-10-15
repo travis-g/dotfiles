@@ -21,11 +21,11 @@ fi
 export BROWSER=luakit
 
 #udiskie &
-#dunst &
+dunst &
 bash ./.fehbg
 
 # Normal cursor
 xsetroot -cursor_name left_ptr &
 
-# Start bspwm
-wm
+# Start wm
+wm bspwm

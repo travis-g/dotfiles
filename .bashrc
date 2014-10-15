@@ -3,15 +3,13 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# ignore duplicates and entries starting with space
+# ignore dups & padded commands
 HISTCONTROL=ignoreboth
 
-
-# Append to history file, don't overwrite it
+# Append to history file
 shopt -s histappend
 
-
-# Alias definitions
+# Source ~/.bash_aliases
 if [ -f ~/.bash_aliases ]; then
 	. ~/.bash_aliases
 fi

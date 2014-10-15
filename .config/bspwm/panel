@@ -1,0 +1,63 @@
+#! /bin/sh
+
+cd $(dirname $0)
+
+##############################################
+# Multi-instance prevention & signal trapping
+##############################################
+if [ $(pgrep -cx panel) -gt 1 ] ; then
+    printf "%s\n" "The panel is already running." >&2
+    exit 1
+fi
+trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
+
+
+##############################################
+# Sourcing/Starup
+##############################################
+# source master config file
+. /home/t/.vars_master
+
+# load PANEL_FIFO
+bspc control --subscribe > "$PANEL_FIFO" &  #utilize $PANEL_FIFO
+
+
+##############################################
+# Variables
+##############################################
+
+BAR_HEIGHT=$PANEL_HEIGHT
+
+FONT1=$STLARCH
+FONT2=$UUSHI
+#FONT2=$TEWI
+#FONT2=$LEMON
+#FONT2=$DWEEP
+
+##############################################
+# Output
+##############################################
+
+# Add window title to PANEL_FIFO
+#xtitle -sf 'T%s' > "$PANEL_FIFO" &
+
+# Arrow sym ⮃
+
+
+case $HOSTNAME in
+	"ax-l")
+		# conky
+		conky -c /home/t/.config/bspwm/panel_conky_$HOSTNAME > "$PANEL_FIFO" &
+		;;
+	"ken-th")
+		while true; do # continuously refresh and pump the info into $PANEL_FIFO
+			echo "S⮃ "$(./scripts/panel_battery)"  "$(./scripts/panel_volume)"   "$(./scripts/panel_clock)" " > "$PANEL_FIFO"
+			sleep 5.0s  # refresh after..
+		done &
+		;;
+esac
+
+cat "$PANEL_FIFO" | panel_bar | \
+bar -g x$BAR_HEIGHT -f "$FONT1,$FONT2" -B $ARGB_CLEAR -F $COLOR_FG &
+
+wait

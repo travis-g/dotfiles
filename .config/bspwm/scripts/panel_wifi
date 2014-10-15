@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# ICONS
+# ⮷ ⮸ ⮹ ⇅
+# 
+
+QUAL=`iwconfig wlp1s0 | grep 'Link Quality=' | awk '{gsub(/[=/]/," "); print $3}'`
+MAX=`iwconfig wlp1s0 | grep 'Link Quality=' | awk '{gsub(/[=/]/," "); print $4}'`
+SIG=`echo $QUAL*100/$MAX | bc`
+
+icon=""
+if [[ "$QUAL" = "" ]]
+then
+	icon=" X"
+elif [[ $SIG -gt 64 ]]
+then
+	icon=""
+elif [[ $SIG -lt 65 ]] && [[ $SIG -gt 39 ]]
+then
+	icon=""
+elif [[ $SIG -lt 40 ]]
+then
+	icon=""
+else
+	icon=" X"
+fi
+
+echo $icon $SIG

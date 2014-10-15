@@ -1,0 +1,7 @@
+#!/bin/bash
+
+QUAL=`iwconfig wlp1s0 | grep 'Link Quality=' | awk '{gsub(/[=/]/," "); print $3}'`
+MAX=`iwconfig wlp1s0 | grep 'Link Quality=' | awk '{gsub(/[=/]/," "); print $4}'`
+SIG=`echo $QUAL*100/$MAX | bc`
+
+echo $SIG

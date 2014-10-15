@@ -1,0 +1,16 @@
+format_human_readable true
+out_to_console yes
+short_units on
+temperature_unit fahrenheit
+update_interval 1
+cpu_avg_samples 1
+net_avg_samples 2
+
+#TEXT
+#${execi 1 ~/.config/bspwm/panel_cpu}  ${execi 1 ~/.config/bspwm/panel_ram}  ⭧ ${time %I:%M} \
+
+TEXT
+S⮃\
+ ⭥ ${cpu}%%  \
+⭦ ${memperc}%%  \
+⭧ ${time %I:%M} 

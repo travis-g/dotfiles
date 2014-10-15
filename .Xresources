@@ -1,0 +1,39 @@
+#include "/home/t/.colors/base16-google.dark"
+
+! #########################################
+
+! Font settings
+URxvt*font: xft:tewi:pixelsize=9:antialias=true:hinting=true
+URxvt*boldFont: xft:tewi:pixelsize=9:antialias=true:hinting=true
+
+!URxvt*font: -*-neep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*
+!URxvt*boldFont: -*-neep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*
+!URxvt*italicFont: -*-neep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*
+!URxvt*bolditalicFont:-*-neep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*
+
+!URxvt*font: xft:uushi:pixelsize=9:antialias=true:hinting=true
+!URxvt*boldFont: xft:uushi:pixelsize=9:antialias=true:hinting=true
+!URxvt*italicFont: xft:uushi:pixelsize=9:antialias=true:hinting=true
+!URxvt*bolditalicFont: xft:uushi:pixelsize=9:antialias=true:hinting=true
+
+! Appearance
+!URxvt*cursorUnderline: 1
+URxvt*cursorBlink: true
+URxvt*scrollBar: false
+URxvt*internalBorder: 5
+
+! Behavior
+URxvt*perl-ext-common: default,matcher
+URxvt*url-launcher: /usr/bin/luakit
+URxvt*matcher.button: 2
+URxvt*urgentOnBell: true
+URxvt*savelines: 3000
+
+! XFont configs
+Xft*antialias: true
+Xft*autohint: true
+Xft*hinting: true
+Xft*hintstyle: hintslight
+Xft*lcdfilter: lcdlight
+Xft*rgba: rgb
+Xft*dpi: 96

@@ -1,0 +1,31 @@
+#!/bin/sh
+
+volStatus=$(amixer get Master | tail -n 1 | cut -d '[' -f 4 | sed 's/].*//g')
+volLevel=$(amixer get Master | tail -n 1 | cut -d '[' -f 2 | sed 's/\%].*//g')
+#headphone=$(amixer -c 0 contents | grep 15 -A 2 | awk 'NR==3 { print $2 }' | cut -d '=' -f 2)
+
+if [ "headphone" == "on" ];
+	then icon="♪"
+elif [ "headphone" == "off" ] && [ "$volStatus" == "on" ];
+	then icon="♪"
+elif [ "headphone" == "off" ] && [ "$volStatus" == "off" ];
+	then icon="X"
+#else icon="⮝"
+fi
+
+case $volLevel in
+	100)	dots="•••••••••••";;
+	0)		dots="○○○○○○○○○○○";;
+	[1-9])	dots="•○○○○○○○○○○";;
+	1*)		dots="••○○○○○○○○○";;
+	2*)		dots="•••○○○○○○○○";;
+	3*)		dots="••••○○○○○○○";;
+	4*)		dots="•••••○○○○○○";;
+	5*)		dots="••••••○○○○○";;
+	6*)		dots="•••••••○○○○";;
+	7*)		dots="••••••••○○○";;
+	8*)		dots="•••••••••○○";;
+	9*)		dots="••••••••••○";;
+esac
+notify-send "Volume:" "`echo "$icon" $dots`"
+#notify-send "Volume:" "`echo $dots`"

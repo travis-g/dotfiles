@@ -1,0 +1,19 @@
+#!/bin/sh
+
+case $1 in
+	help) echo -e "Usage: $(basename $0) [bspwm|twm|swm|dwm]..."
+		echo -e "Window Manager launcher script.\n"; exit 0;;
+	bspwm)
+		export PATH=$PATH:~/.config/bspwm
+		export DESKTOP_SESSION=bspwm
+
+		while true; do
+			sxhkd &
+			[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
+			mkfifo "$PANEL_FIFO"
+			bspwm "$PANEL_FIFO" -p W || break
+		done;;
+	twm)
+		export DESKTOP_SESSION=twm
+		while true; do twm || break; done;;
+esac

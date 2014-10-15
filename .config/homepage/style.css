@@ -1,0 +1,32 @@
+html, body {
+      background-color: #1e1e1e;
+      font-family: "Fixed";
+      font-weight: normal;
+      margin-left: 7%;
+      height: 100%;
+    }
+    a:link,a:visited,a:active {
+      text-decoration: none;
+      color: #999999;
+      font-weight: normal;
+    }
+    a:hover {
+      text-decoration: underline;
+      color: #999999;
+      font-weight: normal;
+    }
+    table {
+      font-size: 9pt;
+      border-spacing: 8px;
+    }
+    td {
+      vertical-align: middle;
+    }
+    td:first-child {
+      font-weight: bold;
+      color: #B3B3B3
+    }
+    td:nth-child(2) {
+      font-weight: normal;
+      color: #4C4C4C;
+    }

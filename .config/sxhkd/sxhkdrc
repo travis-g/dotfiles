@@ -1,9 +1,4 @@
 # vim: set ft=sxhkdrc:
-#
-# bspwm hotkeys
-#
-# source master config file
-#. /home/t/.vars_master
 
 # Toggle panels
 alt + q
@@ -133,10 +128,10 @@ super + l
 #
 
 XF86Audio{Raise,Lower}Volume
-	vol_change.sh {up,down}; /home/t/.config/bspwm/scripts/notify-volume
+	vol_change.sh {up,down}; notify-volume
 
 XF86MonBrightness{Up,Down}
-	/home/t/.config/bspwm/scripts/notify-brightness
+	notify-brightness
 
 # make sxhkd reload its configuration files:
 alt + shift + Escape

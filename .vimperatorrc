@@ -1,6 +1,14 @@
+" vim: set ft=vimperator:
 set gui=none,tabs
 set noscrollbars
-colorscheme darkness
+"colorscheme darkness
+
+"set hintchars=hjklasdfgyuiopqwertnmzxcvb
+set hintchars=asdfhjkl
+
+" scroll more
+noremap j 3j
+noremap k 3k
 
 map <silent> <C-F1> :js toggle_bottombar()<CR>
 

@@ -8,20 +8,20 @@
 !urxvt*italicFont: -*-tewi-medium-r-*-*-11-*-*-*-*-*-*-*
 !urxvt*bolditalicFont: -*-tewi-medium-r-*-*-11-*-*-*-*-*-*-*
 
-URxvt*font: -*-neep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*
-URxvt*boldFont: -*-neep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*
-URxvt*italicFont: -*-neep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*
-URxvt*bolditalicFont:-*-neep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*
+!URxvt*font: -*-neep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*
+!URxvt*boldFont: -*-neep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*
+!URxvt*italicFont: -*-neep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*
+!URxvt*bolditalicFont:-*-neep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*
 
 !URxvt*font: xft:uushi:pixelsize=9:antialias=true:hinting=true
 !URxvt*boldFont: xft:uushi:pixelsize=9:antialias=true:hinting=true
 !URxvt*italicFont: xft:uushi:pixelsize=9:antialias=true:hinting=true
 !URxvt*bolditalicFont: xft:uushi:pixelsize=9:antialias=true:hinting=true
 
-!urxvt*font: -*-gohufont-medium-r-normal-*-11-*-*-*-*-*-*-*
-!urxvt*boldFont: -*-gohufont-bold-r-normal-*-11-*-*-*-*-*-*-*
-!urxvt*italicFont: -*-gohufont-medium-r-normal-*-11-*-*-*-*-*-*-*
-!urxvt*bolditalicFont: -*-gohufont-bold-r-normal-*-11-*-*-*-*-*-*-*
+urxvt*font: -*-gohufont-medium-r-normal-*-11-*-*-*-*-*-*-*
+urxvt*boldFont: -*-gohufont-bold-r-normal-*-11-*-*-*-*-*-*-*
+urxvt*italicFont: -*-gohufont-medium-r-normal-*-11-*-*-*-*-*-*-*
+urxvt*bolditalicFont: -*-gohufont-bold-r-normal-*-11-*-*-*-*-*-*-*
 
 !urxvt*font: -*-lime-*-*-*-*-*-*-*-*-*-*-*-*
 !urxvt*boldFont: -*-lime-*-*-*-*-*-*-*-*-*-*-*-*

@@ -1,5 +1,5 @@
 html, body {
-      background-color: #1e1e1e;
+      background-color: #1d1f21;
       font-family: "Fixed";
       font-weight: normal;
       margin-left: 7%;
@@ -7,12 +7,12 @@ html, body {
     }
     a:link,a:visited,a:active {
       text-decoration: none;
-      color: #999999;
+      color: #c5c8c6;
       font-weight: normal;
     }
     a:hover {
       text-decoration: underline;
-      color: #999999;
+      color: #c5c8c6;
       font-weight: normal;
     }
     table {
@@ -24,9 +24,9 @@ html, body {
     }
     td:first-child {
       font-weight: bold;
-      color: #B3B3B3
+      color: #e0e0e0
     }
     td:nth-child(2) {
       font-weight: normal;
-      color: #4C4C4C;
+      color: #373b41;
     }

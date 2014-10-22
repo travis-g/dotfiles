@@ -10,6 +10,4 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # Source ~/.bash_aliases
-if [ -f ~/.bash_aliases ]; then
-	. ~/.bash_aliases
-fi
+[[ -f ~/.bash_aliases ]] && . ~/.bash_aliases

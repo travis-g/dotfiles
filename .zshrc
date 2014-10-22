@@ -12,7 +12,7 @@ PROMPT="─── "
 RPROMPT=""
 
 setopt AUTO_CD
-setopt completealises
+setopt completealiases
 setopt append_history
 setopt hist_verify
 setopt hist_ignore_all_dups

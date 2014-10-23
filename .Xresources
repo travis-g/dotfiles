@@ -1,7 +1,5 @@
 #include "/home/t/.colors/base16-google.dark"
 
-! #########################################
-
 ! Font settings
 !urxvt*font: -*-tewi-medium-r-*-*-11-*-*-*-*-*-*-*
 !urxvt*boldFont: -*-tewi-medium-r-*-*-11-*-*-*-*-*-*-*
@@ -18,10 +16,10 @@
 !URxvt*italicFont: xft:uushi:pixelsize=9:antialias=true:hinting=true
 !URxvt*bolditalicFont: xft:uushi:pixelsize=9:antialias=true:hinting=true
 
-urxvt*font: -*-gohufont-medium-r-normal-*-11-*-*-*-*-*-*-*
-urxvt*boldFont: -*-gohufont-bold-r-normal-*-11-*-*-*-*-*-*-*
-urxvt*italicFont: -*-gohufont-medium-r-normal-*-11-*-*-*-*-*-*-*
-urxvt*bolditalicFont: -*-gohufont-bold-r-normal-*-11-*-*-*-*-*-*-*
+*font: -*-gohufont-medium-r-normal-*-11-*-*-*-*-*-*-*
+*boldFont: -*-gohufont-bold-r-normal-*-11-*-*-*-*-*-*-*
+*italicFont: -*-gohufont-medium-r-normal-*-11-*-*-*-*-*-*-*
+*bolditalicFont: -*-gohufont-bold-r-normal-*-11-*-*-*-*-*-*-*
 
 !urxvt*font: -*-lime-*-*-*-*-*-*-*-*-*-*-*-*
 !urxvt*boldFont: -*-lime-*-*-*-*-*-*-*-*-*-*-*-*
@@ -40,17 +38,17 @@ urxvt*bolditalicFont: -*-gohufont-bold-r-normal-*-11-*-*-*-*-*-*-*
 
 ! Appearance
 !URxvt*cursorUnderline: 1
-URxvt*cursorBlink: true
-URxvt*scrollBar: false
-URxvt*internalBorder: 5
-URxvt*dynamicColors:	on
+*cursorBlink: true
+*scrollBar: false
+*internalBorder: 5
+*dynamicColors:	on
 
 ! Behavior
-URxvt*perl-ext-common: default,matcher
-URxvt*url-launcher: /usr/bin/luakit
-URxvt*matcher.button: 1
-URxvt*urgentOnBell: true
-URxvt*savelines: 3000
+*perl-ext-common: default,matcher
+*url-launcher: /usr/bin/luakit
+*matcher.button: 1
+*urgentOnBell: true
+*savelines: 3000
 
 ! XFont configs
 Xft*antialias: true

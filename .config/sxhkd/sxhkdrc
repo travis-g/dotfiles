@@ -128,7 +128,7 @@ super + l
 #
 
 XF86Audio{Raise,Lower}Volume
-	vol_change.sh {up,down}; notify-volume
+	vol_change.sh {up,down} 10; notify-volume
 
 XF86MonBrightness{Up,Down}
 	notify-brightness

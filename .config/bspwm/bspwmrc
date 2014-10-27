@@ -47,7 +47,6 @@ bspc config normal_private_border_color			$COLOR_BORDER_PRIVATE
 ##############################################
 # Rules
 ##############################################
-bspc rule -a Thunar pseudo_tiled=on
 bspc rule -a multimc5 pseudo_tiled=on
 bspc rule -a lxappearance floating=on manage=on
 

@@ -127,6 +127,9 @@ super + l
 # Media keys
 #
 
+XF86AudioMute
+	mute
+
 XF86Audio{Raise,Lower}Volume
 	vol_change.sh {up,down} 10; notify-volume
 

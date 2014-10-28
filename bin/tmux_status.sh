@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version=0.9.9
+version=1.0.0
 
 function showHelp() {
 echo "Usage: tmux_status.sh [options]
@@ -92,7 +92,7 @@ function main() {
 		essid)		print_essid;;
 		bat)		print_battery;;
 		vol)		print_volume;;
-		#help)		showHelp 0;
+		help)		showHelp 0;
 	esac
 }
 

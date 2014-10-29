@@ -18,21 +18,21 @@ DWEEP="-*-dweep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*"
 # Color definitions
 ##############################################
 # ARGB hex format
-BK0='#FF2D2D2D'
-BK1='#FF393939'
-GY0='#FF515151'
-GY1='#FF747369'
-GY2='#FFA09F93'
-GY3='#FFD3D0C8'
-WT0='#FFE8E6DF'
-WT1='#FFF2F0EC'
-RD='#FFF2777A'
-OR='#FFF99157'
-YL='#FFFFCC66'
-GN='#FF99CC99'
-CY='#FF66CCCC'
-BL='#FF6699CC'
-MG='#FFCC99CC'
+BK0='#FF1D1F21'
+BK1='#FF282A2E'
+GY0='#FF373B41'
+GY1='#FF969896'
+GY2='#FFB4B7B4'
+GY3='#FFDC5C8C6'
+WT0='#FFE0E0E0'
+WT1='#FFFFFFFF'
+RD='#FFCC342B'
+OR='#FFF96A38'
+YL='#FFFBA922'
+GN='#FF198844'
+CY='#FF3971ED'
+BL='#FF3971ED'
+MG='#FFA36AC7'
 CL='#00FFFFFF'
 
 ##############################################
@@ -70,10 +70,10 @@ WINDOW_GAP=40
 argb2rgb(){ # remove alpha channel from hex color
 	echo $(echo $1 | sed 's/#../#/')
 }
-COLOR_BORDER=$(argb2rgb $BK0)
-COLOR_BORDER_FOCUSED=$(argb2rgb $BK1)
-COLOR_BORDER_ACTIVE=$(argb2rgb $BK1)
-COLOR_BORDER_PRESEL=$(argb2rgb $WT1)
+COLOR_BORDER=$(argb2rgb $BK1)
+COLOR_BORDER_FOCUSED=$(argb2rgb $GY0)
+COLOR_BORDER_ACTIVE=$(argb2rgb $GY0)
+COLOR_BORDER_PRESEL=$(argb2rgb $WT0)
 COLOR_BORDER_LOCKED=$(argb2rgb $YL)
 COLOR_BORDER_STICKY=$(argb2rgb $MG)
 COLOR_BORDER_PRIVATE=$(argb2rgb $CY)

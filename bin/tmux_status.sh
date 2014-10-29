@@ -1,6 +1,6 @@
 #!/bin/bash
 
-version=1.0.0
+version=1.1.0
 
 function showHelp() {
 echo "Usage: tmux_status.sh [options]
@@ -67,12 +67,12 @@ function print_essid() {
 }
 function print_battery() {
 	if [[ $HOSTNAME == "ax-l" ]]; then exit; fi
-	case $status_battery in
-		Full)	color="#[fg=black]";;
-		Charging)	color="#[fg=green]";;
-		Discharging)	color="#[fg=red]";;
+	STAT=`status_battery`
+	case $STAT in
+		Full)	echo "#[fg=black]♥ $(status_charge)%#[fg=default]";;
+		Charging)	echo "#[fg=green]♥ $(status_charge)%#[fg=default]";;
+		Discharging)	echo "#[fg=red]♥ $(status_charge)%#[fg=default]";;
 	esac
-	echo $color"♥ $(status_charge)%#[fg=default]"
 }
 function print_volume() {
 	if [[ $(status_audio) == "off" ]]; then
@@ -97,3 +97,4 @@ function main() {
 }
 
 main "$@"
+# vim: set ts=4

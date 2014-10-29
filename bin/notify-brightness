@@ -19,4 +19,4 @@ case $brightnessLevel in
         14)     dots="••••••••••••••○";;
         15)     dots="•••••••••••••••";;
 esac
-notify-send "Brightness:" "`echo $dots`"
+notify-send "Brightness: " "`echo $dots`"

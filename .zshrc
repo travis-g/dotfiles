@@ -31,5 +31,6 @@ alias egrep='egrep --color=auto'
 alias inst='yaourt'
 alias search='yaourt'
 alias remove='sudo pacman -Rns'
+alias info='yaourt -Qi'
 
 alias git='hub'

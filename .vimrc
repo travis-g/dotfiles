@@ -31,7 +31,7 @@ filetype plugin indent on    " required
 syntax on
 
 " Enable mouse
-set mouse=a
+set mouse-=a
 set ttymouse=urxvt
 
 " Line numbers

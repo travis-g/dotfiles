@@ -16,10 +16,10 @@
 !URxvt*italicFont: xft:uushi:pixelsize=9:antialias=true:hinting=true
 !URxvt*bolditalicFont: xft:uushi:pixelsize=9:antialias=true:hinting=true
 
-*font: -*-gohufont-medium-r-normal-*-11-*-*-*-*-*-*-*
-*boldFont: -*-gohufont-bold-r-normal-*-11-*-*-*-*-*-*-*
-*italicFont: -*-gohufont-medium-r-normal-*-11-*-*-*-*-*-*-*
-*bolditalicFont: -*-gohufont-bold-r-normal-*-11-*-*-*-*-*-*-*
+urxvt*font: -*-gohufont-medium-r-normal-*-11-*-*-*-*-*-*-*
+urxvt*boldFont: -*-gohufont-bold-r-normal-*-11-*-*-*-*-*-*-*
+urxvt*italicFont: -*-gohufont-medium-r-normal-*-11-*-*-*-*-*-*-*
+urxvt*bolditalicFont: -*-gohufont-bold-r-normal-*-11-*-*-*-*-*-*-*
 
 !urxvt*font: -*-lime-*-*-*-*-*-*-*-*-*-*-*-*
 !urxvt*boldFont: -*-lime-*-*-*-*-*-*-*-*-*-*-*-*

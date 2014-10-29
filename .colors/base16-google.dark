@@ -17,14 +17,13 @@
 ! base0F	#3971ed
 
 ! special
-*.foreground:   #c5c8c6
+*.foreground:   #b4b7b4
 *.background:   #1d1f21
-*.cursorColor:	#c5c8c6
+*.cursorColor:  #b4b7b4
 
 ! black
-*.color0:       #1d1f21
-!*.color8:       #373b41
-*.color8:	#969896
+*.color0:       #313439
+*.color8:       #4b5058
 
 ! red
 *.color1:       #cc342b
@@ -51,5 +50,5 @@
 *.color14:      #f96a38
 
 ! white
-*.color7:       #c5c8c6
+*.color7:       #b4b7b4
 *.color15:      #ffffff

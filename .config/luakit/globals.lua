@@ -1,6 +1,6 @@
 -- Global variables for luakit
 globals = {
-    homepage            = "file:///home/t/homepage.html",
+    homepage            = "file:///home/t/newtab.html",
  -- homepage            = "http://luakit.org/",
  -- homepage            = "http://github.com/mason-larobina/luakit",
     scroll_step         = 40,

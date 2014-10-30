@@ -74,7 +74,7 @@
     # The transparency of the window.  Range: [0; 100].
     # This option will only work if a compositing windowmanager is
     # present (e.g. xcompmgr, compiz, etc.).
-    transparency = 13
+    transparency = 0
     
     # Don't remove messages, if the user is idle (no mouse or keyboard input)
     # for longer than idle_threshold seconds.
@@ -112,7 +112,7 @@
     # Draw a line of "separatpr_height" pixel height between two
     # notifications.
     # Set to 0 to disable.
-    separator_height = 2
+    separator_height = 1
     
     # Padding between text and separator.
     padding = 8
@@ -137,7 +137,7 @@
     dmenu = /usr/bin/dmenu -p dunst:
     
     # Browser for opening urls in context menu.
-    browser = /usr/bin/firefox -new-tab
+    browser = /usr/bin/luakit
 
 [frame]
     width = 0
@@ -169,17 +169,17 @@
     # Otherwise the "#" and following would be interpreted as a comment.
     background = "#393939"
     foreground = "#F2F0EC"
-    timeout = 5
+    timeout = 2
 
 [urgency_normal]
     background = "#E8E6DF"
     foreground = "#2D2D2D"
-    timeout = 1
+    timeout = 2
 
 [urgency_critical]
     background = "#6699CC"
     foreground = "#F2F0EC"
-    timeout = 1
+    timeout = 5 
 
 
 # Every section that isn't one of the above is interpreted as a rules to
@@ -203,7 +203,7 @@
 
 [notify-send]
     appname = notify-send
-    format = "<span weight='normal' letter_spacing='1000' color='#4E9FB1'>%s</span>\n%b"
+    format = "<span weight='normal'>%s</span> %b"
 
 [dropboxd]
     timeout = 5

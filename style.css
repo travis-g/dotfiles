@@ -1,6 +1,6 @@
 html, body {
       background-color: #1d1f21;
-      font-family: "GohuFont","Fira Sans";
+      font-family: "GohuFont";
       font-weight: normal;
       margin-left: 7%;
       height: 100%;
@@ -16,7 +16,7 @@ html, body {
       font-weight: normal;
     }
     table {
-      font-size: 9pt;
+      font-size: 8pt;
       border-spacing: 8px;
     }
     td {

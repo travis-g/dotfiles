@@ -122,8 +122,8 @@ var pg              = 3;                    // Selected box
 var searchBox       = 3;                    // Box containing search engines/input fields (see "links")
 var dim             = [ 30, 10, 0 ];        // * Opacity: 0-100 (step1,step2,step3) (%)
 var dimColor        = "#524c59";            // Text input dim color
-var background      = "#14101c";            // Background color
-var color           = "#d6ccdc";            // Text/Link color
+var background      = "#1D1F21";            // Background color
+var color           = "#c5c8c6";            // Text/Link color
 var autoFocus       = "search-1"            // "" = none | default: "search-1"
 
 var enableScroll    = true;                 // Enable/Disable the posibility to scroll boxes
@@ -165,83 +165,80 @@ var waifu=[ // "./waifu-left.png", "./waifu-right.png" ("" = none)
 ];
 
 var boxSetup=[ // Format: ["Title", "#color"],
-    ["News",                "#d99395"],     // box-1
-    ["4-Chan",              "#c4d1a1"],     // box-2
-    ["Search",              "#9bb6d4"],     // box-3
-    ["Entertainment",       "#db9cbe"],     // box-4
-    ["Other",               "#d1c894"],     // box-5
+    ["Reddit",              "#3971ED"],
+    ["News",              "#CC342B"],
+    ["Search",              "#198844"],
+    ["Entertainment",       "#FBA922"],
+    ["Other",               "#969896"],
 ];
 
 // Link setup (separate with "---", "---" (must not exceed boxSetup))
 // Format: ["Name", "URL"],
 var links=[
-    // News -           box-1
+    // Reddit
+    ["/r/unixporn",                     "https://www.reddit.com/r/unixporn"],
+    ["/r/iOSthemes",                    "https://www.reddit.com/r/iOSthemes"],
+    ["/r/jailbreak",                    "https://www.reddit.com/r/jailbreak"],
+    ["/r/pcmasterrace",                 "https://www.reddit.com/r/pcmasterrace"],
+    ["/r/AskReddit",                    "https://www.reddit.com/r/AskReddit"],
+    ["/u/travis-g/saved",               "https://www.reddit.com/saved"],
+
+    ["---",                             "---"],
+
+    // News
+    ["Reddit",                          "https://www.reddit.com"],
+    ["One Thing Well",                  "https://onethingwell.org"],
+    ["Inconsolation",                   "https://inconsolation.wordpress.com"],
     ["Arch Linux",                      "http://archlinux.org"],
-    ["Dagbladet",                       "http://dagbladet.no"],
-    ["Gamer",                           "http://gamer.no"],
-    ["GameSpot",                        "http://gamespot.com"],
-    ["Hardware",                        "http://hardware.no"],
-    ["IGN",                             "http://ign.com"],
-    ["IT-Avisen",                       "http://itavisen.no"],
-    ["NRK",                             "http://nrk.no"],
-    ["OA",                              "http://oa.no"],
-    ["PressFire",                       "http://pressfire.no"],
-    ["Teknofil",                        "http://teknofil.no"],
-    ["TorrentFreak",                    "http://torrentfreak.com"],
-    ["VG",                              "http://vg.no"],
-
-    ["---",                             "---"],
-
-    // 4Chan -          box-2
-    ["/e/ - Ecchi",                     "https://boards.4chan.org/e/"],
-    ["/g/ - Technology",                "https://boards.4chan.org/g/"],
-    ["/gif/ - Adult GIF",               "https://boards.4chan.org/gif/"],
-    ["/h/ - Hentai",                    "https://boards.4chan.org/h/"],
-    ["/mlp/ - Pony",                    "https://boards.4chan.org/mlp/"],
-    ["/mu/ - Music",                    "https://boards.4chan.org/mu/"],
-    ["/pol/ - Politically Incorrect",   "https://boards.4chan.org/pol/"],
-    ["/wg/ - Wallpaper General",        "https://boards.4chan.org/wg/"],
-    ["/wsg/ - Worksafe GIF",            "https://boards.4chan.org/wsg/"],
-    ["/x/ - Paranormal",                "https://boards.4chan.org/x/"],
-
-    ["---",                             "---"],
-
-    // Search -         box-3
-    ["Google",                          "https://www.google.no/#q="],
-    ["Images",                          "https://www.google.no/search?tbm=isch&q="],
-    ["YouTube",                         "https://www.youtube.com/results?search_query="],
-    ["Wikipedia",                       "http://en.wikipedia.org/w/index.php?search="],
-    ["IMDb",                            "http://www.imdb.com/find?q="],
-    ["Urban Dictionary",                "http://www.urbandictionary.com/define.php?term="],
-
-    ["---",                             "---"],
-
-    // Entertainment -  box-4
-    ["Derpibooru",                      "https://derpibooru.org/"],
     ["DeviantArt",                      "http://deviantart.com/"],
-    ["I Am Bored",                      "http://www.i-am-bored.com/"],
+    ["Tumblr",                         "https://www.tumblr.com"],
     ["Imgur",                           "https://imgur.com/"],
-    ["MetArt",                          "http://members.met-art.com/members/"],
-    ["Netflix",                         "http://netflix.com"],
-    ["Reddit",                          "http://reddit.com"],
-    ["StumbleUpon",                     "http://stumbleupon.com"],
-    ["Your World of Text",              "http://www.yourworldoftext.com/"],
-    ["YouTube",                         "http://youtube.com"],
-    ["xHamster",                        "http://xhamster.com/"],
+    ["HypeM",                          "http://hypem.com"],
+    ["Feedly",                          "https://feedly.com/"],
+    ["Pocket",                          "https://getpocket.com/a/queue/"],
+
 
     ["---",                             "---"],
 
-    // Other -          box-5
-    ["Altinn",                          "https://www.altinn.no/"],
-    ["CockMail",                        "https://mail.cock.li"],
-    ["DnB",                             "http://www.dnb.no/en/"],
+    // Search
+    ["Google",                          "https://www.google.no/#q="],
+    ["DuckDuckGo",                      "https://duckduckgo.com/?q="],
+    ["Images",                          "https://www.google.no/search?tbm=isch&q="],
+    ["Reddit",                          "https://www.reddit.com/search?q="],
+
+    ["---",                             "---"],
+
+    // Entertainment
+    ["I Am Bored",                      "http://www.i-am-bored.com/"],
+    ["Netflix",                         "http://netflix.com"],
+    ["Project Free TV",                 "https://www.free-tv-video-online.me"],
+    ["StumbleUpon",                     "http://stumbleupon.com"],
+    ["YouTube",                         "http://youtube.com"],
+    ["Spotify",                         "https://play.spotify.com"],
+
+    ["---",                             "---"],
+
+    // Other
+    ["Gmail",                          "https://mail.google.com"],
+    ["M&T",                             "https://www.mtb.com/"],
     ["Dropbox",                         "https://www.dropbox.com"],
     ["Facebook",                        "http://facebook.com"],
-    ["Outlook",                         "http://outlook.com"],
-    ["Pastebin",                        "http://pastebin.com"],
     ["PayPal",                          "http://www.paypal.com/"],
+    ["Webmail",                         "https://webmail.troweprice.com"],
+    ["MyPC",                            "https://mypc.troweprice.com"],
+    ["put.io",                          "https://put.io"],
     ["Userstyles",                      "http://userstyles.org/"],
-    ["Wallbase",                        "http://wallbase.cc"],
+
+    ["---",                             "---"],
+
+    // Apps
+
+    // ["---",                             "---"],
+    //
+    // Porn
+    // ["Intporn",                         "http://www.intporn.org/forums/gay-porn-vids"],
+    // ["/hm/ - Handsome Men",             "https://www.4chan.org/hm/"],
+
 ];
 
 // + ------------------------------------- Settings (JS) - END ------------------------------------- +

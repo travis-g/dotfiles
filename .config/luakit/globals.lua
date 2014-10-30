@@ -52,9 +52,10 @@ soup.accept_policy = cookie_policy.always
 -- it to avoid collisions with lua's string.format characters.
 -- See: http://www.lua.org/manual/5.1/manual.html#pdf-string.format
 search_engines = {
-    ddg  = "https://duckduckgo.com/?q=%s",
-    gh      = "https://github.com/search?q=%s",
-    ggl      = "https://google.com/search?q=%s",
+    -- ddg = "https://duckduckgo.com/?q=%s",
+    gh  = "https://github.com/search?q=%s",
+    ggl = "https://google.com/search?q=%s",
+    aw  = "https://wiki.archlinux.org/index.php/Special:Search?fulltext=Search&search=%s",
 }
 
 -- Set google as fallback search engine

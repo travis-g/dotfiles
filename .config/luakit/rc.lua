@@ -109,12 +109,16 @@ require "downloads_chrome"
 -- Add vimperator-like link hinting & following
 require "follow"
 
--- Use a custom charater set for hint labels
---local s = follow.label_styles
---follow.label_maker = s.sort(s.reverse(s.charset("asdfqwerzxcv")))
+-- Use a custom charater set for hint labels (See follow.lua)
+local s = follow.label_styles
+-- "0123456789" Default
+-- "asdfhjkl" Home row
+-- "hjklasdfgyuiopqwertnmzxcvb" Smart
+-- "asdfqwerzxcv" Suggested
+follow.label_maker = s.sort(s.reverse(s.charset("asdfhjkl")))
 
 -- Match only hint labels
---follow.pattern_maker = follow.pattern_styles.match_label
+follow.pattern_maker = follow.pattern_styles.match_label
 
 -- Add command history
 require "cmdhist"
@@ -182,20 +186,16 @@ end
 -- Custom user edits --
 -----------------------
 
--- Progress indicator
--- window.methods.update_progress = function (w)
---     local p = w.view.progress
---     if not p then p = w.view:get_prop("progress") end
---     local loaded = w.sbar.l.loaded
---     if not w.view:loading() or p == 1 then
---         loaded:hide()
---     else
---         loaded:show()
---         local pbar2 = {"▁","▂","▃","▄","▅","▆","▇","█"}
---         local pchar = pbar2[(math.floor(p*100)%#pbar2)+1]
---         local text = string.format("(%d%% %s)", p * 100, pchar)
---         if loaded.text ~= text then loaded.text = text end
---     end
--- end
+-- Set download location
+downloads.default_dir = os.getenv("HOME") .. "/downloads"   -- $HOME/downloads
+downloads.add_signal("download-location", function (uri, file)
+    if not file or file == "" then
+        file = (string.match(uri, "/([^/]+)$")
+            or string.match(uri, "^%w+://(.+)")
+            or string.gsub(uri, "/", "_")
+            or "untitled")
+    end
+    return downloads.default_dir .. "/" .. file
+end)
 
 -- vim: et:sw=4:ts=8:sts=4:tw=80

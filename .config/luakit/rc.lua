@@ -118,7 +118,7 @@ local s = follow.label_styles
 follow.label_maker = s.sort(s.reverse(s.charset("asdfhjkl")))
 
 -- Match only hint labels
-follow.pattern_maker = follow.pattern_styles.match_label
+--follow.pattern_maker = follow.pattern_styles.match_label
 
 -- Add command history
 require "cmdhist"
@@ -164,9 +164,9 @@ else
     window.new(uris)
 end
 
--------------------------------------------
--- Open URIs from other luakit instances --
--------------------------------------------
+--------------------------------------
+-- Reopen previous luakit instances --
+--------------------------------------
 
 if unique then
     unique.add_signal("message", function (msg, screen)
@@ -185,17 +185,5 @@ end
 -----------------------
 -- Custom user edits --
 -----------------------
-
--- Set download location
-downloads.default_dir = os.getenv("HOME") .. "/downloads"   -- $HOME/downloads
-downloads.add_signal("download-location", function (uri, file)
-    if not file or file == "" then
-        file = (string.match(uri, "/([^/]+)$")
-            or string.match(uri, "^%w+://(.+)")
-            or string.gsub(uri, "/", "_")
-            or "untitled")
-    end
-    return downloads.default_dir .. "/" .. file
-end)
 
 -- vim: et:sw=4:ts=8:sts=4:tw=80

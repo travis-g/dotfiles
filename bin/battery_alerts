@@ -1,0 +1,5 @@
+#!/bin/zsh
+while true; do
+	notify-send "Battery " "`tmux_status.sh charge`%"
+	sleep 60
+done

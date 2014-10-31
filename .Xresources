@@ -6,15 +6,15 @@
 !urxvt*italicFont: -*-tewi-medium-r-*-*-11-*-*-*-*-*-*-*
 !urxvt*bolditalicFont: -*-tewi-medium-r-*-*-11-*-*-*-*-*-*-*
 
-!URxvt*font: -*-neep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*
-!URxvt*boldFont: -*-neep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*
-!URxvt*italicFont: -*-neep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*
-!URxvt*bolditalicFont:-*-neep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*
+!urxvt*font: -*-neep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*
+!urxvt*boldFont: -*-neep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*
+!urxvt*italicFont: -*-neep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*
+!urxvt*bolditalicFont:-*-neep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*
 
-!URxvt*font: xft:uushi:pixelsize=9:antialias=true:hinting=true
-!URxvt*boldFont: xft:uushi:pixelsize=9:antialias=true:hinting=true
-!URxvt*italicFont: xft:uushi:pixelsize=9:antialias=true:hinting=true
-!URxvt*bolditalicFont: xft:uushi:pixelsize=9:antialias=true:hinting=true
+!urxvt*font: xft:uushi:pixelsize=9:antialias=true:hinting=true
+!urxvt*boldFont: xft:uushi:pixelsize=9:antialias=true:hinting=true
+!urxvt*italicFont: xft:uushi:pixelsize=9:antialias=true:hinting=true
+!urxvt*bolditalicFont: xft:uushi:pixelsize=9:antialias=true:hinting=true
 
 urxvt*font: -*-gohufont-medium-r-normal-*-11-*-*-*-*-*-*-*
 urxvt*boldFont: -*-gohufont-bold-r-normal-*-11-*-*-*-*-*-*-*
@@ -37,18 +37,18 @@ urxvt*bolditalicFont: -*-gohufont-bold-r-normal-*-11-*-*-*-*-*-*-*
 !urxvt*bolditalicFont: -*-lemon-*-*-*-*-*-*-*-*-*-*-*-*
 
 ! Appearance
-!URxvt*cursorUnderline: 1
-*cursorBlink: true
-*scrollBar: false
-*internalBorder: 5
-*dynamicColors:	on
+!urxvt*cursorUnderline: 1
+urxvt*cursorBlink: true
+urxvt*scrollBar: false
+urxvt*internalBorder: 5
+urxvt*dynamicColors: on
 
 ! Behavior
-*perl-ext-common: default,matcher
-*url-launcher: /usr/bin/luakit
-*matcher.button: 1
-*urgentOnBell: true
-*savelines: 3000
+urxvt*perl-ext-common: default,matcher
+urxvt*url-launcher: /usr/bin/luakit
+urxvt*matcher.button: 1
+urxvt*urgentOnBell: true
+urxvt*savelines: 3000
 
 ! XFont configs
 Xft*antialias: true

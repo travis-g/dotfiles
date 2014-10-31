@@ -22,7 +22,7 @@ export BROWSER=luakit
 
 #udiskie &
 dunst &
-bash ./.fehbg
+zsh ./.fehbg
 
 # Normal cursor
 xsetroot -cursor_name left_ptr &

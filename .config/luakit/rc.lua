@@ -56,9 +56,6 @@ require "binds"
 -- Optional user script loading --
 ----------------------------------
 
--- Add luakit-plugins
-require "plugins"
-
 require "webinspector"
 
 -- Add sqlite3 cookiejar
@@ -112,13 +109,9 @@ require "downloads_chrome"
 -- Add vimperator-like link hinting & following
 require "follow"
 
--- Use a custom charater set for hint labels (See follow.lua)
-local s = follow.label_styles
--- "0123456789" Default
--- "asdfhjkl" Home row
--- "hjklasdfgyuiopqwertnmzxcvb" Smart
--- "asdfqwerzxcv" Suggested
-follow.label_maker = s.sort(s.reverse(s.charset("asdfhjkl")))
+-- Use a custom charater set for hint labels
+--local s = follow.label_styles
+--follow.label_maker = s.sort(s.reverse(s.charset("asdfqwerzxcv")))
 
 -- Match only hint labels
 --follow.pattern_maker = follow.pattern_styles.match_label
@@ -167,9 +160,9 @@ else
     window.new(uris)
 end
 
---------------------------------------
--- Reopen previous luakit instances --
---------------------------------------
+-------------------------------------------
+-- Open URIs from other luakit instances --
+-------------------------------------------
 
 if unique then
     unique.add_signal("message", function (msg, screen)
@@ -185,8 +178,7 @@ if unique then
     end)
 end
 
------------------------
--- Custom user edits --
------------------------
+-- Load userconf.lua
+require "userconf"
 
 -- vim: et:sw=4:ts=8:sts=4:tw=80

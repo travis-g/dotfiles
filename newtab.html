@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <!--
 
-    Author:         Twily                                         2014
+    Author:         Twily (Mod by @travis-g)                        2014
     Website:        http://twily.info/
-    Compatibility:  Mozilla Firefox, Google Chrome
-    Useage:         MouseWheel, Touch, Key[1-9,num 1-9,left,right,A,D]
+    Usage:          MouseWheel, Touch, Key[1-9,num 1-9,left,right,A,D]
 
 -->
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
-<title>~ newtab ~</title>
+<title>/new</title>
 
 <style type="text/css">
 html,body {
     margin: 0; padding: 0; width: 100%; height: 100%; color: #FFF;
-    font-family: "Liberation Sans", "Dejavu Sans", "Segoe UI", Tahoma; font-size: 10pt;
+    font-family: "Liberation Sans", "Dejavu Sans", "Segoe UI", Tahoma; font-size: 12pt;
 }
 #perspective {
     position: absolute; top: 0; left: 0; width: 100%; height: 100%;
@@ -57,13 +56,13 @@ input[type="text"]:focus { width: 150px; opacity: 1.0; transition: 0.3s ease; cu
     overflow: visible; white-space: nowrap;
     transition: 1s ease; /* Animation speed/time */
 }
-    .container label {
-        border-bottom: 1px solid #FFF;
-        display: block; font-weight: bold;
-    }
-    /*#box-3 { margin-left: -75px; opacity: 1; }*/ /* Selected box */
-        #search td:nth-child(1)     { text-align: right; }
-        #search label               { border: 0; font-weight: normal; opacity: 0.8; padding-right: 10px; }
+.container label {
+    border-bottom: 1px solid #FFF;
+    display: block; font-weight: bold;
+}
+/*#box-3 { margin-left: -75px; opacity: 1; }*/ /* Selected box */
+#search td:nth-child(1)     { text-align: right; }
+#search label               { border: 0; font-weight: normal; opacity: 0.8; padding-right: 10px; }
 
 #switch {
     position: fixed; bottom: 10%; left: 0; width: 100%; height: 16px;
@@ -118,19 +117,19 @@ var preset          = 2;                    // 0 = null (Custom settings) (1,3 a
 var displayPreset   = false;                // Output current settings as preset string
 
 // * = loaded from preset
-var pg              = 3;                    // Selected box
+var pg              = 2;                    // Selected box
 var searchBox       = 3;                    // Box containing search engines/input fields (see "links")
 var dim             = [ 30, 10, 0 ];        // * Opacity: 0-100 (step1,step2,step3) (%)
 var dimColor        = "#524c59";            // Text input dim color
 var background      = "#1D1F21";            // Background color
 var color           = "#c5c8c6";            // Text/Link color
-var autoFocus       = "search-1"            // "" = none | default: "search-1"
+var autoFocus       = ""                    // "" = none | default: "search-1"
 
 var enableScroll    = true;                 // Enable/Disable the posibility to scroll boxes
 var enableTags      = true;                 // Show/Hide switch buttons/tags
 var enableKeys      = true;                 // Allow key navigation when search field is not active
 var enableTouch     = true;                 // Enable touch screen support
-var enableTitle     = false;                // Enable clickable box titles/content
+var enableTitle     = true;                // Enable clickable box titles/content
 
 var invertScroll    = false;                // Invert mouse wheel
 var useScrollLock   = true;                 // Delay next scroll trigger (prevents box skip)
@@ -166,79 +165,108 @@ var waifu=[ // "./waifu-left.png", "./waifu-right.png" ("" = none)
 
 var boxSetup=[ // Format: ["Title", "#color"],
     ["Reddit",              "#3971ED"],
-    ["News",              "#CC342B"],
+    ["Quicklinks",          "#CC342B"],
     ["Search",              "#198844"],
     ["Entertainment",       "#FBA922"],
     ["Other",               "#969896"],
+    // ["Apps",                ""],
+    // ["Porn",                ""],
 ];
 
 // Link setup (separate with "---", "---" (must not exceed boxSetup))
 // Format: ["Name", "URL"],
 var links=[
     // Reddit
-    ["/r/unixporn",                     "https://www.reddit.com/r/unixporn"],
+    ["/u/travis-g/saved",               "https://www.reddit.com/saved"],
+    ["",""],
+    ["/r/AskReddit",                    "https://www.reddit.com/r/AskReddit"],
     ["/r/iOSthemes",                    "https://www.reddit.com/r/iOSthemes"],
     ["/r/jailbreak",                    "https://www.reddit.com/r/jailbreak"],
     ["/r/pcmasterrace",                 "https://www.reddit.com/r/pcmasterrace"],
-    ["/r/AskReddit",                    "https://www.reddit.com/r/AskReddit"],
-    ["/u/travis-g/saved",               "https://www.reddit.com/saved"],
+    ["/r/unixart",                      "https://www.reddit.com/r/unixart"],
+    ["/r/unixporn",                     "https://www.reddit.com/r/unixporn"],
 
     ["---",                             "---"],
 
-    // News
+    // Quicklinks
     ["Reddit",                          "https://www.reddit.com"],
-    ["One Thing Well",                  "https://onethingwell.org"],
+    ["Google",                          "https://encrypted.google.com"],
+    ["Gmail",                           "https://mail.google.com"],
+    ["GitHub",                          "https://github.com"],
+    ["LastPass",                        "https://lastpass.com"],
+    ["Forecast.io",                     "https://forecast.io/"],
     ["Inconsolation",                   "https://inconsolation.wordpress.com"],
-    ["Arch Linux",                      "http://archlinux.org"],
-    ["DeviantArt",                      "http://deviantart.com/"],
-    ["Tumblr",                         "https://www.tumblr.com"],
-    ["Imgur",                           "https://imgur.com/"],
-    ["HypeM",                          "http://hypem.com"],
-    ["Feedly",                          "https://feedly.com/"],
-    ["Pocket",                          "https://getpocket.com/a/queue/"],
+    ["One Thing Well",                  "http://onethingwell.org"],
+    ["Blackboard",                      "https://learn.captechu.edu/"],
+    // ["Arch Linux",                      "http://archlinux.org"],
+    // ["DeviantArt",                      "http://deviantart.com/"],
+    // ["Imgur",                           "https://imgur.com/"],
+    // ["Dogeweather",                     "http://dogeweather.com/"],
+    // ["THE FUCKING WEATHER",             "http://www.thefuckingweather.com/"],
+    // ["Slashdot",                        "https://slashdot.org/"],
 
 
     ["---",                             "---"],
 
     // Search
-    ["Google",                          "https://www.google.no/#q="],
-    ["DuckDuckGo",                      "https://duckduckgo.com/?q="],
-    ["Images",                          "https://www.google.no/search?tbm=isch&q="],
+    ["Google",                          "https://encrypted.google.com/#q="],
     ["Reddit",                          "https://www.reddit.com/search?q="],
-    ["Github",				"https://github.com/search?q="],
+    ["GitHub",                          "https://github.com/search?q="],
+    ["DuckDuckGo",                      "https://duckduckgo.com/?q="],
+    ["Images",                          "https://encrypted.google.com/search?q="],
 
     ["---",                             "---"],
 
     // Entertainment
-    ["I Am Bored",                      "http://www.i-am-bored.com/"],
-    ["Netflix",                         "http://netflix.com"],
+    ["HypeM",                           "http://hypem.com"],
+    ["Feedly",                          "https://feedly.com/"],
+    ["Netflix",                         "https://netflix.com"],
     ["Project Free TV",                 "https://www.free-tv-video-online.me"],
-    ["StumbleUpon",                     "http://stumbleupon.com"],
-    ["YouTube",                         "http://youtube.com"],
+    ["Joker.org",                       "http://joker.org"],
+    ["Pocket",                          "https://getpocket.com/a/queue/"],
     ["Spotify",                         "https://play.spotify.com"],
+    ["Homestuck",                       "http://mspaintadventures.com"],
+    // ["I Am Bored",                      "http://www.i-am-bored.com"],
+    // ["StumbleUpon",                     "http://stumbleupon.com"],
+    // ["YouTube",                         "http://youtube.com"],
 
     ["---",                             "---"],
 
     // Other
-    ["Gmail",                          "https://mail.google.com"],
+    ["Facebook",                        "http://facebook.com"],
+    ["Tumblr",                          "https://www.tumblr.com"],
     ["M&T",                             "https://www.mtb.com/"],
     ["Dropbox",                         "https://www.dropbox.com"],
-    ["Facebook",                        "http://facebook.com"],
+    ["MyCapitol",                       "https://mycapitol.captechu.edu/ics/"],
     ["PayPal",                          "http://www.paypal.com/"],
     ["Webmail",                         "https://webmail.troweprice.com"],
     ["MyPC",                            "https://mypc.troweprice.com"],
     ["put.io",                          "https://put.io"],
-    ["Userstyles",                      "http://userstyles.org/"],
+    ["",""],
+    ["Userstyles",                      "http://userstyles.org"],
+    ["Greasy Fork",                     "https://greasyfork.org"],
+    ["OpenUserJS",                      "https://openuserjs.org/"],
+    // ["Humble Bundle",                   "https://www.humblebundle.com/"],
 
     ["---",                             "---"],
 
     // Apps
+    // ["Draft",                          "https://draftin.com"],
+    // ["StackEdit",                      "https://stackedit.io"],
+    // ["Sunrise",                        "https://calendar.sunrise.am"],
+    // ["Keep",                           "https://keep.google.com",
+    // ["2048",                           "http://gabrielecirulli.github.io/2048/"],
+    // ["Coffitivity",                    "http://coffitivity.com"],
+    
 
     // ["---",                             "---"],
     //
     // Porn
-    // ["Intporn",                         "http://www.intporn.org/forums/gay-porn-vids"],
-    // ["/hm/ - Handsome Men",             "https://www.4chan.org/hm/"],
+    // ["Intporn 2.0",                    "http://www.intporn.org/forums/gay-porn-vids"],
+    // ["/hm/",            "https://www.4chan.org/hm/"],
+    // ["Gay-Torrents.org",               "https://gay-torrents.org"],
+    // ["Gay Torrents Live",              "https://www.gay-torrents.net"],
+    // ["TongaBonga",                     "http://www.tongabonga.com"],
 
 ];
 

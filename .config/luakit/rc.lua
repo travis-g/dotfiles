@@ -56,6 +56,9 @@ require "binds"
 -- Optional user script loading --
 ----------------------------------
 
+-- Add luakit-plugins
+require "plugins"
+
 require "webinspector"
 
 -- Add sqlite3 cookiejar

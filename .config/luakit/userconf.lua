@@ -8,6 +8,7 @@
 -- tabmenu plugins are all loaded here.
 -- See https://github.com/luakit-crowd/luakit-plugins
 require "plugins"
+plugins.policy = "automatic"
 
 -- Set homepage
 globals.homepage            = "file:///home/t/newtab.html"
@@ -28,7 +29,13 @@ globals.search_engines.default = search_engines.ggl
 
 -- Per-domain webview properties
 -- See http://webkitgtk.org/reference/webkitgtk/stable/WebKitWebSettings.html
-globals.domain_props = { --[[
+globals.domain_props = { 
+    ["draftin.com"] = {
+        enable_scripts          = false,
+        enable_plugins          = false,
+        user_stylesheet_uri     = "",
+    },
+    --[[
     ["all"] = {
         enable_scripts          = false,
         enable_plugins          = false,
@@ -51,10 +58,10 @@ local s = follow.label_styles
 -- "asdfhjkl" Home row
 -- "hjklasdfgyuiopqwertnmzxcvb" Smart
 -- "asdfqwerzxcv" Suggested
-follow.label_maker = s.sort(s.reverse(s.charset("asdfhjkl")))
+follow.label_maker = s.sort(s.reverse(s.charset("asdfhjklgyuiopqwertnmzxcvb")))
 
 -----------------------------
 -- End user script loading --
 -----------------------------
 
--- vim: et:sw=4:ts=8:sts=4:tw=80
+-- vim: et:sw=4:ts=4:sts=4

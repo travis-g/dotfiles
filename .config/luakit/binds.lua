@@ -588,4 +588,18 @@ add_cmds({
         end),
 })
 
--- vim: et:sw=4:ts=8:sts=4:tw=80
+-----------------------------
+-- Manually Added Bindings --
+-----------------------------
+
+add_binds("normal", {
+    key({}, "t", function (w)
+        if true == w.sbar.hidden then
+            w.sbar.ebox:show() w.sbar.hidden = false
+        else
+            w.sbar.ebox:hide() w.sbar.hidden = true
+        end
+    end),
+})
+
+-- vim: et:sw=4:ts=4:sts=4:tw=80

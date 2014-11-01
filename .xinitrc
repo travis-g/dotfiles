@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 
 # Source fonts
 xset +fp /usr/share/fonts/local

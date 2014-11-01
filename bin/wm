@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/zsh
 
 case $1 in
 	help) echo -e "Usage: $(basename $0) [bspwm|twm|swm|dwm]..."

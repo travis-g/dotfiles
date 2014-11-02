@@ -1,4 +1,4 @@
-# vim: set ft=sxhkdrc:
+# vim: set et:ts=4:sw=4:sts=4:ft=sxhkdrc:
 
 # Toggle panels
 alt + q
@@ -46,7 +46,7 @@ alt + {_,shift + }{h,j,k,l}
 
 # resize nodes
 alt + {a,f}
-	window_move.sh {-p,-n} -x -s 20
+	window_move.sh {-n,-p} -x -s 20
 alt + {s,d}
 	window_move.sh {-p,-n} -y -s 20
 
@@ -87,6 +87,10 @@ super + {_,shift + }{1-9,0}
 # Set split ratio of windows
 alt + ctrl + {1-9}
 	bspc window -r 0.{1-9}
+
+# Balance (or equalize) desktop
+alt + {_,shift + }b
+	bspc desktop {-B,-E} 
 
 # Change window padding
 #alt + shift + {minus,equal}
@@ -142,3 +146,4 @@ XF86MonBrightness{Up,Down}
 # make sxhkd reload its configuration files:
 alt + shift + Escape
 	pkill -USR1 -x sxhkd && sxhkd
+

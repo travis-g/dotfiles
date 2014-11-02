@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 version=1.1.0
 
@@ -97,4 +97,4 @@ function main() {
 }
 
 main "$@"
-# vim: set ts=4
+# vim: set ts=4:et

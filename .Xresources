@@ -40,7 +40,7 @@ urxvt*bolditalicFont: -*-gohufont-bold-r-normal-*-11-*-*-*-*-*-*-*
 !urxvt*cursorUnderline: 1
 urxvt*cursorBlink: true
 urxvt*scrollBar: false
-urxvt*internalBorder: 5
+urxvt*internalBorder: 2 
 urxvt*dynamicColors: on
 
 ! Behavior

@@ -1,6 +1,7 @@
 -- Global variables for luakit
 globals = {
-    homepage            = "http://luakit.org/",
+    homepage            = "file:///home/t/newtab.html",
+ -- homepage            = "http://luakit.org/",
  -- homepage            = "http://github.com/mason-larobina/luakit",
     scroll_step         = 40,
     zoom_step           = 0.1,
@@ -55,15 +56,15 @@ soup.accept_policy = cookie_policy.always
 -- it to avoid collisions with lua's string.format characters.
 -- See: http://www.lua.org/manual/5.1/manual.html#pdf-string.format
 search_engines = {
-    duckduckgo  = "https://duckduckgo.com/?q=%s",
-    github      = "https://github.com/search?q=%s",
-    google      = "https://google.com/search?q=%s",
-    imdb        = "http://www.imdb.com/find?s=all&q=%s",
-    wikipedia   = "https://en.wikipedia.org/wiki/Special:Search?search=%s",
+    ddg         = "https://duckduckgo.com/?q=%s",
+    gh          = "https://github.com/search?q=%s",
+    ggl         = "https://google.com/search?q=%s",
+    aw          = "https://wiki.archlinux.org/index.php/Special:Search?fulltext=Search&search=%s",
+    wiki        = "https://en.wikipedia.org/wiki/Special:Search?search=%s",
 }
 
 -- Set google as fallback search engine
-search_engines.default = search_engines.google
+search_engines.default = search_engines.ggl
 -- Use this instead to disable auto-searching
 --search_engines.default = "%s"
 

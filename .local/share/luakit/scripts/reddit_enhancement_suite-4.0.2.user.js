@@ -3938,7 +3938,6 @@ modules['subRedditTagger'] = {
 
 }; 
 
-
 modules['uppersAndDowners'] = {
 	moduleID: 'uppersAndDowners',
 	moduleName: 'Uppers and Downers Enhanced',
@@ -12299,363 +12298,363 @@ modules['styleTweaks'] = {
 	}
 }; 
 
-modules['accountSwitcher'] = {
-	moduleID: 'accountSwitcher',
-	moduleName: 'Account Switcher',
-	category: 'Accounts',
-	options: {
-		accounts: {
-			type: 'table',
-			addRowText: '+add account',
-			fields: [
-				{ name: 'username', type: 'text' },
-				{ name: 'password', type: 'password' }
-			],
-			value: [
-				/*
-				['somebodymakethis','SMT','[SMT]'],
-				['pics','pic','[pic]']
-				*/
-			],
-			description: 'Set your usernames and passwords below. They are only stored in RES preferences.'
-		},
-		keepLoggedIn: {
-			type: 'boolean',
-			value: false,
-			description: 'Keep me logged in when I restart my browser.'
-		}
-	},
-	description: 'Store username/password pairs and switch accounts instantly while browsing Reddit!',
-	isEnabled: function() {
-		return RESConsole.getModulePrefs(this.moduleID);
-	},
-	include: Array(
-		/https?:\/\/([a-z]+).reddit.com\/[-\w\.\/]*/i
-	),
-	isMatchURL: function() {
-		return RESUtils.isMatchURL(this.moduleID);
-	},
-	go: function() {
-		if ((this.isEnabled()) && (this.isMatchURL())) {
-			// get this module's options...
-			// RESUtils.getOptions(this.moduleID);
-			// do stuff now!
-			// this is where your code goes...
-			this.userLink = document.querySelector('#header-bottom-right > span.user > a');
-			if (this.userLink) {
-				// this.loggedInUser = userLink.innerHTML;
-				this.loggedInUser = RESUtils.loggedInUser();
-				var downArrowIMG = 'data:image/gif;base64,R0lGODlhBwAEALMAAAcHBwgICAoKChERETs7Ozo6OkJCQg0NDRoaGhAQEAwMDDIyMv///wAAAAAAAAAAACH5BAEAAAwALAAAAAAHAAQAAAQQ0BSykADsDAUwY4kQfOT4RQA7';
-				var downArrow = document.createElement('img');
-				downArrow.setAttribute('src', downArrowIMG);
-				downArrow.style.cursor = 'pointer';
-				downArrow.style.marginLeft = '3px';
-				downArrow.addEventListener('click',function(e) {
-					e.preventDefault();
-					modules['accountSwitcher'].toggleAccountMenu();
-				}, true);
-				insertAfter(this.userLink, downArrow);
+// modules['accountSwitcher'] = {
+// 	moduleID: 'accountSwitcher',
+// 	moduleName: 'Account Switcher',
+// 	category: 'Accounts',
+// 	options: {
+// 		accounts: {
+// 			type: 'table',
+// 			addRowText: '+add account',
+// 			fields: [
+// 				{ name: 'username', type: 'text' },
+// 				{ name: 'password', type: 'password' }
+// 			],
+// 			value: [
+// 				/*
+// 				['somebodymakethis','SMT','[SMT]'],
+// 				['pics','pic','[pic]']
+// 				*/
+// 			],
+// 			description: 'Set your usernames and passwords below. They are only stored in RES preferences.'
+// 		},
+// 		keepLoggedIn: {
+// 			type: 'boolean',
+// 			value: false,
+// 			description: 'Keep me logged in when I restart my browser.'
+// 		}
+// 	},
+// 	description: 'Store username/password pairs and switch accounts instantly while browsing Reddit!',
+// 	isEnabled: function() {
+// 		return RESConsole.getModulePrefs(this.moduleID);
+// 	},
+// 	include: Array(
+// 		/https?:\/\/([a-z]+).reddit.com\/[-\w\.\/]*/i
+// 	),
+// 	isMatchURL: function() {
+// 		return RESUtils.isMatchURL(this.moduleID);
+// 	},
+// 	go: function() {
+// 		if ((this.isEnabled()) && (this.isMatchURL())) {
+// 			// get this module's options...
+// 			// RESUtils.getOptions(this.moduleID);
+// 			// do stuff now!
+// 			// this is where your code goes...
+// 			this.userLink = document.querySelector('#header-bottom-right > span.user > a');
+// 			if (this.userLink) {
+// 				// this.loggedInUser = userLink.innerHTML;
+// 				this.loggedInUser = RESUtils.loggedInUser();
+// 				var downArrowIMG = 'data:image/gif;base64,R0lGODlhBwAEALMAAAcHBwgICAoKChERETs7Ozo6OkJCQg0NDRoaGhAQEAwMDDIyMv///wAAAAAAAAAAACH5BAEAAAwALAAAAAAHAAQAAAQQ0BSykADsDAUwY4kQfOT4RQA7';
+// 				var downArrow = document.createElement('img');
+// 				downArrow.setAttribute('src', downArrowIMG);
+// 				downArrow.style.cursor = 'pointer';
+// 				downArrow.style.marginLeft = '3px';
+// 				downArrow.addEventListener('click',function(e) {
+// 					e.preventDefault();
+// 					modules['accountSwitcher'].toggleAccountMenu();
+// 				}, true);
+// 				insertAfter(this.userLink, downArrow);
 
-				this.accountMenu = createElementWithID('UL','accountSwitcherMenu');
-				this.accountMenu.style.display = 'none';
-				RESUtils.addCSS('#accountSwitcherMenu { position: absolute; z-index: 999; display: none; padding: 3px; background-color: #ffffff; }');
-				RESUtils.addCSS('.accountName { color: #000; padding: 2px; border-bottom: 1px solid #AAAAAA; border-left: 1px solid #AAAAAA; border-right: 1px solid #AAAAAA; }');
-				RESUtils.addCSS('.accountName:first-child { padding: 2px; border-top: 1px solid #AAAAAA; }');
-				RESUtils.addCSS('.accountName:hover { background-color: #F3FAFF; }');
-				// GM_addStyle(css);
-				var accounts = this.options.accounts.value;
-				if (accounts != null) {
-					var accountCount = 0;
-					for (var i=0, len=accounts.length; i<len; i++) {
-						thisPair = accounts[i];
-						if (thisPair[0] != this.loggedInUser) {
-							accountCount++;
-							var thisLI = document.createElement('LI');
-							addClass(thisLI, 'accountName');
-							thisLI.innerHTML = thisPair[0];
-							thisLI.style.cursor = 'pointer';
-							thisLI.addEventListener('click', function(e) {
-								e.preventDefault();
-								modules['accountSwitcher'].toggleAccountMenu();
-								modules['accountSwitcher'].switchTo(e.target.innerHTML);
-							}, true);
-							this.accountMenu.appendChild(thisLI);
-						}
-					}
-					var thisLI = document.createElement('LI');
-					addClass(thisLI, 'accountName');
-					thisLI.innerHTML = '+ add account';
-					thisLI.style.cursor = 'pointer';
-					thisLI.addEventListener('click', function(e) {
-						e.preventDefault();
-						modules['accountSwitcher'].toggleAccountMenu();
-						modules['accountSwitcher'].manageAccounts();
-					}, true);
-					this.accountMenu.appendChild(thisLI);
-				}
-				document.body.appendChild(this.accountMenu);
-			}
-		}
-	},
-	toggleAccountMenu: function() {
-		if (this.accountMenu.style.display == 'none') {
-			thisXY=RESUtils.getXYpos(this.userLink);
-			this.accountMenu.style.top = (thisXY.y + 12) + 'px';
-			this.accountMenu.style.left = (thisXY.x - 10) + 'px';
-			this.accountMenu.style.display = 'block';
-		} else {
-			this.accountMenu.style.display = 'none';
-		}
-	},
-	closeAccountMenu: function() {
-		// this function basically just exists for other modules to call.
-		if (this.accountMenu) this.accountMenu.style.display = 'none';
-	},
-	switchTo: function(username) {
-		var accounts = this.options.accounts.value;
-		var password = '';
-		var rem = '';
-		if (this.options.keepLoggedIn.value) {
-			rem = '&rem=on';
-		}
-		for (var i=0, len=accounts.length; i<len; i++) {
-			thisPair = accounts[i];
-			if (thisPair[0] == username) {
-				password = thisPair[1];
-			}
-		}
-		// console.log('request with user: ' +username+ ' -- passwd: ' + password);
-		var loginUrl = 'https://ssl.reddit.com/api/login';
-		if (typeof(opera) != 'undefined') loginUrl = 'http://'+location.hostname+'/api/login';
-		GM_xmlhttpRequest({
-			method:	"POST",
-			url:	loginUrl,
-			data: 'user='+RESUtils.urlencode(username)+'&passwd='+RESUtils.urlencode(password)+rem,
-			headers: {
-				"Content-Type": "application/x-www-form-urlencoded"
-			},
-			onload:	function(response) {
-				// console.log(response.responseText);
-				// var data = JSON.parse(response.responseText);
-				var badData = false;
-				try {
-					var data = JSON.parse(response.responseText);
-				} catch(error) {
-					var data = {};
-					badData = true;
-				}
-				// var errorCheck = data.jquery[10][3][0];
-				var error = /WRONG_PASSWORD/;
-				var rateLimit = /RATELIMIT/;
-				if (badData) {
-					RESUtils.notification('There was an error switching accounts. Reddit may be under heavy load. Please try again in a few moments.');
-				} else if (error.test(response.responseText)) {
-					alert('Incorrect login and/or password. Please check your configuration.');
-				} else if (rateLimit.test(response.responseText)) {
-					alert('RATE LIMIT: The Reddit API is seeing too many hits from you too fast, perhaps you keep submitting a wrong password, etc?  Try again in a few minutes.');
-				} else {
-					location.reload();
-				}
-			}
-		});
-	},
-	manageAccounts: function() {
-		RESConsole.open();
-		RESConsole.menuClick(document.getElementById('Menu-Accounts'));
-		RESConsole.drawConfigOptions('accountSwitcher');
-	}
-};
+// 				this.accountMenu = createElementWithID('UL','accountSwitcherMenu');
+// 				this.accountMenu.style.display = 'none';
+// 				RESUtils.addCSS('#accountSwitcherMenu { position: absolute; z-index: 999; display: none; padding: 3px; background-color: #ffffff; }');
+// 				RESUtils.addCSS('.accountName { color: #000; padding: 2px; border-bottom: 1px solid #AAAAAA; border-left: 1px solid #AAAAAA; border-right: 1px solid #AAAAAA; }');
+// 				RESUtils.addCSS('.accountName:first-child { padding: 2px; border-top: 1px solid #AAAAAA; }');
+// 				RESUtils.addCSS('.accountName:hover { background-color: #F3FAFF; }');
+// 				// GM_addStyle(css);
+// 				var accounts = this.options.accounts.value;
+// 				if (accounts != null) {
+// 					var accountCount = 0;
+// 					for (var i=0, len=accounts.length; i<len; i++) {
+// 						thisPair = accounts[i];
+// 						if (thisPair[0] != this.loggedInUser) {
+// 							accountCount++;
+// 							var thisLI = document.createElement('LI');
+// 							addClass(thisLI, 'accountName');
+// 							thisLI.innerHTML = thisPair[0];
+// 							thisLI.style.cursor = 'pointer';
+// 							thisLI.addEventListener('click', function(e) {
+// 								e.preventDefault();
+// 								modules['accountSwitcher'].toggleAccountMenu();
+// 								modules['accountSwitcher'].switchTo(e.target.innerHTML);
+// 							}, true);
+// 							this.accountMenu.appendChild(thisLI);
+// 						}
+// 					}
+// 					var thisLI = document.createElement('LI');
+// 					addClass(thisLI, 'accountName');
+// 					thisLI.innerHTML = '+ add account';
+// 					thisLI.style.cursor = 'pointer';
+// 					thisLI.addEventListener('click', function(e) {
+// 						e.preventDefault();
+// 						modules['accountSwitcher'].toggleAccountMenu();
+// 						modules['accountSwitcher'].manageAccounts();
+// 					}, true);
+// 					this.accountMenu.appendChild(thisLI);
+// 				}
+// 				document.body.appendChild(this.accountMenu);
+// 			}
+// 		}
+// 	},
+// 	toggleAccountMenu: function() {
+// 		if (this.accountMenu.style.display == 'none') {
+// 			thisXY=RESUtils.getXYpos(this.userLink);
+// 			this.accountMenu.style.top = (thisXY.y + 12) + 'px';
+// 			this.accountMenu.style.left = (thisXY.x - 10) + 'px';
+// 			this.accountMenu.style.display = 'block';
+// 		} else {
+// 			this.accountMenu.style.display = 'none';
+// 		}
+// 	},
+// 	closeAccountMenu: function() {
+// 		// this function basically just exists for other modules to call.
+// 		if (this.accountMenu) this.accountMenu.style.display = 'none';
+// 	},
+// 	switchTo: function(username) {
+// 		var accounts = this.options.accounts.value;
+// 		var password = '';
+// 		var rem = '';
+// 		if (this.options.keepLoggedIn.value) {
+// 			rem = '&rem=on';
+// 		}
+// 		for (var i=0, len=accounts.length; i<len; i++) {
+// 			thisPair = accounts[i];
+// 			if (thisPair[0] == username) {
+// 				password = thisPair[1];
+// 			}
+// 		}
+// 		// console.log('request with user: ' +username+ ' -- passwd: ' + password);
+// 		var loginUrl = 'https://ssl.reddit.com/api/login';
+// 		if (typeof(opera) != 'undefined') loginUrl = 'http://'+location.hostname+'/api/login';
+// 		GM_xmlhttpRequest({
+// 			method:	"POST",
+// 			url:	loginUrl,
+// 			data: 'user='+RESUtils.urlencode(username)+'&passwd='+RESUtils.urlencode(password)+rem,
+// 			headers: {
+// 				"Content-Type": "application/x-www-form-urlencoded"
+// 			},
+// 			onload:	function(response) {
+// 				// console.log(response.responseText);
+// 				// var data = JSON.parse(response.responseText);
+// 				var badData = false;
+// 				try {
+// 					var data = JSON.parse(response.responseText);
+// 				} catch(error) {
+// 					var data = {};
+// 					badData = true;
+// 				}
+// 				// var errorCheck = data.jquery[10][3][0];
+// 				var error = /WRONG_PASSWORD/;
+// 				var rateLimit = /RATELIMIT/;
+// 				if (badData) {
+// 					RESUtils.notification('There was an error switching accounts. Reddit may be under heavy load. Please try again in a few moments.');
+// 				} else if (error.test(response.responseText)) {
+// 					alert('Incorrect login and/or password. Please check your configuration.');
+// 				} else if (rateLimit.test(response.responseText)) {
+// 					alert('RATE LIMIT: The Reddit API is seeing too many hits from you too fast, perhaps you keep submitting a wrong password, etc?  Try again in a few minutes.');
+// 				} else {
+// 					location.reload();
+// 				}
+// 			}
+// 		});
+// 	},
+// 	manageAccounts: function() {
+// 		RESConsole.open();
+// 		RESConsole.menuClick(document.getElementById('Menu-Accounts'));
+// 		RESConsole.drawConfigOptions('accountSwitcher');
+// 	}
+// };
 
-modules['RESTips'] = {
-	moduleID: 'RESTips',
-	moduleName: 'RES Tips and Tricks',
-	category: 'UI',
-	options: {
-		// any configurable options you have go here...
-		// options must have a type and a value.. 
-		// valid types are: text, boolean (if boolean, value must be true or false)
-		// for example:
-		dailyTip: {
-			type: 'boolean',
-			value: true,
-			description: 'Show a random tip once every 24 hours.'
-		}
-	},
-	description: 'Adds tips/tricks help to RES console',
-	isEnabled: function() {
-		return RESConsole.getModulePrefs(this.moduleID);
-	},
-	include: Array(
-		/https?:\/\/([a-z]+).reddit.com\/[\?]*/i
-	),
-	isMatchURL: function() {
-		return RESUtils.isMatchURL(this.moduleID);
-	},
-	go: function() {
-		if ((this.isEnabled()) && (this.isMatchURL())) {
-			// get this module's options...
-			// RESUtils.getOptions(this.moduleID);
-			// do stuff now!
-			// this is where your code goes...
-			this.menuItem = createElementWithID('li','RESTipsMenuItem');
-			this.menuItem.innerHTML = 'RES Tips and Tricks';
-			this.menuItem.addEventListener('click', function(e) {
-				modules['RESTips'].randomTip();
-			}, false);
-			$('#RESDropdownOptions').append(this.menuItem);
+// modules['RESTips'] = {
+// 	moduleID: 'RESTips',
+// 	moduleName: 'RES Tips and Tricks',
+// 	category: 'UI',
+// 	options: {
+// 		// any configurable options you have go here...
+// 		// options must have a type and a value.. 
+// 		// valid types are: text, boolean (if boolean, value must be true or false)
+// 		// for example:
+// 		dailyTip: {
+// 			type: 'boolean',
+// 			value: true,
+// 			description: 'Show a random tip once every 24 hours.'
+// 		}
+// 	},
+// 	description: 'Adds tips/tricks help to RES console',
+// 	isEnabled: function() {
+// 		return RESConsole.getModulePrefs(this.moduleID);
+// 	},
+// 	include: Array(
+// 		/https?:\/\/([a-z]+).reddit.com\/[\?]*/i
+// 	),
+// 	isMatchURL: function() {
+// 		return RESUtils.isMatchURL(this.moduleID);
+// 	},
+// 	go: function() {
+// 		if ((this.isEnabled()) && (this.isMatchURL())) {
+// 			// get this module's options...
+// 			// RESUtils.getOptions(this.moduleID);
+// 			// do stuff now!
+// 			// this is where your code goes...
+// 			this.menuItem = createElementWithID('li','RESTipsMenuItem');
+// 			this.menuItem.innerHTML = 'RES Tips and Tricks';
+// 			this.menuItem.addEventListener('click', function(e) {
+// 				modules['RESTips'].randomTip();
+// 			}, false);
+// 			$('#RESDropdownOptions').append(this.menuItem);
 			
-			if (this.options.dailyTip.value) {
-				this.dailyTip();
-			}
-			/*
-			guiders.createGuider({
-			  attachTo: '#RESSettingsButton',
-			  // buttons: [{name: "Next"}],
-			  description: "Guiders are a user interface design pattern for introducing features of software. This dialog box, for example, is the first in a series of guiders that together make up a guide.",
-			  id: "first",
-			  // next: "second",
-			  overlay: true,
-			  xButton: true,
-			  title: "Welcome to Guiders.js!"
-			}).show();
-			*/
-			/*
-			setTimeout(function() {
-				guiders.createGuider({
-					  attachTo: "#RESSettingsButton",
-					  buttons: [{name: "Close"},
-								{name: "Next"}],
-					  description: "This is just some sorta test guider, here... woop woop.",
-					  id: "first",
-					  next: "second",
-					  // offset: { left: -200, top: 120 },
-					  position: 5,
-					  title: "Guiders are typically attached to an element on the page."
-				}).show();
-				guiders.createGuider({
-					  attachTo: "a.toggleImage:first",
-					  buttons: [{name: "Close"},
-								{name: "Next"}],
-					  description: "An example of an image expando",
-					  id: "second",
-					  next: "third",
-					  // offset: { left: -200, top: 120 },
-					  position: 3,
-					  title: "Guiders are typically attached to an element on the page."
-				});
-			}, 2000);
-			*/
-		}
-	},
-	dailyTip: function() {
-		var lastCheck = parseInt(RESStorage.getItem('RESLastToolTip')) || 0;
-		var now = new Date();
-		// 86400000 = 1 day
-		if ((now.getTime() - lastCheck) > 86400000) {
-			// mark off that we've displayed a new tooltip
-			RESStorage.setItem('RESLastToolTip',now.getTime());
-			if (lastCheck == 0) {
-				//var thisTip = 'Welcome to RES. You can turn modules on and off, and configure settings for the modules using the gear icon link at the top right. For feature requests, bug reports, etc - head over to <a href="http://reddit.com/r/Enhancement">/r/Enhancement</a>.<br>Do you keep seeing this message? <a target=\"_blank\" href=\"http://reddit.honestbleeps.com/faq\">see the FAQ</a> about BetterPrivacy and similar addons.';
-				this.showTip(0);
-			} else {
-				setTimeout(function() {
-					modules['RESTips'].randomTip();
-				}, 500);
-			}
-		}
-	},
-	randomTip: function() {
-		this.currTip = Math.floor(Math.random()*this.tips.length);
-		this.showTip(this.currTip);
-	},
-	nextTip: function() {
-		if (typeof(this.currTip) == 'undefined') this.currTip = 0;
-		modules['RESTips'].nextPrevTip(1);
-	},
-	prevTip: function() {
-		if (typeof(this.currTip) == 'undefined') this.currTip = 0;
-		modules['RESTips'].nextPrevTip(-1);
-	},
-	nextPrevTip: function(idx) {
-		if (typeof(this.currTip) == 'undefined') this.currTip = 0;
-		if (idx<0) guiders.hideAll();
-		this.currTip += idx;
-		if (this.currTip < 0) {
-			this.currTip = this.tips.length-1;
-		} else if (this.currTip >= this.tips.length) {
-			this.currTip = 0;
-		}
-		this.showTip(this.currTip);
-	},
-	tips: Array(
-		{
-			message: 'Welcome to RES. You can turn modules on and off, and configure settings for the modules using the gear icon link at the top right. For feature requests, bug reports, or just help getting a question answered, be sure to subscribe to <a href="http://reddit.com/r/Enhancement">/r/Enhancement</a>.'
-		},
-		{ 
-			message: "Most of RES is configurable. Roll over the gear icon and click the settings console link to check it out.",
-			attachTo: "#openRESPrefs",
-			position: 5
-		},
-		{ 
-			message: "Click the tag icon next to a user to tag that user with any name you like - you can also color code the tag.",
-			attachTo: ".RESUserTagImage:visible",
-			position: 3
-		},
-		{ message: "Don't forget to subscribe to <a href=\"http://reddit.com/r/Enhancement\">/r/Enhancement</a> to keep up to date on the latest versions of RES, report bugs, or suggest features!" },
-		{ message: "Don't want to see posts containing certain keywords? Want to filter out certain subreddits from /r/all? Try the filteReddit module!" },
-		{ message: "Keyboard Navigation is one of the most underutilized features in RES. You should try it!  Hit the ? key (shift-/) to see a list of commands." },
-		{ message: "Did you know you can configure the appearance of a number of things in RES? For example: Keyboard navigation lets you configure the look of the 'selected' box, and commentBoxes lets you configure the borders / shadows." },
-		{ message: "Do you subscribe to a ton of reddits? Give the subreddit tagger a try, it can make your homepage a bit more readable." },
-		{ message: "If you haven't tried it yet, Keyboard Navigation is great. Just hit ? while browsing for instructions." },
-		{ message: "Roll over a user's name to get information about them such as their karma, and how long they've been a reddit user." },
-		{ message: "Hover over the 'parent' link in comments pages to see the text of the parent being referred to." },
-		{ message: "You can configure the color and style of the User Highlighter module if you want to change how the highlights look." },
-		{ message: "Not a fan of how comments pages look? You can change the appearance in the Style Tweaks module" },
-		{ message: "Don't like the style in a certain subreddit? RES gives you a checkbox to disable styles individually - check the right sidebar!" },
-		{ message: "Looking for posts by submitter, post with photos, or posts in IAmA form? Try out the comment navigator." },
-		{ message: "Check out the RES Dashboard to keep up on smaller subreddits with easy to configure widgets." },
-		{ message: "Sick of seeing these tips?  They only show up once every 24 hours, but you can disable that in the RES Tips and Tricks preferences." },
-		{ message: "Did you know that there is now a 'keep me logged in' option in the Account Switcher? Turn it on if you want to stay logged in to Reddit when using the switcher!" },
-		{ message: "See that little [vw] next to users you've voted on?  That's their vote weight - it moves up and down as you vote the same user up / down." }
-	),
-	tour: [
-		// array of guiders will go here... and we will add a "tour" button somewhere to start the tour...
-	],
-	initTips: function() {
-		for (var i=0, len=this.tips.length; i<len; i++) {
-			var thisID = "tip"+i;
-			var nextidx = ((parseInt(i+1)) >= len) ? 0 : (parseInt(i+1));
-			var nextID = "tip"+nextidx;
-			guiders.createGuider({
-				  attachTo: this.tips[i].attachTo,
-				  buttons: [{
-								name: "Prev",
-								onclick: modules['RESTips'].prevTip
-							},
-							{
-								name: "Next"
-							}],
-				  description: this.tips[i].message,
-				  id: thisID,
-				  next: nextID,
-				  position: this.tips[i].position,
-				  xButton: true,
-				  title: "RES Tips and Tricks"
-			});
-		}
+// 			if (this.options.dailyTip.value) {
+// 				this.dailyTip();
+// 			}
+// 			/*
+// 			guiders.createGuider({
+// 			  attachTo: '#RESSettingsButton',
+// 			  // buttons: [{name: "Next"}],
+// 			  description: "Guiders are a user interface design pattern for introducing features of software. This dialog box, for example, is the first in a series of guiders that together make up a guide.",
+// 			  id: "first",
+// 			  // next: "second",
+// 			  overlay: true,
+// 			  xButton: true,
+// 			  title: "Welcome to Guiders.js!"
+// 			}).show();
+// 			*/
+// 			/*
+// 			setTimeout(function() {
+// 				guiders.createGuider({
+// 					  attachTo: "#RESSettingsButton",
+// 					  buttons: [{name: "Close"},
+// 								{name: "Next"}],
+// 					  description: "This is just some sorta test guider, here... woop woop.",
+// 					  id: "first",
+// 					  next: "second",
+// 					  // offset: { left: -200, top: 120 },
+// 					  position: 5,
+// 					  title: "Guiders are typically attached to an element on the page."
+// 				}).show();
+// 				guiders.createGuider({
+// 					  attachTo: "a.toggleImage:first",
+// 					  buttons: [{name: "Close"},
+// 								{name: "Next"}],
+// 					  description: "An example of an image expando",
+// 					  id: "second",
+// 					  next: "third",
+// 					  // offset: { left: -200, top: 120 },
+// 					  position: 3,
+// 					  title: "Guiders are typically attached to an element on the page."
+// 				});
+// 			}, 2000);
+// 			*/
+// 		}
+// 	},
+// 	dailyTip: function() {
+// 		var lastCheck = parseInt(RESStorage.getItem('RESLastToolTip')) || 0;
+// 		var now = new Date();
+// 		// 86400000 = 1 day
+// 		if ((now.getTime() - lastCheck) > 86400000) {
+// 			// mark off that we've displayed a new tooltip
+// 			RESStorage.setItem('RESLastToolTip',now.getTime());
+// 			if (lastCheck == 0) {
+// 				//var thisTip = 'Welcome to RES. You can turn modules on and off, and configure settings for the modules using the gear icon link at the top right. For feature requests, bug reports, etc - head over to <a href="http://reddit.com/r/Enhancement">/r/Enhancement</a>.<br>Do you keep seeing this message? <a target=\"_blank\" href=\"http://reddit.honestbleeps.com/faq\">see the FAQ</a> about BetterPrivacy and similar addons.';
+// 				this.showTip(0);
+// 			} else {
+// 				setTimeout(function() {
+// 					modules['RESTips'].randomTip();
+// 				}, 500);
+// 			}
+// 		}
+// 	},
+// 	randomTip: function() {
+// 		this.currTip = Math.floor(Math.random()*this.tips.length);
+// 		this.showTip(this.currTip);
+// 	},
+// 	nextTip: function() {
+// 		if (typeof(this.currTip) == 'undefined') this.currTip = 0;
+// 		modules['RESTips'].nextPrevTip(1);
+// 	},
+// 	prevTip: function() {
+// 		if (typeof(this.currTip) == 'undefined') this.currTip = 0;
+// 		modules['RESTips'].nextPrevTip(-1);
+// 	},
+// 	nextPrevTip: function(idx) {
+// 		if (typeof(this.currTip) == 'undefined') this.currTip = 0;
+// 		if (idx<0) guiders.hideAll();
+// 		this.currTip += idx;
+// 		if (this.currTip < 0) {
+// 			this.currTip = this.tips.length-1;
+// 		} else if (this.currTip >= this.tips.length) {
+// 			this.currTip = 0;
+// 		}
+// 		this.showTip(this.currTip);
+// 	},
+// 	tips: Array(
+// 		{
+// 			message: 'Welcome to RES. You can turn modules on and off, and configure settings for the modules using the gear icon link at the top right. For feature requests, bug reports, or just help getting a question answered, be sure to subscribe to <a href="http://reddit.com/r/Enhancement">/r/Enhancement</a>.'
+// 		},
+// 		{ 
+// 			message: "Most of RES is configurable. Roll over the gear icon and click the settings console link to check it out.",
+// 			attachTo: "#openRESPrefs",
+// 			position: 5
+// 		},
+// 		{ 
+// 			message: "Click the tag icon next to a user to tag that user with any name you like - you can also color code the tag.",
+// 			attachTo: ".RESUserTagImage:visible",
+// 			position: 3
+// 		},
+// 		{ message: "Don't forget to subscribe to <a href=\"http://reddit.com/r/Enhancement\">/r/Enhancement</a> to keep up to date on the latest versions of RES, report bugs, or suggest features!" },
+// 		{ message: "Don't want to see posts containing certain keywords? Want to filter out certain subreddits from /r/all? Try the filteReddit module!" },
+// 		{ message: "Keyboard Navigation is one of the most underutilized features in RES. You should try it!  Hit the ? key (shift-/) to see a list of commands." },
+// 		{ message: "Did you know you can configure the appearance of a number of things in RES? For example: Keyboard navigation lets you configure the look of the 'selected' box, and commentBoxes lets you configure the borders / shadows." },
+// 		{ message: "Do you subscribe to a ton of reddits? Give the subreddit tagger a try, it can make your homepage a bit more readable." },
+// 		{ message: "If you haven't tried it yet, Keyboard Navigation is great. Just hit ? while browsing for instructions." },
+// 		{ message: "Roll over a user's name to get information about them such as their karma, and how long they've been a reddit user." },
+// 		{ message: "Hover over the 'parent' link in comments pages to see the text of the parent being referred to." },
+// 		{ message: "You can configure the color and style of the User Highlighter module if you want to change how the highlights look." },
+// 		{ message: "Not a fan of how comments pages look? You can change the appearance in the Style Tweaks module" },
+// 		{ message: "Don't like the style in a certain subreddit? RES gives you a checkbox to disable styles individually - check the right sidebar!" },
+// 		{ message: "Looking for posts by submitter, post with photos, or posts in IAmA form? Try out the comment navigator." },
+// 		{ message: "Check out the RES Dashboard to keep up on smaller subreddits with easy to configure widgets." },
+// 		{ message: "Sick of seeing these tips?  They only show up once every 24 hours, but you can disable that in the RES Tips and Tricks preferences." },
+// 		{ message: "Did you know that there is now a 'keep me logged in' option in the Account Switcher? Turn it on if you want to stay logged in to Reddit when using the switcher!" },
+// 		{ message: "See that little [vw] next to users you've voted on?  That's their vote weight - it moves up and down as you vote the same user up / down." }
+// 	),
+// 	tour: [
+// 		// array of guiders will go here... and we will add a "tour" button somewhere to start the tour...
+// 	],
+// 	initTips: function() {
+// 		for (var i=0, len=this.tips.length; i<len; i++) {
+// 			var thisID = "tip"+i;
+// 			var nextidx = ((parseInt(i+1)) >= len) ? 0 : (parseInt(i+1));
+// 			var nextID = "tip"+nextidx;
+// 			guiders.createGuider({
+// 				  attachTo: this.tips[i].attachTo,
+// 				  buttons: [{
+// 								name: "Prev",
+// 								onclick: modules['RESTips'].prevTip
+// 							},
+// 							{
+// 								name: "Next"
+// 							}],
+// 				  description: this.tips[i].message,
+// 				  id: thisID,
+// 				  next: nextID,
+// 				  position: this.tips[i].position,
+// 				  xButton: true,
+// 				  title: "RES Tips and Tricks"
+// 			});
+// 		}
 	
-	},
-	showTip: function(idx) {
-		if (typeof(this.tipsInitialized) == 'undefined') {
-			this.initTips();
-			this.tipsInitialized = true;
-		}
-		guiders.show('tip'+idx);
-	},
-	showGuider: function(guiderID) {
-		guiders.show(guiderID);
-	}
-};
+// 	},
+// 	showTip: function(idx) {
+// 		if (typeof(this.tipsInitialized) == 'undefined') {
+// 			this.initTips();
+// 			this.tipsInitialized = true;
+// 		}
+// 		guiders.show('tip'+idx);
+// 	},
+// 	showGuider: function(guiderID) {
+// 		guiders.show(guiderID);
+// 	}
+// };
 
 modules['filteReddit'] = {
 	moduleID: 'filteReddit',
@@ -13596,1093 +13595,1093 @@ modules['redditProfiles'] = {
 };
 */
 
-modules['subredditManager'] = {
-	moduleID: 'subredditManager',
-	moduleName: 'Subreddit Manager',
-	category: 'UI',
-	options: {
-		linkAll: {
-			type: 'boolean',
-			value: true,
-			description: 'Show "ALL" link in subreddit manager'
-		},
-		linkRandom: {
-			type: 'boolean',
-			value: true,
-			description: 'Show "RANDOM" link in subreddit manager'
-		},
-		linkFriends: {
-			type: 'boolean',
-			value: true,
-			description: 'Show "FRIENDS" link in subreddit manager'
-		},
-		linkMod: {
-			type: 'boolean',
-			value: true,
-			description: 'Show "MOD" link in subreddit manager'
-		}
-	},
-	description: 'Allows you to customize the top bar with your own subreddit shortcuts, including dropdown menus of multi-reddits and more.',
-	isEnabled: function() {
-		return RESConsole.getModulePrefs(this.moduleID);
-	},
-	include: Array(
-		/https?:\/\/([a-z]+).reddit.com\/.*/i
-	),
-	isMatchURL: function() {
-		return RESUtils.isMatchURL(this.moduleID);
-	},
-	go: function() {
-		if ((this.isEnabled()) && (this.isMatchURL())) {
-			this.manageSubreddits();
-			if (RESUtils.currentSubreddit() != null) {
-				this.setLastViewtime();
-			}
-		}
-	},
-	manageSubreddits: function() {
-		RESUtils.addCSS('.srOver { outline: 1px dashed black; }');
-		RESUtils.addCSS('body { overflow-x: hidden; }');
-		RESUtils.addCSS('#sr-header-area a { font-size: 100% !important; }');
-		RESUtils.addCSS('#srList { position: absolute; top: 18px; left: 0px; z-index: 9999; display: none; border: 1px solid black; background-color: #FAFAFA; max-height: 92%; width: auto; overflow-y: auto; }');
-		RESUtils.addCSS('#srList tr { border-bottom: 1px solid gray; }');
-		RESUtils.addCSS('#srList thead td { cursor: pointer; }');
-		RESUtils.addCSS('#srList td { padding-left: 8px; padding-right: 8px; padding-top: 3px; padding-bottom: 3px; }');
-		RESUtils.addCSS('#srList td.RESvisited, #srList td.RESshortcut { text-transform: none; }');
-		RESUtils.addCSS('#srList td.RESshortcut {cursor: pointer;}');
-		RESUtils.addCSS('#srList td a { width: 100%; display: block; }');
-		RESUtils.addCSS('#srList tr:hover { background-color: #eeeeff; }');
-		RESUtils.addCSS('#srLeftContainer, #RESStaticShortcuts, #RESShortcuts, #srDropdown { display: inline; float: left; position: relative; z-index: 5; }');
-		RESUtils.addCSS('#editShortcutDialog { display: none; z-index: 999; position: absolute; top: 25px; left: 5px; width: 230px; padding: 10px; background-color: #f0f3fc; border: 1px solid #c7c7c7; border-radius: 3px 3px 3px 3px; -moz-border-radius: 3px 3px 3px 3px; -webkit-border-radius: 3px 3px 3px 3px; font-size: 12px; color: #000000; }');
-		RESUtils.addCSS('#editShortcutDialog h3 { display: inline-block; float: left; font-size: 13px; margin-top: 6px; }');
-		RESUtils.addCSS('#editShortcutClose { float: right; margin-top: 2px; margin-right: 0px; }');
-		RESUtils.addCSS('#editShortcutDialog label { clear: both; float: left; width: 100px; margin-top: 12px; }');
-		RESUtils.addCSS('#editShortcutDialog input { float: left; width: 126px; margin-top: 10px; }');
-		RESUtils.addCSS('#editShortcutDialog input[type=button] { float: right; width: 45px; margin-left: 10px; cursor: pointer; padding-top: 3px; padding-bottom: 3px; padding-left: 5px; padding-right: 5px; font-size: 12px; color: #ffffff; border: 1px solid #636363; border-radius: 3px 3px 3px 3px; -moz-border-radius: 3px 3px 3px 3px; -webkit-border-radius: 3px 3px 3px 3px; background-color: #5cc410; }');
-		if ((typeof(chrome) != 'undefined') || (typeof(safari) != 'undefined')) {
-			RESUtils.addCSS('#srLeftContainer { margin-right: 14px; }');
-		} else {
-			RESUtils.addCSS('#srLeftContainer { margin-right: 6px; }');
-		}
-		RESUtils.addCSS('#srLeftContainer { z-index: 4; margin-left: -4px; padding-left: 4px; }');
+// modules['subredditManager'] = {
+// 	moduleID: 'subredditManager',
+// 	moduleName: 'Subreddit Manager',
+// 	category: 'UI',
+// 	options: {
+// 		linkAll: {
+// 			type: 'boolean',
+// 			value: true,
+// 			description: 'Show "ALL" link in subreddit manager'
+// 		},
+// 		linkRandom: {
+// 			type: 'boolean',
+// 			value: true,
+// 			description: 'Show "RANDOM" link in subreddit manager'
+// 		},
+// 		linkFriends: {
+// 			type: 'boolean',
+// 			value: true,
+// 			description: 'Show "FRIENDS" link in subreddit manager'
+// 		},
+// 		linkMod: {
+// 			type: 'boolean',
+// 			value: true,
+// 			description: 'Show "MOD" link in subreddit manager'
+// 		}
+// 	},
+// 	description: 'Allows you to customize the top bar with your own subreddit shortcuts, including dropdown menus of multi-reddits and more.',
+// 	isEnabled: function() {
+// 		return RESConsole.getModulePrefs(this.moduleID);
+// 	},
+// 	include: Array(
+// 		/https?:\/\/([a-z]+).reddit.com\/.*/i
+// 	),
+// 	isMatchURL: function() {
+// 		return RESUtils.isMatchURL(this.moduleID);
+// 	},
+// 	go: function() {
+// 		if ((this.isEnabled()) && (this.isMatchURL())) {
+// 			this.manageSubreddits();
+// 			if (RESUtils.currentSubreddit() != null) {
+// 				this.setLastViewtime();
+// 			}
+// 		}
+// 	},
+// 	manageSubreddits: function() {
+// 		RESUtils.addCSS('.srOver { outline: 1px dashed black; }');
+// 		RESUtils.addCSS('body { overflow-x: hidden; }');
+// 		RESUtils.addCSS('#sr-header-area a { font-size: 100% !important; }');
+// 		RESUtils.addCSS('#srList { position: absolute; top: 18px; left: 0px; z-index: 9999; display: none; border: 1px solid black; background-color: #FAFAFA; max-height: 92%; width: auto; overflow-y: auto; }');
+// 		RESUtils.addCSS('#srList tr { border-bottom: 1px solid gray; }');
+// 		RESUtils.addCSS('#srList thead td { cursor: pointer; }');
+// 		RESUtils.addCSS('#srList td { padding-left: 8px; padding-right: 8px; padding-top: 3px; padding-bottom: 3px; }');
+// 		RESUtils.addCSS('#srList td.RESvisited, #srList td.RESshortcut { text-transform: none; }');
+// 		RESUtils.addCSS('#srList td.RESshortcut {cursor: pointer;}');
+// 		RESUtils.addCSS('#srList td a { width: 100%; display: block; }');
+// 		RESUtils.addCSS('#srList tr:hover { background-color: #eeeeff; }');
+// 		RESUtils.addCSS('#srLeftContainer, #RESStaticShortcuts, #RESShortcuts, #srDropdown { display: inline; float: left; position: relative; z-index: 5; }');
+// 		RESUtils.addCSS('#editShortcutDialog { display: none; z-index: 999; position: absolute; top: 25px; left: 5px; width: 230px; padding: 10px; background-color: #f0f3fc; border: 1px solid #c7c7c7; border-radius: 3px 3px 3px 3px; -moz-border-radius: 3px 3px 3px 3px; -webkit-border-radius: 3px 3px 3px 3px; font-size: 12px; color: #000000; }');
+// 		RESUtils.addCSS('#editShortcutDialog h3 { display: inline-block; float: left; font-size: 13px; margin-top: 6px; }');
+// 		RESUtils.addCSS('#editShortcutClose { float: right; margin-top: 2px; margin-right: 0px; }');
+// 		RESUtils.addCSS('#editShortcutDialog label { clear: both; float: left; width: 100px; margin-top: 12px; }');
+// 		RESUtils.addCSS('#editShortcutDialog input { float: left; width: 126px; margin-top: 10px; }');
+// 		RESUtils.addCSS('#editShortcutDialog input[type=button] { float: right; width: 45px; margin-left: 10px; cursor: pointer; padding-top: 3px; padding-bottom: 3px; padding-left: 5px; padding-right: 5px; font-size: 12px; color: #ffffff; border: 1px solid #636363; border-radius: 3px 3px 3px 3px; -moz-border-radius: 3px 3px 3px 3px; -webkit-border-radius: 3px 3px 3px 3px; background-color: #5cc410; }');
+// 		if ((typeof(chrome) != 'undefined') || (typeof(safari) != 'undefined')) {
+// 			RESUtils.addCSS('#srLeftContainer { margin-right: 14px; }');
+// 		} else {
+// 			RESUtils.addCSS('#srLeftContainer { margin-right: 6px; }');
+// 		}
+// 		RESUtils.addCSS('#srLeftContainer { z-index: 4; margin-left: -4px; padding-left: 4px; }');
 		
-		// RESUtils.addCSS('#RESShortcuts { position: absolute; left: '+ this.srLeftContainerWidth+'px;  z-index: 6; white-space: nowrap; overflow-x: hidden; padding-left: 2px; margin-top: -2px; padding-top: 2px; }');
-		RESUtils.addCSS('#RESShortcutsViewport { width: auto; max-height: 20px; overflow: hidden; } ');
-		RESUtils.addCSS('#RESShortcuts { z-index: 6; white-space: nowrap; overflow-x: hidden; padding-left: 2px; }');
-		RESUtils.addCSS('#RESSubredditGroupDropdown { display: none; position: absolute; z-index: 99999; padding: 3px; background-color: #F0F0F0; border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black; }');
-		RESUtils.addCSS('#RESSubredditGroupDropdown li { padding-left: 3px; padding-right: 3px; margin-bottom: 2px; }');
-		RESUtils.addCSS('#RESSubredditGroupDropdown li:hover { background-color: #F0F0FC; }');
+// 		// RESUtils.addCSS('#RESShortcuts { position: absolute; left: '+ this.srLeftContainerWidth+'px;  z-index: 6; white-space: nowrap; overflow-x: hidden; padding-left: 2px; margin-top: -2px; padding-top: 2px; }');
+// 		RESUtils.addCSS('#RESShortcutsViewport { width: auto; max-height: 20px; overflow: hidden; } ');
+// 		RESUtils.addCSS('#RESShortcuts { z-index: 6; white-space: nowrap; overflow-x: hidden; padding-left: 2px; }');
+// 		RESUtils.addCSS('#RESSubredditGroupDropdown { display: none; position: absolute; z-index: 99999; padding: 3px; background-color: #F0F0F0; border-left: 1px solid black; border-right: 1px solid black; border-bottom: 1px solid black; }');
+// 		RESUtils.addCSS('#RESSubredditGroupDropdown li { padding-left: 3px; padding-right: 3px; margin-bottom: 2px; }');
+// 		RESUtils.addCSS('#RESSubredditGroupDropdown li:hover { background-color: #F0F0FC; }');
 
-		RESUtils.addCSS('#RESShortcutsEditContainer { width: 52px; position: absolute; right: 0px; top: 0px; z-index: 999; background-color: #f0f0f0; height: 16px; user-select: none; -webkit-user-select: none; -moz-user-select: none; }');
-		RESUtils.addCSS('#RESShortcutsRight { width: 16px; background-image: url("http://f.thumbs.redditmedia.com/ykyGgtUvyXldPc3A.png"); background-position: -16px -176px; cursor: pointer; right: 0px; position: absolute; top: 0px; z-index: 999; background-color: #f0f0f0; height: 16px; user-select: none; -webkit-user-select: none; -moz-user-select: none; }');
-		RESUtils.addCSS('#RESShortcutsAdd { width: 16px; background-image: url("http://f.thumbs.redditmedia.com/ykyGgtUvyXldPc3A.png"); background-position: 0px -160px; background-repeat: no-repeat; cursor: pointer; right: 15px; height: 16px; position: absolute; top: 0px; z-index: 999; background-color: #f0f0f0; user-select: none; -webkit-user-select: none; -moz-user-select: none; }');
-		RESUtils.addCSS('#RESShortcutsTrash { display: none; width: 16px; background-image: url("http://f.thumbs.redditmedia.com/ykyGgtUvyXldPc3A.png"); background-position: -16px -160px; background-repeat: no-repeat; cursor: pointer; right: 15px; height: 16px; position: absolute; top: 0px; z-index: 1000; background-color: #DDD; user-select: none; -webkit-user-select: none; -moz-user-select: none; }');
-		RESUtils.addCSS('#RESShortcutsLeft { width: 16px; background-image: url("http://f.thumbs.redditmedia.com/ykyGgtUvyXldPc3A.png"); background-position: 0px -176px; cursor: pointer; right: 31px; position: absolute; top: 0px; z-index: 999; background-color: #f0f0f0; height: 16px; user-select: none; -webkit-user-select: none; -moz-user-select: none; }');
-		RESUtils.addCSS('.srSep { margin-left: 6px; }');
-		RESUtils.addCSS('.RESshortcutside { margin-right: 5px; color: white; background-image: url(/static/bg-button-add.png); cursor: pointer; text-align: center; width: 68px; font-weight: bold; font-size: 10px; border: 1px solid #444444; padding: 1px 6px; border-radius: 3px 3px 3px 3px; }');
-		RESUtils.addCSS('.RESshortcutside.remove { background-image: url(/static/bg-button-remove.png) }');
-		RESUtils.addCSS('.RESshortcutside:hover { background-color: #f0f0ff; }');
-		RESUtils.addCSS('h1.redditname > a { float: left; }');
-		RESUtils.addCSS('h1.redditname { overflow: auto; }');
-		RESUtils.addCSS('.sortAsc, .sortDesc { float: right; background-image: url("http://f.thumbs.redditmedia.com/ykyGgtUvyXldPc3A.png"); width: 12px; height: 12px; background-repeat: no-repeat; }');
-		RESUtils.addCSS('.sortAsc { background-position: 0px -148px; }');
-		RESUtils.addCSS('.sortDesc { background-position: -12px -148px; }');
-		RESUtils.addCSS('#RESShortcutsAddFormContainer { display: none; position: absolute; width: 290px; padding: 2px; right: 0px; top: 21px; z-index: 10000; background-color: #f0f3fc; border: 1px solid #c7c7c7; border-radius: 3px 3px 3px 3px; -moz-border-radius: 3px 3px 3px 3px; -webkit-border-radius: 3px 3px 3px 3px; font-size: 12px; color: #000000; }');
-		RESUtils.addCSS('#RESShortcutsAddFormContainer  a { font-weight: bold; }');
-		RESUtils.addCSS('#newShortcut { width: 130px; }');
-		RESUtils.addCSS('#displayName { width: 130px; }');
-		RESUtils.addCSS('#shortCutsAddForm { padding: 5px; }');
-		RESUtils.addCSS('#shortCutsAddForm div { font-size: 10px; margin-bottom: 10px; }');
-		RESUtils.addCSS('#shortCutsAddForm label { display: inline-block; width: 100px; }');
-		RESUtils.addCSS('#shortCutsAddForm input[type=text] { width: 170px; margin-bottom: 6px; }');
-		RESUtils.addCSS('#addSubreddit { float: right; cursor: pointer; padding-top: 3px; padding-bottom: 3px; padding-left: 5px; padding-right: 5px; font-size: 12px; color: #ffffff; border: 1px solid #636363; border-radius: 3px 3px 3px 3px; -moz-border-radius: 3px 3px 3px 3px; -webkit-border-radius: 3px 3px 3px 3px; background-color: #5cc410; }');
+// 		RESUtils.addCSS('#RESShortcutsEditContainer { width: 52px; position: absolute; right: 0px; top: 0px; z-index: 999; background-color: #f0f0f0; height: 16px; user-select: none; -webkit-user-select: none; -moz-user-select: none; }');
+// 		RESUtils.addCSS('#RESShortcutsRight { width: 16px; background-image: url("http://f.thumbs.redditmedia.com/ykyGgtUvyXldPc3A.png"); background-position: -16px -176px; cursor: pointer; right: 0px; position: absolute; top: 0px; z-index: 999; background-color: #f0f0f0; height: 16px; user-select: none; -webkit-user-select: none; -moz-user-select: none; }');
+// 		RESUtils.addCSS('#RESShortcutsAdd { width: 16px; background-image: url("http://f.thumbs.redditmedia.com/ykyGgtUvyXldPc3A.png"); background-position: 0px -160px; background-repeat: no-repeat; cursor: pointer; right: 15px; height: 16px; position: absolute; top: 0px; z-index: 999; background-color: #f0f0f0; user-select: none; -webkit-user-select: none; -moz-user-select: none; }');
+// 		RESUtils.addCSS('#RESShortcutsTrash { display: none; width: 16px; background-image: url("http://f.thumbs.redditmedia.com/ykyGgtUvyXldPc3A.png"); background-position: -16px -160px; background-repeat: no-repeat; cursor: pointer; right: 15px; height: 16px; position: absolute; top: 0px; z-index: 1000; background-color: #DDD; user-select: none; -webkit-user-select: none; -moz-user-select: none; }');
+// 		RESUtils.addCSS('#RESShortcutsLeft { width: 16px; background-image: url("http://f.thumbs.redditmedia.com/ykyGgtUvyXldPc3A.png"); background-position: 0px -176px; cursor: pointer; right: 31px; position: absolute; top: 0px; z-index: 999; background-color: #f0f0f0; height: 16px; user-select: none; -webkit-user-select: none; -moz-user-select: none; }');
+// 		RESUtils.addCSS('.srSep { margin-left: 6px; }');
+// 		RESUtils.addCSS('.RESshortcutside { margin-right: 5px; color: white; background-image: url(/static/bg-button-add.png); cursor: pointer; text-align: center; width: 68px; font-weight: bold; font-size: 10px; border: 1px solid #444444; padding: 1px 6px; border-radius: 3px 3px 3px 3px; }');
+// 		RESUtils.addCSS('.RESshortcutside.remove { background-image: url(/static/bg-button-remove.png) }');
+// 		RESUtils.addCSS('.RESshortcutside:hover { background-color: #f0f0ff; }');
+// 		RESUtils.addCSS('h1.redditname > a { float: left; }');
+// 		RESUtils.addCSS('h1.redditname { overflow: auto; }');
+// 		RESUtils.addCSS('.sortAsc, .sortDesc { float: right; background-image: url("http://f.thumbs.redditmedia.com/ykyGgtUvyXldPc3A.png"); width: 12px; height: 12px; background-repeat: no-repeat; }');
+// 		RESUtils.addCSS('.sortAsc { background-position: 0px -148px; }');
+// 		RESUtils.addCSS('.sortDesc { background-position: -12px -148px; }');
+// 		RESUtils.addCSS('#RESShortcutsAddFormContainer { display: none; position: absolute; width: 290px; padding: 2px; right: 0px; top: 21px; z-index: 10000; background-color: #f0f3fc; border: 1px solid #c7c7c7; border-radius: 3px 3px 3px 3px; -moz-border-radius: 3px 3px 3px 3px; -webkit-border-radius: 3px 3px 3px 3px; font-size: 12px; color: #000000; }');
+// 		RESUtils.addCSS('#RESShortcutsAddFormContainer  a { font-weight: bold; }');
+// 		RESUtils.addCSS('#newShortcut { width: 130px; }');
+// 		RESUtils.addCSS('#displayName { width: 130px; }');
+// 		RESUtils.addCSS('#shortCutsAddForm { padding: 5px; }');
+// 		RESUtils.addCSS('#shortCutsAddForm div { font-size: 10px; margin-bottom: 10px; }');
+// 		RESUtils.addCSS('#shortCutsAddForm label { display: inline-block; width: 100px; }');
+// 		RESUtils.addCSS('#shortCutsAddForm input[type=text] { width: 170px; margin-bottom: 6px; }');
+// 		RESUtils.addCSS('#addSubreddit { float: right; cursor: pointer; padding-top: 3px; padding-bottom: 3px; padding-left: 5px; padding-right: 5px; font-size: 12px; color: #ffffff; border: 1px solid #636363; border-radius: 3px 3px 3px 3px; -moz-border-radius: 3px 3px 3px 3px; -webkit-border-radius: 3px 3px 3px 3px; background-color: #5cc410; }');
 		
 		
-		// this shows the sr-header-area that we hid while rendering it (to curb opera's glitchy "jumping")...
-		if (typeof(opera) != 'undefined') {
-			RESUtils.addCSS('#sr-header-area { display: block !important; }');
-		}
-		// This is the init function for Manage Subreddits - it'll get your preferences and redraw the top bar.
-		this.redrawSubredditBar();
-		// Listen for subscriptions / unsubscriptions from reddits so we know to reload the JSON string...
-		// also, add a +/- shortcut button...
-		if (RESUtils.currentSubreddit()) {
-			var subButton = document.querySelector('.fancy-toggle-button');
-			if (! ($('#subButtons').length>0)) {
-				this.subButtons = $('<div id="subButtons"></div>');
-				$(subButton).wrap(this.subButtons);
-			}
-			if (subButton) {
-				subButton.addEventListener('click',function() {
-					// reset the last checked time for the subreddit list so that we refresh it anew no matter what.
-					RESStorage.setItem('RESmodules.subredditManager.subreddits.lastCheck.'+RESUtils.loggedInUser(),0);
-				},false);
-				var theSubredditLink = document.querySelector('h1.redditname');
-				if (theSubredditLink) {
-					var theSC = document.createElement('span');
-					theSC.setAttribute('class','RESshortcut RESshortcutside');
-					theSC.setAttribute('subreddit',RESUtils.currentSubreddit());
-					var idx = -1;
-					for (var i=0, len=modules['subredditManager'].mySubredditShortcuts.length; i<len; i++) {
-						if (modules['subredditManager'].mySubredditShortcuts[i].subreddit == RESUtils.currentSubreddit()) {
-							idx=i;
-							break;
-						}
-					}
-					if (idx != -1) {
-						theSC.innerHTML = '-shortcut';
-						theSC.setAttribute('title','Remove this subreddit from your shortcut bar');
-						addClass(theSC,'remove');
-					} else {
-						theSC.innerHTML = '+shortcut';
-						theSC.setAttribute('title','Add this subreddit to your shortcut bar');
-					}
-					theSC.addEventListener('click', modules['subredditManager'].toggleSubredditShortcut, false);
-					// subButton.parentNode.insertBefore(theSC, subButton);
-					// theSubredditLink.appendChild(theSC);
-					$('#subButtons').append(theSC);
-				}
-			}
-		}
-		// If we're on the reddit-browsing page (/reddits), add +shortcut and -shortcut buttons...
-		if (location.href.match(/https?:\/\/www.reddit.com\/reddits\/?(\?[\w=&]+)*/)) {
-			this.browsingReddits();
-		}
-	},
-	browsingReddits: function() {
-		var subredditLinks = document.body.querySelectorAll('p.titlerow > a');
-		if (subredditLinks) {
-			for (var i=0, len=subredditLinks.length; i<len; i++) {
-				if (typeof(subredditLinks[i]) == 'undefined') break;
-				var match = subredditLinks[i].getAttribute('href').match(/https?:\/\/(?:[a-z]+).reddit.com\/r\/([\w]+).*/i);
-				if (match != null) {
-					var theSC = document.createElement('span');
-					theSC.setAttribute('class','RESshortcut RESshortcutside');
-					theSC.setAttribute('subreddit',match[1]);
-					var idx = -1;
-					for (var j=0, len=modules['subredditManager'].mySubredditShortcuts.length; j<len; j++) {
-						if (modules['subredditManager'].mySubredditShortcuts[j].subreddit == RESUtils.currentSubreddit()) {
-							idx=j;
-							break;
-						}
-					}
-					if (idx != -1) {
-						theSC.innerHTML = '-shortcut';
-						theSC.setAttribute('title','Remove this subreddit from your shortcut bar');
-					} else {
-						theSC.innerHTML = '+shortcut';
-						theSC.setAttribute('title','Add this subreddit to your shortcut bar');
-					}
-					theSC.addEventListener('click', modules['subredditManager'].toggleSubredditShortcut, false);
-					// subButton.parentNode.insertBefore(theSC, subButton);
-					subredditLinks[i].parentNode.parentNode.previousSibling.appendChild(theSC);
-				} else {
-					// uh oh...
-				}
-			}
-		}
-	},
-	redrawShortcuts: function() {
-		this.shortCutsContainer.innerHTML = '';
-		var shortCuts = RESStorage.getItem('RESmodules.subredditManager.subredditShortcuts.'+RESUtils.loggedInUser());
-		if (shortCuts == null) {
-			shortCuts = RESStorage.getItem('RESmodules.betteReddit.subredditShortcuts.'+RESUtils.loggedInUser());
-			// if we used to have these settings in betteReddit, clean them up.
-			if (shortCuts != null) {
-				var betteRedditOptions = JSON.parse(RESStorage.getItem('RESoptions.betteReddit'));
-				delete betteRedditOptions.manageSubreddits;
-				delete betteRedditOptions.linkAll;
-				delete betteRedditOptions.linkFriends;
-				delete betteRedditOptions.linkMod;
-				delete betteRedditOptions.linkRandom;
-				RESStorage.setItem('RESoptions.betteReddit', JSON.stringify(betteRedditOptions));
-				RESStorage.setItem('RESmodules.subredditManager.subredditShortcuts.'+RESUtils.loggedInUser(), shortCuts);
-				RESStorage.removeItem('RESmodules.betteReddit.subredditShortcuts.'+RESUtils.loggedInUser());
-				RESUtils.notification({
-					header: 'RES Notification', 
-					message: 'Subreddit Manager is now a separate module (removed from betteReddit) to avoid confusion. If you dislike this feature, you may disable the module in the RES console' 
-				});
-			}
-		}
-		if ((shortCuts != null) && (shortCuts != '') && (shortCuts != [])) {
-			this.mySubredditShortcuts = safeJSON.parse(shortCuts, 'RESmodules.subredditManager.subredditShortcuts.'+RESUtils.loggedInUser())
-			// go through the list of shortcuts and print them out...
-			for (var i=0, len=this.mySubredditShortcuts.length; i<len; i++) {
-				if (typeof(this.mySubredditShortcuts[i]) == 'string') {
-					this.mySubredditShortcuts[i] = {
-						subreddit: this.mySubredditShortcuts[i],
-						displayName: this.mySubredditShortcuts[i]
-					}
-				} 
-				var thisShortCut = document.createElement('a');
-				thisShortCut.setAttribute('draggable','true');
-				thisShortCut.setAttribute('orderIndex',i);
-				thisShortCut.setAttribute('href','/r/'+this.mySubredditShortcuts[i].subreddit);
-				thisShortCut.innerHTML = this.mySubredditShortcuts[i].displayName;
-				thisShortCut.addEventListener('click', function(e) {
-					if (e.button != 1) {
-						e.preventDefault();
-						// use to open links in new tabs... work on this later...
-						modules['subredditManager'].clickedShortcutShift = e.shiftKey;
-						modules['subredditManager'].clickedShortcutCtrl = e.ctrlKey;
-						modules['subredditManager'].clickedShortcut = e.target.getAttribute('href');
-						if (typeof(modules['subredditManager'].clickTimer) == 'undefined') {
-							modules['subredditManager'].clickTimer = setTimeout(modules['subredditManager'].followSubredditShortcut, 300);
-						}
-					}
-				}, false);
-				thisShortCut.addEventListener('dblclick', function(e) {
-					e.preventDefault();
-					clearTimeout(modules['subredditManager'].clickTimer);
-					delete modules['subredditManager'].clickTimer;
-					modules['subredditManager'].editSubredditShortcut(e.target);
-				}, false);
-				thisShortCut.addEventListener('mouseover', function(e) {
-					clearTimeout(modules['subredditManager'].hideSubredditGroupDropdownTimer);
-					if ((typeof(e.target.getAttribute) != 'undefined') && (e.target.getAttribute('href').indexOf('+') != -1)) {
-						var subreddits = e.target.getAttribute('href').replace('/r/','').split('+');
-						modules['subredditManager'].showSubredditGroupDropdown(subreddits, e.target);
-					}
-				}, false);
-				thisShortCut.addEventListener('mouseout', function(e) {
-					modules['subredditManager'].hideSubredditGroupDropdownTimer = setTimeout(function() {
-						modules['subredditManager'].hideSubredditGroupDropdown();
-					}, 500);
-				}, false);
-				thisShortCut.addEventListener('dragstart', modules['subredditManager'].subredditDragStart, false);
-				thisShortCut.addEventListener('dragenter', modules['subredditManager'].subredditDragEnter, false)
-				thisShortCut.addEventListener('dragover', modules['subredditManager'].subredditDragOver, false);
-				thisShortCut.addEventListener('dragleave', modules['subredditManager'].subredditDragLeave, false);
-				thisShortCut.addEventListener('drop', modules['subredditManager'].subredditDrop, false);
-				thisShortCut.addEventListener('dragend', modules['subredditManager'].subredditDragEnd, false);
-				this.shortCutsContainer.appendChild(thisShortCut);
-				if (i < len-1) {
-					var sep = document.createElement('span');
-					sep.setAttribute('class','separator');
-					sep.innerHTML = '-';
-					this.shortCutsContainer.appendChild(sep);
-				} 
-			}
-			if (this.mySubredditShortcuts.length == 0) {
-				this.shortCutsContainer.style.textTransform = 'none';
-				this.shortCutsContainer.innerHTML = 'add shortcuts from the my subreddits menu at left or click the button by the subreddit name, drag and drop to sort';
-			} else {
-				this.shortCutsContainer.style.textTransform = '';
-			}
-		} else {
-			this.shortCutsContainer.style.textTransform = 'none';
-			this.shortCutsContainer.innerHTML = 'add shortcuts from the my subreddits menu at left or click the button by the subreddit name, drag and drop to sort';
-			this.mySubredditShortcuts = [];
-		}
-		// clip the width of the container to the remaining area...
-		// this.shortCutsContainer.style.width = parseInt(window.innerWidth - this.srLeftContainerWidth - 40) + 'px';
-	},
-	showSubredditGroupDropdown: function(subreddits, obj) {
-		if (typeof(this.subredditGroupDropdown) == 'undefined') {
-			this.subredditGroupDropdown = createElementWithID('div','RESSubredditGroupDropdown');
-			this.subredditGroupDropdownUL = document.createElement('ul');
-			this.subredditGroupDropdown.appendChild(this.subredditGroupDropdownUL);
-			document.body.appendChild(this.subredditGroupDropdown);
-			this.subredditGroupDropdown.addEventListener('mouseout', function(e) {
-				modules['subredditManager'].hideSubredditGroupDropdownTimer = setTimeout(function() {
-					modules['subredditManager'].hideSubredditGroupDropdown();
-				}, 500);
-			}, false);
-			this.subredditGroupDropdown.addEventListener('mouseover', function(e) {
-				clearTimeout(modules['subredditManager'].hideSubredditGroupDropdownTimer);
-			}, false);
-		}
-		this.groupDropdownVisible = true;
-		if (subreddits) {
-			this.subredditGroupDropdownUL.innerHTML = '';
-			for (var i=0, len=subreddits.length; i<len; i++) {
-				this.subredditGroupDropdownUL.innerHTML += '<li><a href="/r/'+subreddits[i]+'">'+subreddits[i]+'</a></li>';
-			}
-			var thisXY = RESUtils.getXYpos(obj);
-			this.subredditGroupDropdown.style.top = (thisXY.y + 16) + 'px';
-			// if fixed, override y to just be the height of the subreddit bar...
-			// this.subredditGroupDropdown.style.position = 'fixed';
-			// this.subredditGroupDropdown.style.top = '20px';
-			this.subredditGroupDropdown.style.left = thisXY.x + 'px';
-			this.subredditGroupDropdown.style.display = 'block';
-		}
-	},
-	hideSubredditGroupDropdown: function() {
-		delete modules['subredditManager'].hideSubredditGroupDropdownTimer;
-		if (this.subredditGroupDropdown) this.subredditGroupDropdown.style.display = 'none';
-	},
-	editSubredditShortcut: function(ele) {
-		var subreddit = ele.getAttribute('href').slice(3);
-		var idx;
-		for (var i=0, len=modules['subredditManager'].mySubredditShortcuts.length; i<len; i++) {
-			if (modules['subredditManager'].mySubredditShortcuts[i].subreddit == subreddit) {
-				idx = i;
-				break;
-			}
-		}
-		if (typeof(this.editShortcutDialog) == 'undefined') {
-			this.editShortcutDialog = createElementWithID('div','editShortcutDialog');
-			document.body.appendChild(this.editShortcutDialog);
-		}
-		this.editShortcutDialog.innerHTML = '<form name="editSubredditShortcut"><h3>Edit Shortcut</h3><div id="editShortcutClose" class="RESCloseButton">X</div><label for="subreddit">Subreddit:</label> <input type="text" name="subreddit" value="'+subreddit+'" id="shortcut-subreddit"><br>';
-		this.editShortcutDialog.innerHTML += '<label for="displayName">Display Name:</label><input type="text" name="displayName" value="'+ele.innerHTML+'" id="shortcut-displayname">';
-		this.editShortcutDialog.innerHTML += '<input type="hidden" name="idx" value="'+idx+'"><input type="button" name="shortcut-save" value="save" id="shortcut-save"></form>';
+// 		// this shows the sr-header-area that we hid while rendering it (to curb opera's glitchy "jumping")...
+// 		if (typeof(opera) != 'undefined') {
+// 			RESUtils.addCSS('#sr-header-area { display: block !important; }');
+// 		}
+// 		// This is the init function for Manage Subreddits - it'll get your preferences and redraw the top bar.
+// 		this.redrawSubredditBar();
+// 		// Listen for subscriptions / unsubscriptions from reddits so we know to reload the JSON string...
+// 		// also, add a +/- shortcut button...
+// 		if (RESUtils.currentSubreddit()) {
+// 			var subButton = document.querySelector('.fancy-toggle-button');
+// 			if (! ($('#subButtons').length>0)) {
+// 				this.subButtons = $('<div id="subButtons"></div>');
+// 				$(subButton).wrap(this.subButtons);
+// 			}
+// 			if (subButton) {
+// 				subButton.addEventListener('click',function() {
+// 					// reset the last checked time for the subreddit list so that we refresh it anew no matter what.
+// 					RESStorage.setItem('RESmodules.subredditManager.subreddits.lastCheck.'+RESUtils.loggedInUser(),0);
+// 				},false);
+// 				var theSubredditLink = document.querySelector('h1.redditname');
+// 				if (theSubredditLink) {
+// 					var theSC = document.createElement('span');
+// 					theSC.setAttribute('class','RESshortcut RESshortcutside');
+// 					theSC.setAttribute('subreddit',RESUtils.currentSubreddit());
+// 					var idx = -1;
+// 					for (var i=0, len=modules['subredditManager'].mySubredditShortcuts.length; i<len; i++) {
+// 						if (modules['subredditManager'].mySubredditShortcuts[i].subreddit == RESUtils.currentSubreddit()) {
+// 							idx=i;
+// 							break;
+// 						}
+// 					}
+// 					if (idx != -1) {
+// 						theSC.innerHTML = '-shortcut';
+// 						theSC.setAttribute('title','Remove this subreddit from your shortcut bar');
+// 						addClass(theSC,'remove');
+// 					} else {
+// 						theSC.innerHTML = '+shortcut';
+// 						theSC.setAttribute('title','Add this subreddit to your shortcut bar');
+// 					}
+// 					theSC.addEventListener('click', modules['subredditManager'].toggleSubredditShortcut, false);
+// 					// subButton.parentNode.insertBefore(theSC, subButton);
+// 					// theSubredditLink.appendChild(theSC);
+// 					$('#subButtons').append(theSC);
+// 				}
+// 			}
+// 		}
+// 		// If we're on the reddit-browsing page (/reddits), add +shortcut and -shortcut buttons...
+// 		if (location.href.match(/https?:\/\/www.reddit.com\/reddits\/?(\?[\w=&]+)*/)) {
+// 			this.browsingReddits();
+// 		}
+// 	},
+// 	browsingReddits: function() {
+// 		var subredditLinks = document.body.querySelectorAll('p.titlerow > a');
+// 		if (subredditLinks) {
+// 			for (var i=0, len=subredditLinks.length; i<len; i++) {
+// 				if (typeof(subredditLinks[i]) == 'undefined') break;
+// 				var match = subredditLinks[i].getAttribute('href').match(/https?:\/\/(?:[a-z]+).reddit.com\/r\/([\w]+).*/i);
+// 				if (match != null) {
+// 					var theSC = document.createElement('span');
+// 					theSC.setAttribute('class','RESshortcut RESshortcutside');
+// 					theSC.setAttribute('subreddit',match[1]);
+// 					var idx = -1;
+// 					for (var j=0, len=modules['subredditManager'].mySubredditShortcuts.length; j<len; j++) {
+// 						if (modules['subredditManager'].mySubredditShortcuts[j].subreddit == RESUtils.currentSubreddit()) {
+// 							idx=j;
+// 							break;
+// 						}
+// 					}
+// 					if (idx != -1) {
+// 						theSC.innerHTML = '-shortcut';
+// 						theSC.setAttribute('title','Remove this subreddit from your shortcut bar');
+// 					} else {
+// 						theSC.innerHTML = '+shortcut';
+// 						theSC.setAttribute('title','Add this subreddit to your shortcut bar');
+// 					}
+// 					theSC.addEventListener('click', modules['subredditManager'].toggleSubredditShortcut, false);
+// 					// subButton.parentNode.insertBefore(theSC, subButton);
+// 					subredditLinks[i].parentNode.parentNode.previousSibling.appendChild(theSC);
+// 				} else {
+// 					// uh oh...
+// 				}
+// 			}
+// 		}
+// 	},
+// 	redrawShortcuts: function() {
+// 		this.shortCutsContainer.innerHTML = '';
+// 		var shortCuts = RESStorage.getItem('RESmodules.subredditManager.subredditShortcuts.'+RESUtils.loggedInUser());
+// 		if (shortCuts == null) {
+// 			shortCuts = RESStorage.getItem('RESmodules.betteReddit.subredditShortcuts.'+RESUtils.loggedInUser());
+// 			// if we used to have these settings in betteReddit, clean them up.
+// 			if (shortCuts != null) {
+// 				var betteRedditOptions = JSON.parse(RESStorage.getItem('RESoptions.betteReddit'));
+// 				delete betteRedditOptions.manageSubreddits;
+// 				delete betteRedditOptions.linkAll;
+// 				delete betteRedditOptions.linkFriends;
+// 				delete betteRedditOptions.linkMod;
+// 				delete betteRedditOptions.linkRandom;
+// 				RESStorage.setItem('RESoptions.betteReddit', JSON.stringify(betteRedditOptions));
+// 				RESStorage.setItem('RESmodules.subredditManager.subredditShortcuts.'+RESUtils.loggedInUser(), shortCuts);
+// 				RESStorage.removeItem('RESmodules.betteReddit.subredditShortcuts.'+RESUtils.loggedInUser());
+// 				RESUtils.notification({
+// 					header: 'RES Notification', 
+// 					message: 'Subreddit Manager is now a separate module (removed from betteReddit) to avoid confusion. If you dislike this feature, you may disable the module in the RES console' 
+// 				});
+// 			}
+// 		}
+// 		if ((shortCuts != null) && (shortCuts != '') && (shortCuts != [])) {
+// 			this.mySubredditShortcuts = safeJSON.parse(shortCuts, 'RESmodules.subredditManager.subredditShortcuts.'+RESUtils.loggedInUser())
+// 			// go through the list of shortcuts and print them out...
+// 			for (var i=0, len=this.mySubredditShortcuts.length; i<len; i++) {
+// 				if (typeof(this.mySubredditShortcuts[i]) == 'string') {
+// 					this.mySubredditShortcuts[i] = {
+// 						subreddit: this.mySubredditShortcuts[i],
+// 						displayName: this.mySubredditShortcuts[i]
+// 					}
+// 				} 
+// 				var thisShortCut = document.createElement('a');
+// 				thisShortCut.setAttribute('draggable','true');
+// 				thisShortCut.setAttribute('orderIndex',i);
+// 				thisShortCut.setAttribute('href','/r/'+this.mySubredditShortcuts[i].subreddit);
+// 				thisShortCut.innerHTML = this.mySubredditShortcuts[i].displayName;
+// 				thisShortCut.addEventListener('click', function(e) {
+// 					if (e.button != 1) {
+// 						e.preventDefault();
+// 						// use to open links in new tabs... work on this later...
+// 						modules['subredditManager'].clickedShortcutShift = e.shiftKey;
+// 						modules['subredditManager'].clickedShortcutCtrl = e.ctrlKey;
+// 						modules['subredditManager'].clickedShortcut = e.target.getAttribute('href');
+// 						if (typeof(modules['subredditManager'].clickTimer) == 'undefined') {
+// 							modules['subredditManager'].clickTimer = setTimeout(modules['subredditManager'].followSubredditShortcut, 300);
+// 						}
+// 					}
+// 				}, false);
+// 				thisShortCut.addEventListener('dblclick', function(e) {
+// 					e.preventDefault();
+// 					clearTimeout(modules['subredditManager'].clickTimer);
+// 					delete modules['subredditManager'].clickTimer;
+// 					modules['subredditManager'].editSubredditShortcut(e.target);
+// 				}, false);
+// 				thisShortCut.addEventListener('mouseover', function(e) {
+// 					clearTimeout(modules['subredditManager'].hideSubredditGroupDropdownTimer);
+// 					if ((typeof(e.target.getAttribute) != 'undefined') && (e.target.getAttribute('href').indexOf('+') != -1)) {
+// 						var subreddits = e.target.getAttribute('href').replace('/r/','').split('+');
+// 						modules['subredditManager'].showSubredditGroupDropdown(subreddits, e.target);
+// 					}
+// 				}, false);
+// 				thisShortCut.addEventListener('mouseout', function(e) {
+// 					modules['subredditManager'].hideSubredditGroupDropdownTimer = setTimeout(function() {
+// 						modules['subredditManager'].hideSubredditGroupDropdown();
+// 					}, 500);
+// 				}, false);
+// 				thisShortCut.addEventListener('dragstart', modules['subredditManager'].subredditDragStart, false);
+// 				thisShortCut.addEventListener('dragenter', modules['subredditManager'].subredditDragEnter, false)
+// 				thisShortCut.addEventListener('dragover', modules['subredditManager'].subredditDragOver, false);
+// 				thisShortCut.addEventListener('dragleave', modules['subredditManager'].subredditDragLeave, false);
+// 				thisShortCut.addEventListener('drop', modules['subredditManager'].subredditDrop, false);
+// 				thisShortCut.addEventListener('dragend', modules['subredditManager'].subredditDragEnd, false);
+// 				this.shortCutsContainer.appendChild(thisShortCut);
+// 				if (i < len-1) {
+// 					var sep = document.createElement('span');
+// 					sep.setAttribute('class','separator');
+// 					sep.innerHTML = '-';
+// 					this.shortCutsContainer.appendChild(sep);
+// 				} 
+// 			}
+// 			if (this.mySubredditShortcuts.length == 0) {
+// 				this.shortCutsContainer.style.textTransform = 'none';
+// 				this.shortCutsContainer.innerHTML = 'add shortcuts from the my subreddits menu at left or click the button by the subreddit name, drag and drop to sort';
+// 			} else {
+// 				this.shortCutsContainer.style.textTransform = '';
+// 			}
+// 		} else {
+// 			this.shortCutsContainer.style.textTransform = 'none';
+// 			this.shortCutsContainer.innerHTML = 'add shortcuts from the my subreddits menu at left or click the button by the subreddit name, drag and drop to sort';
+// 			this.mySubredditShortcuts = [];
+// 		}
+// 		// clip the width of the container to the remaining area...
+// 		// this.shortCutsContainer.style.width = parseInt(window.innerWidth - this.srLeftContainerWidth - 40) + 'px';
+// 	},
+// 	showSubredditGroupDropdown: function(subreddits, obj) {
+// 		if (typeof(this.subredditGroupDropdown) == 'undefined') {
+// 			this.subredditGroupDropdown = createElementWithID('div','RESSubredditGroupDropdown');
+// 			this.subredditGroupDropdownUL = document.createElement('ul');
+// 			this.subredditGroupDropdown.appendChild(this.subredditGroupDropdownUL);
+// 			document.body.appendChild(this.subredditGroupDropdown);
+// 			this.subredditGroupDropdown.addEventListener('mouseout', function(e) {
+// 				modules['subredditManager'].hideSubredditGroupDropdownTimer = setTimeout(function() {
+// 					modules['subredditManager'].hideSubredditGroupDropdown();
+// 				}, 500);
+// 			}, false);
+// 			this.subredditGroupDropdown.addEventListener('mouseover', function(e) {
+// 				clearTimeout(modules['subredditManager'].hideSubredditGroupDropdownTimer);
+// 			}, false);
+// 		}
+// 		this.groupDropdownVisible = true;
+// 		if (subreddits) {
+// 			this.subredditGroupDropdownUL.innerHTML = '';
+// 			for (var i=0, len=subreddits.length; i<len; i++) {
+// 				this.subredditGroupDropdownUL.innerHTML += '<li><a href="/r/'+subreddits[i]+'">'+subreddits[i]+'</a></li>';
+// 			}
+// 			var thisXY = RESUtils.getXYpos(obj);
+// 			this.subredditGroupDropdown.style.top = (thisXY.y + 16) + 'px';
+// 			// if fixed, override y to just be the height of the subreddit bar...
+// 			// this.subredditGroupDropdown.style.position = 'fixed';
+// 			// this.subredditGroupDropdown.style.top = '20px';
+// 			this.subredditGroupDropdown.style.left = thisXY.x + 'px';
+// 			this.subredditGroupDropdown.style.display = 'block';
+// 		}
+// 	},
+// 	hideSubredditGroupDropdown: function() {
+// 		delete modules['subredditManager'].hideSubredditGroupDropdownTimer;
+// 		if (this.subredditGroupDropdown) this.subredditGroupDropdown.style.display = 'none';
+// 	},
+// 	editSubredditShortcut: function(ele) {
+// 		var subreddit = ele.getAttribute('href').slice(3);
+// 		var idx;
+// 		for (var i=0, len=modules['subredditManager'].mySubredditShortcuts.length; i<len; i++) {
+// 			if (modules['subredditManager'].mySubredditShortcuts[i].subreddit == subreddit) {
+// 				idx = i;
+// 				break;
+// 			}
+// 		}
+// 		if (typeof(this.editShortcutDialog) == 'undefined') {
+// 			this.editShortcutDialog = createElementWithID('div','editShortcutDialog');
+// 			document.body.appendChild(this.editShortcutDialog);
+// 		}
+// 		this.editShortcutDialog.innerHTML = '<form name="editSubredditShortcut"><h3>Edit Shortcut</h3><div id="editShortcutClose" class="RESCloseButton">X</div><label for="subreddit">Subreddit:</label> <input type="text" name="subreddit" value="'+subreddit+'" id="shortcut-subreddit"><br>';
+// 		this.editShortcutDialog.innerHTML += '<label for="displayName">Display Name:</label><input type="text" name="displayName" value="'+ele.innerHTML+'" id="shortcut-displayname">';
+// 		this.editShortcutDialog.innerHTML += '<input type="hidden" name="idx" value="'+idx+'"><input type="button" name="shortcut-save" value="save" id="shortcut-save"></form>';
 		
-		this.subredditInput = this.editShortcutDialog.querySelector('input[name=subreddit]');
-		this.displayNameInput = this.editShortcutDialog.querySelector('input[name=displayName]');
+// 		this.subredditInput = this.editShortcutDialog.querySelector('input[name=subreddit]');
+// 		this.displayNameInput = this.editShortcutDialog.querySelector('input[name=displayName]');
 
-		this.subredditForm = this.editShortcutDialog.querySelector('FORM');
-		this.subredditForm.addEventListener('submit', function(e) {
-			e.preventDefault();
-		}, false);
+// 		this.subredditForm = this.editShortcutDialog.querySelector('FORM');
+// 		this.subredditForm.addEventListener('submit', function(e) {
+// 			e.preventDefault();
+// 		}, false);
 
-		this.saveButton = this.editShortcutDialog.querySelector('input[name=shortcut-save]');
-		this.saveButton.addEventListener('click', function(e) {
-			var idx = modules['subredditManager'].editShortcutDialog.querySelector('input[name=idx]').value;
-			var subreddit = modules['subredditManager'].editShortcutDialog.querySelector('input[name=subreddit]').value;
-			var displayName = modules['subredditManager'].editShortcutDialog.querySelector('input[name=displayName]').value;
-			if ((subreddit == '') || (displayName == '')) {
-				// modules['subredditManager'].mySubredditShortcuts.splice(idx,1);
-				subreddit = modules['subredditManager'].mySubredditShortcuts[idx].displayName;
-				modules['subredditManager'].removeSubredditShortcut(subreddit);
-			} else {
-				if (RESUtils.proEnabled()) {
-					// store a delete for the old subreddit, and an add for the new.
-					var oldsubreddit = modules['subredditManager'].mySubredditShortcuts[idx].subreddit;
-					if (typeof(modules['subredditManager'].RESPro) == 'undefined') {
-						if (RESStorage.getItem('RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser()) != null) {
-							var temp = safeJSON.parse(RESStorage.getItem('RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser()), 'RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser());
-						} else {
-							var temp = { add: {}, del: {} };
-						}
-						modules['subredditManager'].RESPro = temp;
-					}
-					if (typeof(modules['subredditManager'].RESPro.add) == 'undefined') {
-						modules['subredditManager'].RESPro.add = {}
-					}
-					if (typeof(modules['subredditManager'].RESPro.del) == 'undefined') {
-						modules['subredditManager'].RESPro.del = {}
-					}
-					// add modules['subredditManager'] new subreddit next time we sync...
-					modules['subredditManager'].RESPro.add[subreddit] = true;
-					// delete the old one
-					modules['subredditManager'].RESPro.del[oldsubreddit] = true;
-					// make sure we don't run an add on the old subreddit next time we sync...
-					if (typeof(modules['subredditManager'].RESPro.add[oldsubreddit]) != 'undefined') delete modules['subredditManager'].RESPro.add[oldsubreddit];
-					// make sure we don't run a delete on the new subreddit next time we sync...
-					if (typeof(modules['subredditManager'].RESPro.del[subreddit]) != 'undefined') delete modules['subredditManager'].RESPro.del[subreddit];
-					RESStorage.setItem('RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser(), JSON.stringify(modules['subredditManager'].RESPro));
-				}
-				modules['subredditManager'].mySubredditShortcuts[idx] = {
-					subreddit: subreddit,
-					displayName: displayName
-				}
-				RESStorage.setItem('RESmodules.subredditManager.subredditShortcuts.'+RESUtils.loggedInUser(),JSON.stringify(modules['subredditManager'].mySubredditShortcuts));
-				if (RESUtils.proEnabled()) {
-					modules['RESPro'].saveModuleData('subredditManager');
-				}
-			}
-			modules['subredditManager'].editShortcutDialog.style.display = 'none';
-			modules['subredditManager'].redrawShortcuts();
-			modules['subredditManager'].populateSubredditDropdown();
-		}, false);
+// 		this.saveButton = this.editShortcutDialog.querySelector('input[name=shortcut-save]');
+// 		this.saveButton.addEventListener('click', function(e) {
+// 			var idx = modules['subredditManager'].editShortcutDialog.querySelector('input[name=idx]').value;
+// 			var subreddit = modules['subredditManager'].editShortcutDialog.querySelector('input[name=subreddit]').value;
+// 			var displayName = modules['subredditManager'].editShortcutDialog.querySelector('input[name=displayName]').value;
+// 			if ((subreddit == '') || (displayName == '')) {
+// 				// modules['subredditManager'].mySubredditShortcuts.splice(idx,1);
+// 				subreddit = modules['subredditManager'].mySubredditShortcuts[idx].displayName;
+// 				modules['subredditManager'].removeSubredditShortcut(subreddit);
+// 			} else {
+// 				if (RESUtils.proEnabled()) {
+// 					// store a delete for the old subreddit, and an add for the new.
+// 					var oldsubreddit = modules['subredditManager'].mySubredditShortcuts[idx].subreddit;
+// 					if (typeof(modules['subredditManager'].RESPro) == 'undefined') {
+// 						if (RESStorage.getItem('RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser()) != null) {
+// 							var temp = safeJSON.parse(RESStorage.getItem('RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser()), 'RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser());
+// 						} else {
+// 							var temp = { add: {}, del: {} };
+// 						}
+// 						modules['subredditManager'].RESPro = temp;
+// 					}
+// 					if (typeof(modules['subredditManager'].RESPro.add) == 'undefined') {
+// 						modules['subredditManager'].RESPro.add = {}
+// 					}
+// 					if (typeof(modules['subredditManager'].RESPro.del) == 'undefined') {
+// 						modules['subredditManager'].RESPro.del = {}
+// 					}
+// 					// add modules['subredditManager'] new subreddit next time we sync...
+// 					modules['subredditManager'].RESPro.add[subreddit] = true;
+// 					// delete the old one
+// 					modules['subredditManager'].RESPro.del[oldsubreddit] = true;
+// 					// make sure we don't run an add on the old subreddit next time we sync...
+// 					if (typeof(modules['subredditManager'].RESPro.add[oldsubreddit]) != 'undefined') delete modules['subredditManager'].RESPro.add[oldsubreddit];
+// 					// make sure we don't run a delete on the new subreddit next time we sync...
+// 					if (typeof(modules['subredditManager'].RESPro.del[subreddit]) != 'undefined') delete modules['subredditManager'].RESPro.del[subreddit];
+// 					RESStorage.setItem('RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser(), JSON.stringify(modules['subredditManager'].RESPro));
+// 				}
+// 				modules['subredditManager'].mySubredditShortcuts[idx] = {
+// 					subreddit: subreddit,
+// 					displayName: displayName
+// 				}
+// 				RESStorage.setItem('RESmodules.subredditManager.subredditShortcuts.'+RESUtils.loggedInUser(),JSON.stringify(modules['subredditManager'].mySubredditShortcuts));
+// 				if (RESUtils.proEnabled()) {
+// 					modules['RESPro'].saveModuleData('subredditManager');
+// 				}
+// 			}
+// 			modules['subredditManager'].editShortcutDialog.style.display = 'none';
+// 			modules['subredditManager'].redrawShortcuts();
+// 			modules['subredditManager'].populateSubredditDropdown();
+// 		}, false);
 
-		// handle enter and escape keys in the dialog box...
-		this.subredditInput.addEventListener('keyup', function(e) {
-			if (e.keyCode == 27) {
-				modules['subredditManager'].editShortcutDialog.style.display = 'none';
-				modules['subredditManager'].editShortcutDialog.blur();
-			} else if (e.keyCode == 13) {
-				RESUtils.click(modules['subredditManager'].saveButton);
-			}
-		}, false);
-		this.displayNameInput.addEventListener('keyup', function(e) {
-			if (e.keyCode == 27) {
-				modules['subredditManager'].editShortcutDialog.style.display = 'none';
-				modules['subredditManager'].editShortcutDialog.blur();
-			} else if (e.keyCode == 13) {
-				RESUtils.click(modules['subredditManager'].saveButton);
-			}
-		}, false);
+// 		// handle enter and escape keys in the dialog box...
+// 		this.subredditInput.addEventListener('keyup', function(e) {
+// 			if (e.keyCode == 27) {
+// 				modules['subredditManager'].editShortcutDialog.style.display = 'none';
+// 				modules['subredditManager'].editShortcutDialog.blur();
+// 			} else if (e.keyCode == 13) {
+// 				RESUtils.click(modules['subredditManager'].saveButton);
+// 			}
+// 		}, false);
+// 		this.displayNameInput.addEventListener('keyup', function(e) {
+// 			if (e.keyCode == 27) {
+// 				modules['subredditManager'].editShortcutDialog.style.display = 'none';
+// 				modules['subredditManager'].editShortcutDialog.blur();
+// 			} else if (e.keyCode == 13) {
+// 				RESUtils.click(modules['subredditManager'].saveButton);
+// 			}
+// 		}, false);
 
-		var cancelButton = this.editShortcutDialog.querySelector('#editShortcutClose');
-		cancelButton.addEventListener('click', function(e) {
-			modules['subredditManager'].editShortcutDialog.style.display = 'none';
-		}, false);
-		this.editShortcutDialog.style.display = 'block';
-		var thisLeft = Math.min(RESUtils.mouseX, window.innerWidth-300);
-		this.editShortcutDialog.style.left = thisLeft + 'px';
-		setTimeout(function() {
-			modules['subredditManager'].subredditInput.focus()
-		}, 200);
-	},
-	followSubredditShortcut: function() {
-		if (modules['subredditManager'].clickedShortcutCtrl) {
-			RESUtils.openLinkInNewTab(modules['subredditManager'].clickedShortcut);
-		} else {
-			if (typeof(self.on) == 'function') {
-				// stupid firefox... sigh...
-				location.href = location.protocol + '//' + location.hostname + modules['subredditManager'].clickedShortcut;
-			} else {
-				location.href = modules['subredditManager'].clickedShortcut;
-			}
-		}
-	},
-	subredditDragStart: function(e) {
-		clearTimeout(modules['subredditManager'].clickTimer);
-		// Target (this) element is the source node.
-		this.style.opacity = '0.4';
-		modules['subredditManager'].shortCutsTrash.style.display = 'block';
-		modules['subredditManager'].dragSrcEl = this;
+// 		var cancelButton = this.editShortcutDialog.querySelector('#editShortcutClose');
+// 		cancelButton.addEventListener('click', function(e) {
+// 			modules['subredditManager'].editShortcutDialog.style.display = 'none';
+// 		}, false);
+// 		this.editShortcutDialog.style.display = 'block';
+// 		var thisLeft = Math.min(RESUtils.mouseX, window.innerWidth-300);
+// 		this.editShortcutDialog.style.left = thisLeft + 'px';
+// 		setTimeout(function() {
+// 			modules['subredditManager'].subredditInput.focus()
+// 		}, 200);
+// 	},
+// 	followSubredditShortcut: function() {
+// 		if (modules['subredditManager'].clickedShortcutCtrl) {
+// 			RESUtils.openLinkInNewTab(modules['subredditManager'].clickedShortcut);
+// 		} else {
+// 			if (typeof(self.on) == 'function') {
+// 				// stupid firefox... sigh...
+// 				location.href = location.protocol + '//' + location.hostname + modules['subredditManager'].clickedShortcut;
+// 			} else {
+// 				location.href = modules['subredditManager'].clickedShortcut;
+// 			}
+// 		}
+// 	},
+// 	subredditDragStart: function(e) {
+// 		clearTimeout(modules['subredditManager'].clickTimer);
+// 		// Target (this) element is the source node.
+// 		this.style.opacity = '0.4';
+// 		modules['subredditManager'].shortCutsTrash.style.display = 'block';
+// 		modules['subredditManager'].dragSrcEl = this;
 
-		e.dataTransfer.effectAllowed = 'move';
-		// because Safari is stupid, we have to do this.
-		modules['subredditManager'].srDataTransfer = this.getAttribute('orderIndex') + ',' + this.innerHTML;
-		// e.dataTransfer.setData('text/html', this.getAttribute('orderIndex') + ',' + this.innerHTML);
-	},
-	subredditDragEnter: function(e) {
-		addClass(this,'srOver');
-		return false;
-	},
-	subredditDragOver: function(e) {
-		if (e.preventDefault) {
-			e.preventDefault(); // Necessary. Allows us to drop.
-		}
-		e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
-		// addClass(this,'srOver');
+// 		e.dataTransfer.effectAllowed = 'move';
+// 		// because Safari is stupid, we have to do this.
+// 		modules['subredditManager'].srDataTransfer = this.getAttribute('orderIndex') + ',' + this.innerHTML;
+// 		// e.dataTransfer.setData('text/html', this.getAttribute('orderIndex') + ',' + this.innerHTML);
+// 	},
+// 	subredditDragEnter: function(e) {
+// 		addClass(this,'srOver');
+// 		return false;
+// 	},
+// 	subredditDragOver: function(e) {
+// 		if (e.preventDefault) {
+// 			e.preventDefault(); // Necessary. Allows us to drop.
+// 		}
+// 		e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
+// 		// addClass(this,'srOver');
 
-		return false;
-	},
-	subredditDragLeave: function(e) {
-		removeClass(this,'srOver');
-		return false;
-	},
-	subredditDrop: function(e) {
-		// this/e.target is current target element.
-		if (e.stopPropagation) {
-			e.stopPropagation(); // Stops some browsers from redirecting.
-		}
-		// Stops other browsers from redirecting.
-		e.preventDefault();
-		modules['subredditManager'].shortCutsTrash.style.display = 'none';
-		// Don't do anything if dropping the same column we're dragging.
-		if (modules['subredditManager'].dragSrcEl != this) {
-			if (e.target.getAttribute('id') != 'RESShortcutsTrash') {
-				// get the order index of the src and destination to swap...
-				// var theData = e.dataTransfer.getData('text/html').split(',');
-				var theData = modules['subredditManager'].srDataTransfer.split(',');
-				var srcOrderIndex = parseInt(theData[0]);
-				// var srcSubreddit = theData[1];
-				var srcSubreddit = modules['subredditManager'].mySubredditShortcuts[srcOrderIndex];
-				var destOrderIndex = parseInt(this.getAttribute('orderIndex'));
-				var destSubreddit = modules['subredditManager'].mySubredditShortcuts[destOrderIndex];
-				var rearranged = [];
-				var rearrangedI = 0;
-				for (var i=0, len=modules['subredditManager'].mySubredditShortcuts.length; i<len; i++) {
-					if ((i != srcOrderIndex) && (i != destOrderIndex)) {
-						rearranged[rearrangedI] = modules['subredditManager'].mySubredditShortcuts[i];
-						rearrangedI++;
-					} else if (i == destOrderIndex) {
-						if (destOrderIndex > srcOrderIndex) {
-							// if dragging right, order dest first, src next.
-							rearranged[rearrangedI] = destSubreddit;
-							rearrangedI++;
-							rearranged[rearrangedI] = srcSubreddit;
-							rearrangedI++;
-						} else {
-							// if dragging left, order src first, dest next.
-							rearranged[rearrangedI] = srcSubreddit;
-							rearrangedI++;
-							rearranged[rearrangedI] = destSubreddit;
-							rearrangedI++;
-						}
-					}
-				}
-				modules['subredditManager'].mySubredditShortcuts = rearranged;
-				// save the updated order...
-				RESStorage.setItem('RESmodules.subredditManager.subredditShortcuts.'+RESUtils.loggedInUser(),JSON.stringify(modules['subredditManager'].mySubredditShortcuts));
-				// redraw the shortcut bar...
-				modules['subredditManager'].redrawShortcuts();
-				removeClass(this,'srOver');
-			} else {
-				// var theData = e.dataTransfer.getData('text/html').split(',');
-				var theData = modules['subredditManager'].srDataTransfer.split(',');
-				// console.log(theData);
-				var srcOrderIndex = parseInt(theData[0]);
-				var srcSubreddit = theData[1];
-				modules['subredditManager'].removeSubredditShortcut(srcSubreddit);
-			}
-		}
-		return false;
-	},
-	subredditDragEnd: function(e) {
-		modules['subredditManager'].shortCutsTrash.style.display = 'none';
-		this.style.opacity = '1';
-		return false;
-	},
-	redrawSubredditBar: function() {
-		this.headerContents = document.querySelector('#sr-header-area');
-		if (this.headerContents) {
-			// for opera, because it renders progressively and makes it look "glitchy", hide the header bar, then show it all at once with CSS.
-			if (typeof(opera) != 'undefined') this.headerContents.style.display = 'none';
-			// Clear out the existing stuff in the top bar first, we'll replace it with our own stuff.
-			this.headerContents.innerHTML = '';
-			this.srLeftContainer = createElementWithID('div','srLeftContainer');
-			this.srLeftContainer.setAttribute('class','sr-bar');
-			this.srDropdown = createElementWithID('div','srDropdown');
-			this.srDropdownContainer = createElementWithID('div','srDropdownContainer');
-			this.srDropdownContainer.innerHTML = '<a href="javascript:void(0)">My Subreddits</a>';
-			this.srDropdownContainer.addEventListener('click',modules['subredditManager'].toggleSubredditDropdown, false);
-			this.srDropdown.appendChild(this.srDropdownContainer);
-			this.srList = createElementWithID('table','srList');
-			// this.srDropdownContainer.appendChild(this.srList);
-			document.body.appendChild(this.srList);
-			this.srLeftContainer.appendChild(this.srDropdown);
-			var sep = document.createElement('span');
-			sep.setAttribute('class','srSep');
-			sep.innerHTML = '|';
-			this.srLeftContainer.appendChild(sep);
-			// now put in the shortcuts...
-			this.staticShortCutsContainer = document.createElement('div');
-			this.staticShortCutsContainer.setAttribute('id','RESStaticShortcuts');
-			/* this probably isn't the best way to give the option, since the mechanic is drag/drop for other stuff..  but it's much easier for now... */
-			this.staticShortCutsContainer.innerHTML = '';
-			if (this.options.linkAll.value) this.staticShortCutsContainer.innerHTML += '<span class="separator">-</span><a href="/r/all/">ALL</a>';
-			if (this.options.linkRandom.value) this.staticShortCutsContainer.innerHTML += '<span class="separator">-</span><a href="/r/random/">RANDOM</a>';
-			if (RESUtils.loggedInUser() != null) {
-				if (this.options.linkFriends.value) this.staticShortCutsContainer.innerHTML += '<span class="separator">-</span><a href="/r/friends/">FRIENDS</a>';
-				var modmail = document.getElementById('modmail');
-				if ((modmail) && (this.options.linkMod.value)) this.staticShortCutsContainer.innerHTML += '<span class="separator">-</span><a href="/r/mod/">MOD</a>';
-			}
+// 		return false;
+// 	},
+// 	subredditDragLeave: function(e) {
+// 		removeClass(this,'srOver');
+// 		return false;
+// 	},
+// 	subredditDrop: function(e) {
+// 		// this/e.target is current target element.
+// 		if (e.stopPropagation) {
+// 			e.stopPropagation(); // Stops some browsers from redirecting.
+// 		}
+// 		// Stops other browsers from redirecting.
+// 		e.preventDefault();
+// 		modules['subredditManager'].shortCutsTrash.style.display = 'none';
+// 		// Don't do anything if dropping the same column we're dragging.
+// 		if (modules['subredditManager'].dragSrcEl != this) {
+// 			if (e.target.getAttribute('id') != 'RESShortcutsTrash') {
+// 				// get the order index of the src and destination to swap...
+// 				// var theData = e.dataTransfer.getData('text/html').split(',');
+// 				var theData = modules['subredditManager'].srDataTransfer.split(',');
+// 				var srcOrderIndex = parseInt(theData[0]);
+// 				// var srcSubreddit = theData[1];
+// 				var srcSubreddit = modules['subredditManager'].mySubredditShortcuts[srcOrderIndex];
+// 				var destOrderIndex = parseInt(this.getAttribute('orderIndex'));
+// 				var destSubreddit = modules['subredditManager'].mySubredditShortcuts[destOrderIndex];
+// 				var rearranged = [];
+// 				var rearrangedI = 0;
+// 				for (var i=0, len=modules['subredditManager'].mySubredditShortcuts.length; i<len; i++) {
+// 					if ((i != srcOrderIndex) && (i != destOrderIndex)) {
+// 						rearranged[rearrangedI] = modules['subredditManager'].mySubredditShortcuts[i];
+// 						rearrangedI++;
+// 					} else if (i == destOrderIndex) {
+// 						if (destOrderIndex > srcOrderIndex) {
+// 							// if dragging right, order dest first, src next.
+// 							rearranged[rearrangedI] = destSubreddit;
+// 							rearrangedI++;
+// 							rearranged[rearrangedI] = srcSubreddit;
+// 							rearrangedI++;
+// 						} else {
+// 							// if dragging left, order src first, dest next.
+// 							rearranged[rearrangedI] = srcSubreddit;
+// 							rearrangedI++;
+// 							rearranged[rearrangedI] = destSubreddit;
+// 							rearrangedI++;
+// 						}
+// 					}
+// 				}
+// 				modules['subredditManager'].mySubredditShortcuts = rearranged;
+// 				// save the updated order...
+// 				RESStorage.setItem('RESmodules.subredditManager.subredditShortcuts.'+RESUtils.loggedInUser(),JSON.stringify(modules['subredditManager'].mySubredditShortcuts));
+// 				// redraw the shortcut bar...
+// 				modules['subredditManager'].redrawShortcuts();
+// 				removeClass(this,'srOver');
+// 			} else {
+// 				// var theData = e.dataTransfer.getData('text/html').split(',');
+// 				var theData = modules['subredditManager'].srDataTransfer.split(',');
+// 				// console.log(theData);
+// 				var srcOrderIndex = parseInt(theData[0]);
+// 				var srcSubreddit = theData[1];
+// 				modules['subredditManager'].removeSubredditShortcut(srcSubreddit);
+// 			}
+// 		}
+// 		return false;
+// 	},
+// 	subredditDragEnd: function(e) {
+// 		modules['subredditManager'].shortCutsTrash.style.display = 'none';
+// 		this.style.opacity = '1';
+// 		return false;
+// 	},
+// 	redrawSubredditBar: function() {
+// 		this.headerContents = document.querySelector('#sr-header-area');
+// 		if (this.headerContents) {
+// 			// for opera, because it renders progressively and makes it look "glitchy", hide the header bar, then show it all at once with CSS.
+// 			if (typeof(opera) != 'undefined') this.headerContents.style.display = 'none';
+// 			// Clear out the existing stuff in the top bar first, we'll replace it with our own stuff.
+// 			this.headerContents.innerHTML = '';
+// 			this.srLeftContainer = createElementWithID('div','srLeftContainer');
+// 			this.srLeftContainer.setAttribute('class','sr-bar');
+// 			this.srDropdown = createElementWithID('div','srDropdown');
+// 			this.srDropdownContainer = createElementWithID('div','srDropdownContainer');
+// 			this.srDropdownContainer.innerHTML = '<a href="javascript:void(0)">My Subreddits</a>';
+// 			this.srDropdownContainer.addEventListener('click',modules['subredditManager'].toggleSubredditDropdown, false);
+// 			this.srDropdown.appendChild(this.srDropdownContainer);
+// 			this.srList = createElementWithID('table','srList');
+// 			// this.srDropdownContainer.appendChild(this.srList);
+// 			document.body.appendChild(this.srList);
+// 			this.srLeftContainer.appendChild(this.srDropdown);
+// 			var sep = document.createElement('span');
+// 			sep.setAttribute('class','srSep');
+// 			sep.innerHTML = '|';
+// 			this.srLeftContainer.appendChild(sep);
+// 			// now put in the shortcuts...
+// 			this.staticShortCutsContainer = document.createElement('div');
+// 			this.staticShortCutsContainer.setAttribute('id','RESStaticShortcuts');
+// 			/* this probably isn't the best way to give the option, since the mechanic is drag/drop for other stuff..  but it's much easier for now... */
+// 			this.staticShortCutsContainer.innerHTML = '';
+// 			if (this.options.linkAll.value) this.staticShortCutsContainer.innerHTML += '<span class="separator">-</span><a href="/r/all/">ALL</a>';
+// 			if (this.options.linkRandom.value) this.staticShortCutsContainer.innerHTML += '<span class="separator">-</span><a href="/r/random/">RANDOM</a>';
+// 			if (RESUtils.loggedInUser() != null) {
+// 				if (this.options.linkFriends.value) this.staticShortCutsContainer.innerHTML += '<span class="separator">-</span><a href="/r/friends/">FRIENDS</a>';
+// 				var modmail = document.getElementById('modmail');
+// 				if ((modmail) && (this.options.linkMod.value)) this.staticShortCutsContainer.innerHTML += '<span class="separator">-</span><a href="/r/mod/">MOD</a>';
+// 			}
 			
-			/*
-			this.staticShortCutsContainer.innerHTML = ' <span class="separator">|</span><a href="/r/all/">ALL</a><span class="separator">-</span><a href="/r/random/">RANDOM</a>';
-			if (RESUtils.loggedInUser() != null) {
-				this.staticShortCutsContainer.innerHTML += '<span class="separator">-</span><a href="/r/friends/">FRIENDS</a><span class="separator">-</span><a href="/r/mod/">MOD</a>';
-			}
-			*/
-			this.srLeftContainer.appendChild(this.staticShortCutsContainer);
-			this.srLeftContainer.appendChild(sep);
-			this.headerContents.appendChild(this.srLeftContainer);			
+// 			/*
+// 			this.staticShortCutsContainer.innerHTML = ' <span class="separator">|</span><a href="/r/all/">ALL</a><span class="separator">-</span><a href="/r/random/">RANDOM</a>';
+// 			if (RESUtils.loggedInUser() != null) {
+// 				this.staticShortCutsContainer.innerHTML += '<span class="separator">-</span><a href="/r/friends/">FRIENDS</a><span class="separator">-</span><a href="/r/mod/">MOD</a>';
+// 			}
+// 			*/
+// 			this.srLeftContainer.appendChild(this.staticShortCutsContainer);
+// 			this.srLeftContainer.appendChild(sep);
+// 			this.headerContents.appendChild(this.srLeftContainer);			
 						
-			this.shortCutsViewport = document.createElement('div');
-			this.shortCutsViewport.setAttribute('id','RESShortcutsViewport');
-			this.headerContents.appendChild(this.shortCutsViewport);
+// 			this.shortCutsViewport = document.createElement('div');
+// 			this.shortCutsViewport.setAttribute('id','RESShortcutsViewport');
+// 			this.headerContents.appendChild(this.shortCutsViewport);
 
-			this.shortCutsContainer = document.createElement('div');
-			this.shortCutsContainer.setAttribute('id','RESShortcuts');
-			this.shortCutsContainer.setAttribute('class','sr-bar');
-			this.shortCutsViewport.appendChild(this.shortCutsContainer);
+// 			this.shortCutsContainer = document.createElement('div');
+// 			this.shortCutsContainer.setAttribute('id','RESShortcuts');
+// 			this.shortCutsContainer.setAttribute('class','sr-bar');
+// 			this.shortCutsViewport.appendChild(this.shortCutsContainer);
 
-			this.shortCutsEditContainer = document.createElement('div');
-			this.shortCutsEditContainer.setAttribute('id','RESShortcutsEditContainer');
-			this.headerContents.appendChild(this.shortCutsEditContainer);
+// 			this.shortCutsEditContainer = document.createElement('div');
+// 			this.shortCutsEditContainer.setAttribute('id','RESShortcutsEditContainer');
+// 			this.headerContents.appendChild(this.shortCutsEditContainer);
 			
-			// now add an event listener to show the edit bar on hover...
-			/* not working so great, too much glitchiness... maybe we'll address this later when we have more time...
-			this.headerContents.addEventListener('mouseover', modules['subredditManager'].showShortcutButtons, false);
-			this.headerContents.addEventListener('mouseout', modules['subredditManager'].hideShortcutButtons, false);
-			*/
+// 			// now add an event listener to show the edit bar on hover...
+// 			/* not working so great, too much glitchiness... maybe we'll address this later when we have more time...
+// 			this.headerContents.addEventListener('mouseover', modules['subredditManager'].showShortcutButtons, false);
+// 			this.headerContents.addEventListener('mouseout', modules['subredditManager'].hideShortcutButtons, false);
+// 			*/
 
-			// add right scroll arrow...
-			this.shortCutsRight = document.createElement('div');
-			this.shortCutsRight.setAttribute('id','RESShortcutsRight');
-			this.shortCutsRight.innerHTML = '';
-			// this.containerWidth = this.shortCutsContainer.scrollWidth;
-			this.shortCutsRight.addEventListener('click', function(e) {
-				modules['subredditManager'].containerWidth = modules['subredditManager'].shortCutsContainer.offsetWidth;
-				// var marginLeft = modules['subredditManager'].shortCutsContainer.firstChild.style.marginLeft;
-				// width of browser minus width of left container plus a bit extra for padding...
-				// var containerWidth = window.innerWidth + 20 - modules['subredditManager'].srLeftContainer.scrollWidth;
-				var marginLeft = modules['subredditManager'].shortCutsContainer.firstChild.style.marginLeft;
-				marginLeft = parseInt(marginLeft.replace('px',''));
-				if (isNaN(marginLeft)) marginLeft = 0;
-				if (modules['subredditManager'].containerWidth > (window.innerWidth-380)) {
-					marginLeft -= (window.innerWidth - 380);
-					modules['subredditManager'].shortCutsContainer.firstChild.style.marginLeft = marginLeft + 'px';
-				} else {
-					// console.log('already all the way over.');
-				}
-			}, false);
-			this.shortCutsEditContainer.appendChild(this.shortCutsRight);
+// 			// add right scroll arrow...
+// 			this.shortCutsRight = document.createElement('div');
+// 			this.shortCutsRight.setAttribute('id','RESShortcutsRight');
+// 			this.shortCutsRight.innerHTML = '';
+// 			// this.containerWidth = this.shortCutsContainer.scrollWidth;
+// 			this.shortCutsRight.addEventListener('click', function(e) {
+// 				modules['subredditManager'].containerWidth = modules['subredditManager'].shortCutsContainer.offsetWidth;
+// 				// var marginLeft = modules['subredditManager'].shortCutsContainer.firstChild.style.marginLeft;
+// 				// width of browser minus width of left container plus a bit extra for padding...
+// 				// var containerWidth = window.innerWidth + 20 - modules['subredditManager'].srLeftContainer.scrollWidth;
+// 				var marginLeft = modules['subredditManager'].shortCutsContainer.firstChild.style.marginLeft;
+// 				marginLeft = parseInt(marginLeft.replace('px',''));
+// 				if (isNaN(marginLeft)) marginLeft = 0;
+// 				if (modules['subredditManager'].containerWidth > (window.innerWidth-380)) {
+// 					marginLeft -= (window.innerWidth - 380);
+// 					modules['subredditManager'].shortCutsContainer.firstChild.style.marginLeft = marginLeft + 'px';
+// 				} else {
+// 					// console.log('already all the way over.');
+// 				}
+// 			}, false);
+// 			this.shortCutsEditContainer.appendChild(this.shortCutsRight);
 
-			// add an "add shortcut" button...
-			this.shortCutsAdd = document.createElement('div');
-			this.shortCutsAdd.setAttribute('id','RESShortcutsAdd');
-			this.shortCutsAdd.innerHTML = '';
-			this.shortCutsAdd.title = 'add shortcut';
-			this.shortCutsAddFormContainer = document.createElement('div');
-			this.shortCutsAddFormContainer.setAttribute('id','RESShortcutsAddFormContainer');
-			this.shortCutsAddFormContainer.style.display = 'none';
-			this.shortCutsAddFormContainer.innerHTML = ' \
-				<form id="shortCutsAddForm"> \
-					<div>Add shortcut or multi-reddit (i.e. foo+bar+baz):</div> \
-					<label for="newShortcut">Subreddit:</label> <input type="text" id="newShortcut"><br> \
-					<label for="displayName">Display Name:</label> <input type="text" id="displayName"><br> \
-					<input type="submit" name="submit" value="add" id="addSubreddit"> \
-					<div style="clear: both; float: right; margin-top: 5px;"><a style="font-size: 9px;" href="/reddits">Edit frontpage subscriptions</a></div> \
-				</form> \
-			';			
-			this.shortCutsAddFormField = this.shortCutsAddFormContainer.querySelector('#newShortcut');
-			this.shortCutsAddFormFieldDisplayName = this.shortCutsAddFormContainer.querySelector('#displayName');
-			modules['subredditManager'].shortCutsAddFormField.addEventListener('keyup', function(e) {
-				if (e.keyCode == 27) {
-					modules['subredditManager'].shortCutsAddFormContainer.style.display = 'none';
-					modules['subredditManager'].shortCutsAddFormField.blur();
-				}
-			}, false);
-			modules['subredditManager'].shortCutsAddFormFieldDisplayName.addEventListener('keyup', function(e) {
-				if (e.keyCode == 27) {
-					modules['subredditManager'].shortCutsAddFormContainer.style.display = 'none';
-					modules['subredditManager'].shortCutsAddFormFieldDisplayName.blur();
-				}
-			}, false);
+// 			// add an "add shortcut" button...
+// 			this.shortCutsAdd = document.createElement('div');
+// 			this.shortCutsAdd.setAttribute('id','RESShortcutsAdd');
+// 			this.shortCutsAdd.innerHTML = '';
+// 			this.shortCutsAdd.title = 'add shortcut';
+// 			this.shortCutsAddFormContainer = document.createElement('div');
+// 			this.shortCutsAddFormContainer.setAttribute('id','RESShortcutsAddFormContainer');
+// 			this.shortCutsAddFormContainer.style.display = 'none';
+// 			this.shortCutsAddFormContainer.innerHTML = ' \
+// 				<form id="shortCutsAddForm"> \
+// 					<div>Add shortcut or multi-reddit (i.e. foo+bar+baz):</div> \
+// 					<label for="newShortcut">Subreddit:</label> <input type="text" id="newShortcut"><br> \
+// 					<label for="displayName">Display Name:</label> <input type="text" id="displayName"><br> \
+// 					<input type="submit" name="submit" value="add" id="addSubreddit"> \
+// 					<div style="clear: both; float: right; margin-top: 5px;"><a style="font-size: 9px;" href="/reddits">Edit frontpage subscriptions</a></div> \
+// 				</form> \
+// 			';			
+// 			this.shortCutsAddFormField = this.shortCutsAddFormContainer.querySelector('#newShortcut');
+// 			this.shortCutsAddFormFieldDisplayName = this.shortCutsAddFormContainer.querySelector('#displayName');
+// 			modules['subredditManager'].shortCutsAddFormField.addEventListener('keyup', function(e) {
+// 				if (e.keyCode == 27) {
+// 					modules['subredditManager'].shortCutsAddFormContainer.style.display = 'none';
+// 					modules['subredditManager'].shortCutsAddFormField.blur();
+// 				}
+// 			}, false);
+// 			modules['subredditManager'].shortCutsAddFormFieldDisplayName.addEventListener('keyup', function(e) {
+// 				if (e.keyCode == 27) {
+// 					modules['subredditManager'].shortCutsAddFormContainer.style.display = 'none';
+// 					modules['subredditManager'].shortCutsAddFormFieldDisplayName.blur();
+// 				}
+// 			}, false);
 			
-			// add the "add shortcut" form...
-			this.shortCutsAddForm = this.shortCutsAddFormContainer.querySelector('#shortCutsAddForm');
-			this.shortCutsAddForm.addEventListener('submit', function(e) {
-				e.preventDefault();
-				var subreddit = modules['subredditManager'].shortCutsAddFormField.value;
-				var displayname = modules['subredditManager'].shortCutsAddFormFieldDisplayName.value;
-				if (displayname == '') displayname = subreddit;
-				subreddit = subreddit.replace('/r/','').replace('r/','');
-				modules['subredditManager'].shortCutsAddFormField.value = '';
-				modules['subredditManager'].shortCutsAddFormFieldDisplayName.value = '';
-				modules['subredditManager'].shortCutsAddFormContainer.style.display = 'none';
-				if (subreddit) {
-					modules['subredditManager'].addSubredditShortcut(subreddit, displayname);
-				}
-			}, false);
-			this.shortCutsAdd.addEventListener('click', function(e) {
-				if (modules['subredditManager'].shortCutsAddFormContainer.style.display == 'none') {
-					modules['subredditManager'].shortCutsAddFormContainer.style.display = 'block';
-					modules['subredditManager'].shortCutsAddFormField.focus();
-				} else {
-					modules['subredditManager'].shortCutsAddFormContainer.style.display = 'none';
-					modules['subredditManager'].shortCutsAddFormField.blur();
-				}
-			}, false);
-			this.shortCutsEditContainer.appendChild(this.shortCutsAdd);
-			document.body.appendChild(this.shortCutsAddFormContainer);
+// 			// add the "add shortcut" form...
+// 			this.shortCutsAddForm = this.shortCutsAddFormContainer.querySelector('#shortCutsAddForm');
+// 			this.shortCutsAddForm.addEventListener('submit', function(e) {
+// 				e.preventDefault();
+// 				var subreddit = modules['subredditManager'].shortCutsAddFormField.value;
+// 				var displayname = modules['subredditManager'].shortCutsAddFormFieldDisplayName.value;
+// 				if (displayname == '') displayname = subreddit;
+// 				subreddit = subreddit.replace('/r/','').replace('r/','');
+// 				modules['subredditManager'].shortCutsAddFormField.value = '';
+// 				modules['subredditManager'].shortCutsAddFormFieldDisplayName.value = '';
+// 				modules['subredditManager'].shortCutsAddFormContainer.style.display = 'none';
+// 				if (subreddit) {
+// 					modules['subredditManager'].addSubredditShortcut(subreddit, displayname);
+// 				}
+// 			}, false);
+// 			this.shortCutsAdd.addEventListener('click', function(e) {
+// 				if (modules['subredditManager'].shortCutsAddFormContainer.style.display == 'none') {
+// 					modules['subredditManager'].shortCutsAddFormContainer.style.display = 'block';
+// 					modules['subredditManager'].shortCutsAddFormField.focus();
+// 				} else {
+// 					modules['subredditManager'].shortCutsAddFormContainer.style.display = 'none';
+// 					modules['subredditManager'].shortCutsAddFormField.blur();
+// 				}
+// 			}, false);
+// 			this.shortCutsEditContainer.appendChild(this.shortCutsAdd);
+// 			document.body.appendChild(this.shortCutsAddFormContainer);
 			
-			// add the "trash bin"...
-			this.shortCutsTrash = document.createElement('div');
-			// thisShortCut.setAttribute('draggable','true');
-			// thisShortCut.setAttribute('orderIndex',i);
-			this.shortCutsTrash.setAttribute('id','RESShortcutsTrash');
-			// thisShortCut.addEventListener('dragstart', modules['subredditManager'].subredditDragStart, false);
-			this.shortCutsTrash.addEventListener('dragenter', modules['subredditManager'].subredditDragEnter, false)
-			this.shortCutsTrash.addEventListener('dragleave', modules['subredditManager'].subredditDragLeave, false);
-			// thisShortCut.addEventListener('dragend', modules['subredditManager'].subredditDragEnd, false);
-			this.shortCutsTrash.addEventListener('dragover', modules['subredditManager'].subredditDragOver, false);
-			this.shortCutsTrash.addEventListener('drop', modules['subredditManager'].subredditDrop, false);
-			this.shortCutsEditContainer.appendChild(this.shortCutsTrash);
+// 			// add the "trash bin"...
+// 			this.shortCutsTrash = document.createElement('div');
+// 			// thisShortCut.setAttribute('draggable','true');
+// 			// thisShortCut.setAttribute('orderIndex',i);
+// 			this.shortCutsTrash.setAttribute('id','RESShortcutsTrash');
+// 			// thisShortCut.addEventListener('dragstart', modules['subredditManager'].subredditDragStart, false);
+// 			this.shortCutsTrash.addEventListener('dragenter', modules['subredditManager'].subredditDragEnter, false)
+// 			this.shortCutsTrash.addEventListener('dragleave', modules['subredditManager'].subredditDragLeave, false);
+// 			// thisShortCut.addEventListener('dragend', modules['subredditManager'].subredditDragEnd, false);
+// 			this.shortCutsTrash.addEventListener('dragover', modules['subredditManager'].subredditDragOver, false);
+// 			this.shortCutsTrash.addEventListener('drop', modules['subredditManager'].subredditDrop, false);
+// 			this.shortCutsEditContainer.appendChild(this.shortCutsTrash);
 			
-			// add left scroll arrow...
-			this.shortCutsLeft = document.createElement('div');
-			this.shortCutsLeft.setAttribute('id','RESShortcutsLeft');
-			this.shortCutsLeft.innerHTML = '';
-			this.shortCutsLeft.addEventListener('click', function(e) {
-				var marginLeft = modules['subredditManager'].shortCutsContainer.firstChild.style.marginLeft;
-				marginLeft = parseInt(marginLeft.replace('px',''));
-				if (isNaN(marginLeft)) marginLeft = 0;
-				marginLeft += (window.innerWidth - 380);
-				if (marginLeft <= 0) {
-					modules['subredditManager'].shortCutsContainer.firstChild.style.marginLeft = marginLeft + 'px';
-				}
-			}, false);
-			this.shortCutsEditContainer.appendChild(this.shortCutsLeft);
+// 			// add left scroll arrow...
+// 			this.shortCutsLeft = document.createElement('div');
+// 			this.shortCutsLeft.setAttribute('id','RESShortcutsLeft');
+// 			this.shortCutsLeft.innerHTML = '';
+// 			this.shortCutsLeft.addEventListener('click', function(e) {
+// 				var marginLeft = modules['subredditManager'].shortCutsContainer.firstChild.style.marginLeft;
+// 				marginLeft = parseInt(marginLeft.replace('px',''));
+// 				if (isNaN(marginLeft)) marginLeft = 0;
+// 				marginLeft += (window.innerWidth - 380);
+// 				if (marginLeft <= 0) {
+// 					modules['subredditManager'].shortCutsContainer.firstChild.style.marginLeft = marginLeft + 'px';
+// 				}
+// 			}, false);
+// 			this.shortCutsEditContainer.appendChild(this.shortCutsLeft);
 			
-			this.redrawShortcuts();
-		}
-	},
-	/* not working so great, too much glitchiness... maybe we'll address this later when we have more time...
-	showShortcutButtons: function() {
-			RESUtils.fadeElementIn(modules['subredditManager'].shortCutsEditContainer, 0.3);
-	},
-	hideShortcutButtons: function() {
-			RESUtils.fadeElementOut(modules['subredditManager'].shortCutsEditContainer, 0.3);
-	}, */
-	toggleSubredditDropdown: function() {
-		if (modules['subredditManager'].srList.style.display == 'block') {
-			modules['subredditManager'].srList.style.display = 'none';
-		} else {
-			if (RESUtils.loggedInUser()) {
-				modules['subredditManager'].srList.innerHTML = '<tr><td width="360">Loading subreddits (may take a moment)...<div id="subredditPagesLoaded"></div></td></tr>';
-				modules['subredditManager'].subredditPagesLoaded = modules['subredditManager'].srList.querySelector('#subredditPagesLoaded');
-				modules['subredditManager'].srList.style.display = 'block';
-				modules['subredditManager'].getSubreddits();
-			} else {
-				modules['subredditManager'].srList.innerHTML = '<tr><td width="360">You must be logged in to load your own list of subreddits. <a style="display: inline; float: left;" href="/reddits">browse them all</a></td></tr>';
-				modules['subredditManager'].srList.style.display = 'block';
-			}
-		}
-	},
-	mySubreddits: [
-	],
-	mySubredditShortcuts: [
-	],
-	getSubredditJSON: function(after) {
-		// console.log('getsubredditjson called');
-		var jsonURL = 'http://' + location.hostname + '/reddits/mine/.json';
-		if (after) jsonURL += '?after='+after;
-		// console.log('jsonURL: ' + jsonURL);
-		GM_xmlhttpRequest({
-			method:	"GET",
-			url:	jsonURL,
-			onload:	function(response) {
-				// console.log('json loaded...');
-				var thisResponse = JSON.parse(response.responseText);
-				// console.log(typeof(thisResponse.data));
-				// if (typeof(thisResponse.data) != 'undefined') console.log(typeof(thisResponse.data.children));;
-				if ((typeof(thisResponse.data) != 'undefined') && (typeof(thisResponse.data.children) != 'undefined')) {
-					// console.log('starting to process json...');
-					if (modules['subredditManager'].subredditPagesLoaded.innerHTML == '') {
-						modules['subredditManager'].subredditPagesLoaded.innerHTML = 'Pages loaded: 1';
-					} else {
-						var pages = modules['subredditManager'].subredditPagesLoaded.innerHTML.match(/:\ ([\d]+)/);
-						modules['subredditManager'].subredditPagesLoaded.innerHTML = 'Pages loaded: ' + (parseInt(pages[1])+1);
-					}
-					var now = new Date();
-					RESStorage.setItem('RESmodules.subredditManager.subreddits.lastCheck.'+RESUtils.loggedInUser(),now.getTime());
-					var subreddits = thisResponse.data.children;
-					for (var i=0, len=subreddits.length; i<len; i++) {
-						var srObj = {
-							display_name: subreddits[i].data.display_name,
-							url: subreddits[i].data.url,
-							over18: subreddits[i].data.over18,
-							id: subreddits[i].data.id,
-							created: subreddits[i].data.created,
-							description: subreddits[i].data.description,
-						}
-						modules['subredditManager'].mySubreddits.push(srObj);
-					}
-					if (thisResponse.data.after != null) {
-						modules['subredditManager'].getSubredditJSON(thisResponse.data.after);
-					} else {
-						modules['subredditManager'].mySubreddits.sort(function(a,b) {
-							var adisp = a.display_name.toLowerCase();
-							var bdisp = b.display_name.toLowerCase();
-							if (adisp > bdisp) return 1;
-							if (adisp == bdisp) return 0;
-							return -1;
-						});
-						RESStorage.setItem('RESmodules.subredditManager.subreddits.'+RESUtils.loggedInUser(),JSON.stringify(modules['subredditManager'].mySubreddits));
-						this.gettingSubreddits = false;
-						modules['subredditManager'].populateSubredditDropdown();
-					}
-				} else {
-					// user is probably not logged in.. no subreddits found.
-					modules['subredditManager'].populateSubredditDropdown(null, true);
-				}
-			}
-		});
+// 			this.redrawShortcuts();
+// 		}
+// 	},
+// 	/* not working so great, too much glitchiness... maybe we'll address this later when we have more time...
+// 	showShortcutButtons: function() {
+// 			RESUtils.fadeElementIn(modules['subredditManager'].shortCutsEditContainer, 0.3);
+// 	},
+// 	hideShortcutButtons: function() {
+// 			RESUtils.fadeElementOut(modules['subredditManager'].shortCutsEditContainer, 0.3);
+// 	}, */
+// 	toggleSubredditDropdown: function() {
+// 		if (modules['subredditManager'].srList.style.display == 'block') {
+// 			modules['subredditManager'].srList.style.display = 'none';
+// 		} else {
+// 			if (RESUtils.loggedInUser()) {
+// 				modules['subredditManager'].srList.innerHTML = '<tr><td width="360">Loading subreddits (may take a moment)...<div id="subredditPagesLoaded"></div></td></tr>';
+// 				modules['subredditManager'].subredditPagesLoaded = modules['subredditManager'].srList.querySelector('#subredditPagesLoaded');
+// 				modules['subredditManager'].srList.style.display = 'block';
+// 				modules['subredditManager'].getSubreddits();
+// 			} else {
+// 				modules['subredditManager'].srList.innerHTML = '<tr><td width="360">You must be logged in to load your own list of subreddits. <a style="display: inline; float: left;" href="/reddits">browse them all</a></td></tr>';
+// 				modules['subredditManager'].srList.style.display = 'block';
+// 			}
+// 		}
+// 	},
+// 	mySubreddits: [
+// 	],
+// 	mySubredditShortcuts: [
+// 	],
+// 	getSubredditJSON: function(after) {
+// 		// console.log('getsubredditjson called');
+// 		var jsonURL = 'http://' + location.hostname + '/reddits/mine/.json';
+// 		if (after) jsonURL += '?after='+after;
+// 		// console.log('jsonURL: ' + jsonURL);
+// 		GM_xmlhttpRequest({
+// 			method:	"GET",
+// 			url:	jsonURL,
+// 			onload:	function(response) {
+// 				// console.log('json loaded...');
+// 				var thisResponse = JSON.parse(response.responseText);
+// 				// console.log(typeof(thisResponse.data));
+// 				// if (typeof(thisResponse.data) != 'undefined') console.log(typeof(thisResponse.data.children));;
+// 				if ((typeof(thisResponse.data) != 'undefined') && (typeof(thisResponse.data.children) != 'undefined')) {
+// 					// console.log('starting to process json...');
+// 					if (modules['subredditManager'].subredditPagesLoaded.innerHTML == '') {
+// 						modules['subredditManager'].subredditPagesLoaded.innerHTML = 'Pages loaded: 1';
+// 					} else {
+// 						var pages = modules['subredditManager'].subredditPagesLoaded.innerHTML.match(/:\ ([\d]+)/);
+// 						modules['subredditManager'].subredditPagesLoaded.innerHTML = 'Pages loaded: ' + (parseInt(pages[1])+1);
+// 					}
+// 					var now = new Date();
+// 					RESStorage.setItem('RESmodules.subredditManager.subreddits.lastCheck.'+RESUtils.loggedInUser(),now.getTime());
+// 					var subreddits = thisResponse.data.children;
+// 					for (var i=0, len=subreddits.length; i<len; i++) {
+// 						var srObj = {
+// 							display_name: subreddits[i].data.display_name,
+// 							url: subreddits[i].data.url,
+// 							over18: subreddits[i].data.over18,
+// 							id: subreddits[i].data.id,
+// 							created: subreddits[i].data.created,
+// 							description: subreddits[i].data.description,
+// 						}
+// 						modules['subredditManager'].mySubreddits.push(srObj);
+// 					}
+// 					if (thisResponse.data.after != null) {
+// 						modules['subredditManager'].getSubredditJSON(thisResponse.data.after);
+// 					} else {
+// 						modules['subredditManager'].mySubreddits.sort(function(a,b) {
+// 							var adisp = a.display_name.toLowerCase();
+// 							var bdisp = b.display_name.toLowerCase();
+// 							if (adisp > bdisp) return 1;
+// 							if (adisp == bdisp) return 0;
+// 							return -1;
+// 						});
+// 						RESStorage.setItem('RESmodules.subredditManager.subreddits.'+RESUtils.loggedInUser(),JSON.stringify(modules['subredditManager'].mySubreddits));
+// 						this.gettingSubreddits = false;
+// 						modules['subredditManager'].populateSubredditDropdown();
+// 					}
+// 				} else {
+// 					// user is probably not logged in.. no subreddits found.
+// 					modules['subredditManager'].populateSubredditDropdown(null, true);
+// 				}
+// 			}
+// 		});
 	
-	},
-	getSubreddits: function() {
-		modules['subredditManager'].mySubreddits = [];
-		var lastCheck = parseInt(RESStorage.getItem('RESmodules.subredditManager.subreddits.lastCheck.'+RESUtils.loggedInUser())) || 0;
-		var now = new Date();
-		var check = RESStorage.getItem('RESmodules.subredditManager.subreddits.'+RESUtils.loggedInUser());
-		// 86400000 = 1 day
-		if (((now.getTime() - lastCheck) > 86400000) || (check == null) || (check == '') || (check.length == 0)) {
-			if (!this.gettingSubreddits) {
-				this.gettingSubreddits = true;
-				this.getSubredditJSON();
-			} 
-		} else {
-			modules['subredditManager'].mySubreddits = safeJSON.parse(check, 'RESmodules.subredditManager.subreddits.'+RESUtils.loggedInUser());
-			this.populateSubredditDropdown();
-		}
-	},
-	// if badJSON is true, then getSubredditJSON ran into an error...
-	populateSubredditDropdown: function(sortBy, badJSON) {
-		modules['subredditManager'].sortBy = sortBy || 'subreddit';
-		modules['subredditManager'].srList.innerHTML = '';
-		// NOTE WE NEED TO CHECK LAST TIME THEY UPDATED THEIR SUBREDDIT LIST AND REPOPULATE...
-		var theHead = document.createElement('thead');
-		var theRow = document.createElement('tr');
-		modules['subredditManager'].srHeader = document.createElement('td');
-		modules['subredditManager'].srHeader.addEventListener('click', function() {
-			if (modules['subredditManager'].sortBy == 'subreddit') {
-				modules['subredditManager'].populateSubredditDropdown('subredditDesc');
-			} else {
-				modules['subredditManager'].populateSubredditDropdown('subreddit');
-			}
-		}, false);
-		modules['subredditManager'].srHeader.innerHTML = 'subreddit';
-		modules['subredditManager'].srHeader.setAttribute('width','200');
-		modules['subredditManager'].lvHeader = document.createElement('td');
-		modules['subredditManager'].lvHeader.addEventListener('click', function() {
-			if (modules['subredditManager'].sortBy == 'lastVisited') {
-				modules['subredditManager'].populateSubredditDropdown('lastVisitedAsc');
-			} else {
-				modules['subredditManager'].populateSubredditDropdown('lastVisited');
-			}
-		}, false);
-		modules['subredditManager'].lvHeader.innerHTML = 'Last Visited';
-		modules['subredditManager'].lvHeader.setAttribute('width','120');
-		var scHeader = document.createElement('td');
-		// scHeader.innerHTML = '&nbsp;';
-		scHeader.innerHTML = '<a style="float: right;" href="/reddits">View all &raquo;</a>';
-		theRow.appendChild(modules['subredditManager'].srHeader);
-		theRow.appendChild(modules['subredditManager'].lvHeader);
-		theRow.appendChild(scHeader);
-		theHead.appendChild(theRow);
-		// theRow.innerHTML = '<td width="120">subreddit</td><td width="100">Last Visited</td><td></td>';
-		modules['subredditManager'].srList.appendChild(theHead);
-		var theBody = document.createElement('tbody');
-		if (!(badJSON)) {
-			var subredditCount = modules['subredditManager'].mySubreddits.length;
-			if (typeof(this.subredditsLastViewed) == 'undefined') {
-				var check = RESStorage.getItem('RESmodules.subredditManager.subredditsLastViewed.'+RESUtils.loggedInUser());
-				if (check) {
-					this.subredditsLastViewed = safeJSON.parse(check, 'RESmodules.subredditManager.subredditsLastViewed.'+RESUtils.loggedInUser());
-				} else {
-					this.subredditsLastViewed = {};
-				}
-			}
-			// copy modules['subredditManager'].mySubreddits to a placeholder array so we can sort without modifying it...
-			var sortableSubreddits = modules['subredditManager'].mySubreddits;
-			if (sortBy == 'lastVisited') {
-				modules['subredditManager'].lvHeader.innerHTML = 'Last Visited <div class="sortAsc"></div>';
-				modules['subredditManager'].srHeader.innerHTML = 'subreddit';
-				sortableSubreddits.sort(function(a, b) {
-					var adisp = a.display_name.toLowerCase();
-					var bdisp = b.display_name.toLowerCase();
-					(typeof(modules['subredditManager'].subredditsLastViewed[adisp]) == 'undefined') ? alv = 0 : alv = parseInt(modules['subredditManager'].subredditsLastViewed[adisp].last_visited);
-					(typeof(modules['subredditManager'].subredditsLastViewed[bdisp]) == 'undefined') ? blv = 0 : blv = parseInt(modules['subredditManager'].subredditsLastViewed[bdisp].last_visited);
-					if (alv < blv) return 1;
-					if (alv == blv) {
-						if (adisp > bdisp) return 1;
-						return -1;
-					}
-					return -1;
-				});
-			} else if (sortBy == 'lastVisitedAsc') {
-				modules['subredditManager'].lvHeader.innerHTML = 'Last Visited <div class="sortDesc"></div>';
-				modules['subredditManager'].srHeader.innerHTML = 'subreddit';
-				sortableSubreddits.sort(function(a, b) {
-					var adisp = a.display_name.toLowerCase();
-					var bdisp = b.display_name.toLowerCase();
-					(typeof(modules['subredditManager'].subredditsLastViewed[adisp]) == 'undefined') ? alv = 0 : alv = parseInt(modules['subredditManager'].subredditsLastViewed[adisp].last_visited);
-					(typeof(modules['subredditManager'].subredditsLastViewed[bdisp]) == 'undefined') ? blv = 0 : blv = parseInt(modules['subredditManager'].subredditsLastViewed[bdisp].last_visited);
-					if (alv > blv) return 1;
-					if (alv == blv) {
-						if (adisp > bdisp) return 1;
-						return -1;
-					}
-					return -1;
-				});
-			} else if (sortBy == 'subredditDesc') {
-				modules['subredditManager'].lvHeader.innerHTML = 'Last Visited';
-				modules['subredditManager'].srHeader.innerHTML = 'subreddit <div class="sortDesc"></div>';
-				sortableSubreddits.sort(function(a,b) {
-					var adisp = a.display_name.toLowerCase();
-					var bdisp = b.display_name.toLowerCase();
-					if (adisp < bdisp) return 1;
-					if (adisp == bdisp) return 0;
-					return -1;
-				});		
-			} else {
-				modules['subredditManager'].lvHeader.innerHTML = 'Last Visited';
-				modules['subredditManager'].srHeader.innerHTML = 'subreddit <div class="sortAsc"></div>';
-				sortableSubreddits.sort(function(a,b) {
-					var adisp = a.display_name.toLowerCase();
-					var bdisp = b.display_name.toLowerCase();
-					if (adisp > bdisp) return 1;
-					if (adisp == bdisp) return 0;
-					return -1;
-				});
-			}
-			for (var i=0; i<subredditCount; i++) {
-				var dateString = 'Never';
-				var thisReddit = sortableSubreddits[i].display_name.toLowerCase();
-				if (typeof(this.subredditsLastViewed[thisReddit]) != 'undefined') {
-					var ts = parseInt(this.subredditsLastViewed[thisReddit].last_visited);
-					var dateVisited = new Date(ts);
-					dateString = RESUtils.niceDate(dateVisited);
-				}
-				var theRow = document.createElement('tr');
-				var theSR = document.createElement('td');
-				theSR.innerHTML = '<a href="'+modules['subredditManager'].mySubreddits[i].url+'">'+modules['subredditManager'].mySubreddits[i].display_name+'</a>';
-				theRow.appendChild(theSR);
-				var theLV = document.createElement('td');
-				theLV.innerHTML = dateString;
-				theLV.setAttribute('class','RESvisited');
-				theRow.appendChild(theLV);
-				var theSC = document.createElement('td');
-				theSC.setAttribute('class','RESshortcut');
-				theSC.setAttribute('subreddit',modules['subredditManager'].mySubreddits[i].display_name);
-				var idx = -1;
-				for (var j=0, len=modules['subredditManager'].mySubredditShortcuts.length; j<len; j++) {
-					if (modules['subredditManager'].mySubredditShortcuts[j].subreddit == modules['subredditManager'].mySubreddits[i].display_name) {
-						idx=j;
-						break;
-					}
-				}
-				if (idx != -1) {
-					theSC.addEventListener('click', function(e) {
-						if (e.stopPropagation) {
-							e.stopPropagation(); // Stops from triggering the click on the bigger box, which toggles this window closed...
-						}
-						var subreddit = e.target.getAttribute('subreddit');
-						modules['subredditManager'].removeSubredditShortcut(subreddit);
-					}, false);
-					theSC.innerHTML = '-shortcut';
-				} else {
-					theSC.addEventListener('click', function(e) {
-						if (e.stopPropagation) {
-							e.stopPropagation(); // Stops from triggering the click on the bigger box, which toggles this window closed...
-						}
-						var subreddit = e.target.getAttribute('subreddit');
-						modules['subredditManager'].addSubredditShortcut(subreddit);
-					}, false);
-					theSC.innerHTML = '+shortcut';
-				}
-				theRow.appendChild(theSC);
-				theBody.appendChild(theRow);
-			}
-		} else {
-			var theRow = document.createElement('tr');
-			var theTD = document.createElement('td');
-			theTD.innerHTML = 'There was an error getting your subreddits. You may have third party cookies disabled by your browser. For this function to work, you\'ll need to add an exception for cookies from reddit.com<';
-			theTD.setAttribute('colspan','3');
-			theRow.appendChild(theTD);
-			theBody.appendChild(theRow);
-		}
-		modules['subredditManager'].srList.appendChild(theBody);
-	},
-	toggleSubredditShortcut: function(e) {
-		if (e.stopPropagation) {
-			e.stopPropagation(); // Stops from triggering the click on the bigger box, which toggles this window closed...
-		}
-		var idx = -1;
-		for (var i=0, len=modules['subredditManager'].mySubredditShortcuts.length; i<len; i++) {
-			if (modules['subredditManager'].mySubredditShortcuts[i].subreddit == e.target.getAttribute('subreddit')) {
-				idx=i;
-				break;
-			}
-		}
-		if (idx != -1) {
-			// modules['subredditManager'].mySubredditShortcuts.splice(idx,1);
-			modules['subredditManager'].removeSubredditShortcut(e.target.getAttribute('subreddit'));
-			e.target.setAttribute('title','Add this subreddit to your shortcut bar');
-			e.target.innerHTML = '+shortcut';
-			removeClass(e.target,'remove');
-		} else {
-			// modules['subredditManager'].mySubredditShortcuts.push(e.target.getAttribute('subreddit'));
-			modules['subredditManager'].addSubredditShortcut(e.target.getAttribute('subreddit'));
-			e.target.setAttribute('title','Remove this subreddit from your shortcut bar');
-			e.target.innerHTML = '-shortcut';
-			addClass(e.target,'remove');
-		}
-		modules['subredditManager'].redrawShortcuts();
-	},
-	addSubredditShortcut: function(subreddit, displayname) {
-		var idx = -1;
-		for (var i=0, len=modules['subredditManager'].mySubredditShortcuts.length; i<len; i++) {
-			if (modules['subredditManager'].mySubredditShortcuts[i].subreddit == subreddit) {
-				idx = i;
-				break;
-			}
-		}
-		if (idx != -1) {
-			alert('Whoops, you already have a shortcut for that subreddit');
-		} else {
-			displayname = displayname || subreddit;
-			subredditObj = {
-				subreddit: subreddit,
-				displayName: displayname
-			}
-			modules['subredditManager'].mySubredditShortcuts.push(subredditObj);
-			if (RESUtils.proEnabled()) {
-				if (typeof(modules['subredditManager'].RESPro) == 'undefined') {
-					if (RESStorage.getItem('RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser()) != null) {
-						var temp = safeJSON.parse(RESStorage.getItem('RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser()), 'RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser());
-					} else {
-						var temp = { add: {}, del: {} };
-					}
-					modules['subredditManager'].RESPro = temp;
-				}
-				if (typeof(modules['subredditManager'].RESPro.add) == 'undefined') {
-					modules['subredditManager'].RESPro.add = {}
-				}
-				if (typeof(modules['subredditManager'].RESPro.del) == 'undefined') {
-					modules['subredditManager'].RESPro.del = {}
-				}
-				// add this subreddit next time we sync...
-				modules['subredditManager'].RESPro.add[subreddit] = true;
-				// make sure we don't run a delete on this subreddit next time we sync...
-				if (typeof(modules['subredditManager'].RESPro.del[subreddit]) != 'undefined') delete modules['subredditManager'].RESPro.del[subreddit];
-				RESStorage.setItem('RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser(), JSON.stringify(modules['subredditManager'].RESPro));
-			}
-			RESStorage.setItem('RESmodules.subredditManager.subredditShortcuts.'+RESUtils.loggedInUser(), JSON.stringify(modules['subredditManager'].mySubredditShortcuts));
-			modules['subredditManager'].redrawShortcuts();
-			modules['subredditManager'].populateSubredditDropdown();
-			if (RESUtils.proEnabled()) {
-				modules['RESPro'].saveModuleData('subredditManager');
-			}
-			RESUtils.notification({ 
-				header: 'Subreddit Manager Notification', 
-				message: 'Subreddit shortcut added. You can edit by double clicking, or trash by dragging to the trash can.'
-			});
-		}
-	},
-	removeSubredditShortcut: function(subreddit) {
-		var idx = -1;
-		for (var i=0, len=modules['subredditManager'].mySubredditShortcuts.length; i<len; i++) {
-			if (modules['subredditManager'].mySubredditShortcuts[i].displayName == subreddit) {
-				idx = i;
-				break;
-			}
-		}
-		if (idx != -1) {
-			modules['subredditManager'].mySubredditShortcuts.splice(idx,1);
-			if (RESUtils.proEnabled()) {
-				if (typeof(modules['subredditManager'].RESPro) == 'undefined') {
-					if (RESStorage.getItem('RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser()) != null) {
-						var temp = safeJSON.parse(RESStorage.getItem('RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser()), 'RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser());
-					} else {
-						var temp = { add: {}, del: {} };
-					}
-					modules['subredditManager'].RESPro = temp;
-				}
-				if (typeof(modules['subredditManager'].RESPro.add) == 'undefined') {
-					modules['subredditManager'].RESPro.add = {}
-				}
-				if (typeof(modules['subredditManager'].RESPro.del) == 'undefined') {
-					modules['subredditManager'].RESPro.del = {}
-				}
-				// delete this subreddit next time we sync...
-				modules['subredditManager'].RESPro.del[subreddit] = true;
-				// make sure we don't run an add on this subreddit
-				if (typeof(modules['subredditManager'].RESPro.add[subreddit]) != 'undefined') delete modules['subredditManager'].RESPro.add[subreddit];
-				RESStorage.setItem('RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser(), JSON.stringify(modules['subredditManager'].RESPro));
-			}
-			RESStorage.setItem('RESmodules.subredditManager.subredditShortcuts.'+RESUtils.loggedInUser(), JSON.stringify(modules['subredditManager'].mySubredditShortcuts));
-			modules['subredditManager'].redrawShortcuts();
-			modules['subredditManager'].populateSubredditDropdown();
-			if (RESUtils.proEnabled()) {
-				modules['RESPro'].saveModuleData('subredditManager');
-			}
-		}
-	},
-	setLastViewtime: function() {
-		var check = RESStorage.getItem('RESmodules.subredditManager.subredditsLastViewed.'+RESUtils.loggedInUser());
-		if (check == null) {
-			this.subredditsLastViewed = {};
-		} else {
-			this.subredditsLastViewed = safeJSON.parse(check, 'RESmodules.subredditManager.subredditsLastViewed.'+RESUtils.loggedInUser());
-		}
-		var now = new Date();
-		var thisReddit = RESUtils.currentSubreddit().toLowerCase();
-		this.subredditsLastViewed[thisReddit] = {
-			last_visited: now.getTime()
-		}
-		RESStorage.setItem('RESmodules.subredditManager.subredditsLastViewed.'+RESUtils.loggedInUser(),JSON.stringify(this.subredditsLastViewed));
-	}
-}; // note: you NEED this semicolon at the end!
+// 	},
+// 	getSubreddits: function() {
+// 		modules['subredditManager'].mySubreddits = [];
+// 		var lastCheck = parseInt(RESStorage.getItem('RESmodules.subredditManager.subreddits.lastCheck.'+RESUtils.loggedInUser())) || 0;
+// 		var now = new Date();
+// 		var check = RESStorage.getItem('RESmodules.subredditManager.subreddits.'+RESUtils.loggedInUser());
+// 		// 86400000 = 1 day
+// 		if (((now.getTime() - lastCheck) > 86400000) || (check == null) || (check == '') || (check.length == 0)) {
+// 			if (!this.gettingSubreddits) {
+// 				this.gettingSubreddits = true;
+// 				this.getSubredditJSON();
+// 			} 
+// 		} else {
+// 			modules['subredditManager'].mySubreddits = safeJSON.parse(check, 'RESmodules.subredditManager.subreddits.'+RESUtils.loggedInUser());
+// 			this.populateSubredditDropdown();
+// 		}
+// 	},
+// 	// if badJSON is true, then getSubredditJSON ran into an error...
+// 	populateSubredditDropdown: function(sortBy, badJSON) {
+// 		modules['subredditManager'].sortBy = sortBy || 'subreddit';
+// 		modules['subredditManager'].srList.innerHTML = '';
+// 		// NOTE WE NEED TO CHECK LAST TIME THEY UPDATED THEIR SUBREDDIT LIST AND REPOPULATE...
+// 		var theHead = document.createElement('thead');
+// 		var theRow = document.createElement('tr');
+// 		modules['subredditManager'].srHeader = document.createElement('td');
+// 		modules['subredditManager'].srHeader.addEventListener('click', function() {
+// 			if (modules['subredditManager'].sortBy == 'subreddit') {
+// 				modules['subredditManager'].populateSubredditDropdown('subredditDesc');
+// 			} else {
+// 				modules['subredditManager'].populateSubredditDropdown('subreddit');
+// 			}
+// 		}, false);
+// 		modules['subredditManager'].srHeader.innerHTML = 'subreddit';
+// 		modules['subredditManager'].srHeader.setAttribute('width','200');
+// 		modules['subredditManager'].lvHeader = document.createElement('td');
+// 		modules['subredditManager'].lvHeader.addEventListener('click', function() {
+// 			if (modules['subredditManager'].sortBy == 'lastVisited') {
+// 				modules['subredditManager'].populateSubredditDropdown('lastVisitedAsc');
+// 			} else {
+// 				modules['subredditManager'].populateSubredditDropdown('lastVisited');
+// 			}
+// 		}, false);
+// 		modules['subredditManager'].lvHeader.innerHTML = 'Last Visited';
+// 		modules['subredditManager'].lvHeader.setAttribute('width','120');
+// 		var scHeader = document.createElement('td');
+// 		// scHeader.innerHTML = '&nbsp;';
+// 		scHeader.innerHTML = '<a style="float: right;" href="/reddits">View all &raquo;</a>';
+// 		theRow.appendChild(modules['subredditManager'].srHeader);
+// 		theRow.appendChild(modules['subredditManager'].lvHeader);
+// 		theRow.appendChild(scHeader);
+// 		theHead.appendChild(theRow);
+// 		// theRow.innerHTML = '<td width="120">subreddit</td><td width="100">Last Visited</td><td></td>';
+// 		modules['subredditManager'].srList.appendChild(theHead);
+// 		var theBody = document.createElement('tbody');
+// 		if (!(badJSON)) {
+// 			var subredditCount = modules['subredditManager'].mySubreddits.length;
+// 			if (typeof(this.subredditsLastViewed) == 'undefined') {
+// 				var check = RESStorage.getItem('RESmodules.subredditManager.subredditsLastViewed.'+RESUtils.loggedInUser());
+// 				if (check) {
+// 					this.subredditsLastViewed = safeJSON.parse(check, 'RESmodules.subredditManager.subredditsLastViewed.'+RESUtils.loggedInUser());
+// 				} else {
+// 					this.subredditsLastViewed = {};
+// 				}
+// 			}
+// 			// copy modules['subredditManager'].mySubreddits to a placeholder array so we can sort without modifying it...
+// 			var sortableSubreddits = modules['subredditManager'].mySubreddits;
+// 			if (sortBy == 'lastVisited') {
+// 				modules['subredditManager'].lvHeader.innerHTML = 'Last Visited <div class="sortAsc"></div>';
+// 				modules['subredditManager'].srHeader.innerHTML = 'subreddit';
+// 				sortableSubreddits.sort(function(a, b) {
+// 					var adisp = a.display_name.toLowerCase();
+// 					var bdisp = b.display_name.toLowerCase();
+// 					(typeof(modules['subredditManager'].subredditsLastViewed[adisp]) == 'undefined') ? alv = 0 : alv = parseInt(modules['subredditManager'].subredditsLastViewed[adisp].last_visited);
+// 					(typeof(modules['subredditManager'].subredditsLastViewed[bdisp]) == 'undefined') ? blv = 0 : blv = parseInt(modules['subredditManager'].subredditsLastViewed[bdisp].last_visited);
+// 					if (alv < blv) return 1;
+// 					if (alv == blv) {
+// 						if (adisp > bdisp) return 1;
+// 						return -1;
+// 					}
+// 					return -1;
+// 				});
+// 			} else if (sortBy == 'lastVisitedAsc') {
+// 				modules['subredditManager'].lvHeader.innerHTML = 'Last Visited <div class="sortDesc"></div>';
+// 				modules['subredditManager'].srHeader.innerHTML = 'subreddit';
+// 				sortableSubreddits.sort(function(a, b) {
+// 					var adisp = a.display_name.toLowerCase();
+// 					var bdisp = b.display_name.toLowerCase();
+// 					(typeof(modules['subredditManager'].subredditsLastViewed[adisp]) == 'undefined') ? alv = 0 : alv = parseInt(modules['subredditManager'].subredditsLastViewed[adisp].last_visited);
+// 					(typeof(modules['subredditManager'].subredditsLastViewed[bdisp]) == 'undefined') ? blv = 0 : blv = parseInt(modules['subredditManager'].subredditsLastViewed[bdisp].last_visited);
+// 					if (alv > blv) return 1;
+// 					if (alv == blv) {
+// 						if (adisp > bdisp) return 1;
+// 						return -1;
+// 					}
+// 					return -1;
+// 				});
+// 			} else if (sortBy == 'subredditDesc') {
+// 				modules['subredditManager'].lvHeader.innerHTML = 'Last Visited';
+// 				modules['subredditManager'].srHeader.innerHTML = 'subreddit <div class="sortDesc"></div>';
+// 				sortableSubreddits.sort(function(a,b) {
+// 					var adisp = a.display_name.toLowerCase();
+// 					var bdisp = b.display_name.toLowerCase();
+// 					if (adisp < bdisp) return 1;
+// 					if (adisp == bdisp) return 0;
+// 					return -1;
+// 				});		
+// 			} else {
+// 				modules['subredditManager'].lvHeader.innerHTML = 'Last Visited';
+// 				modules['subredditManager'].srHeader.innerHTML = 'subreddit <div class="sortAsc"></div>';
+// 				sortableSubreddits.sort(function(a,b) {
+// 					var adisp = a.display_name.toLowerCase();
+// 					var bdisp = b.display_name.toLowerCase();
+// 					if (adisp > bdisp) return 1;
+// 					if (adisp == bdisp) return 0;
+// 					return -1;
+// 				});
+// 			}
+// 			for (var i=0; i<subredditCount; i++) {
+// 				var dateString = 'Never';
+// 				var thisReddit = sortableSubreddits[i].display_name.toLowerCase();
+// 				if (typeof(this.subredditsLastViewed[thisReddit]) != 'undefined') {
+// 					var ts = parseInt(this.subredditsLastViewed[thisReddit].last_visited);
+// 					var dateVisited = new Date(ts);
+// 					dateString = RESUtils.niceDate(dateVisited);
+// 				}
+// 				var theRow = document.createElement('tr');
+// 				var theSR = document.createElement('td');
+// 				theSR.innerHTML = '<a href="'+modules['subredditManager'].mySubreddits[i].url+'">'+modules['subredditManager'].mySubreddits[i].display_name+'</a>';
+// 				theRow.appendChild(theSR);
+// 				var theLV = document.createElement('td');
+// 				theLV.innerHTML = dateString;
+// 				theLV.setAttribute('class','RESvisited');
+// 				theRow.appendChild(theLV);
+// 				var theSC = document.createElement('td');
+// 				theSC.setAttribute('class','RESshortcut');
+// 				theSC.setAttribute('subreddit',modules['subredditManager'].mySubreddits[i].display_name);
+// 				var idx = -1;
+// 				for (var j=0, len=modules['subredditManager'].mySubredditShortcuts.length; j<len; j++) {
+// 					if (modules['subredditManager'].mySubredditShortcuts[j].subreddit == modules['subredditManager'].mySubreddits[i].display_name) {
+// 						idx=j;
+// 						break;
+// 					}
+// 				}
+// 				if (idx != -1) {
+// 					theSC.addEventListener('click', function(e) {
+// 						if (e.stopPropagation) {
+// 							e.stopPropagation(); // Stops from triggering the click on the bigger box, which toggles this window closed...
+// 						}
+// 						var subreddit = e.target.getAttribute('subreddit');
+// 						modules['subredditManager'].removeSubredditShortcut(subreddit);
+// 					}, false);
+// 					theSC.innerHTML = '-shortcut';
+// 				} else {
+// 					theSC.addEventListener('click', function(e) {
+// 						if (e.stopPropagation) {
+// 							e.stopPropagation(); // Stops from triggering the click on the bigger box, which toggles this window closed...
+// 						}
+// 						var subreddit = e.target.getAttribute('subreddit');
+// 						modules['subredditManager'].addSubredditShortcut(subreddit);
+// 					}, false);
+// 					theSC.innerHTML = '+shortcut';
+// 				}
+// 				theRow.appendChild(theSC);
+// 				theBody.appendChild(theRow);
+// 			}
+// 		} else {
+// 			var theRow = document.createElement('tr');
+// 			var theTD = document.createElement('td');
+// 			theTD.innerHTML = 'There was an error getting your subreddits. You may have third party cookies disabled by your browser. For this function to work, you\'ll need to add an exception for cookies from reddit.com<';
+// 			theTD.setAttribute('colspan','3');
+// 			theRow.appendChild(theTD);
+// 			theBody.appendChild(theRow);
+// 		}
+// 		modules['subredditManager'].srList.appendChild(theBody);
+// 	},
+// 	toggleSubredditShortcut: function(e) {
+// 		if (e.stopPropagation) {
+// 			e.stopPropagation(); // Stops from triggering the click on the bigger box, which toggles this window closed...
+// 		}
+// 		var idx = -1;
+// 		for (var i=0, len=modules['subredditManager'].mySubredditShortcuts.length; i<len; i++) {
+// 			if (modules['subredditManager'].mySubredditShortcuts[i].subreddit == e.target.getAttribute('subreddit')) {
+// 				idx=i;
+// 				break;
+// 			}
+// 		}
+// 		if (idx != -1) {
+// 			// modules['subredditManager'].mySubredditShortcuts.splice(idx,1);
+// 			modules['subredditManager'].removeSubredditShortcut(e.target.getAttribute('subreddit'));
+// 			e.target.setAttribute('title','Add this subreddit to your shortcut bar');
+// 			e.target.innerHTML = '+shortcut';
+// 			removeClass(e.target,'remove');
+// 		} else {
+// 			// modules['subredditManager'].mySubredditShortcuts.push(e.target.getAttribute('subreddit'));
+// 			modules['subredditManager'].addSubredditShortcut(e.target.getAttribute('subreddit'));
+// 			e.target.setAttribute('title','Remove this subreddit from your shortcut bar');
+// 			e.target.innerHTML = '-shortcut';
+// 			addClass(e.target,'remove');
+// 		}
+// 		modules['subredditManager'].redrawShortcuts();
+// 	},
+// 	addSubredditShortcut: function(subreddit, displayname) {
+// 		var idx = -1;
+// 		for (var i=0, len=modules['subredditManager'].mySubredditShortcuts.length; i<len; i++) {
+// 			if (modules['subredditManager'].mySubredditShortcuts[i].subreddit == subreddit) {
+// 				idx = i;
+// 				break;
+// 			}
+// 		}
+// 		if (idx != -1) {
+// 			alert('Whoops, you already have a shortcut for that subreddit');
+// 		} else {
+// 			displayname = displayname || subreddit;
+// 			subredditObj = {
+// 				subreddit: subreddit,
+// 				displayName: displayname
+// 			}
+// 			modules['subredditManager'].mySubredditShortcuts.push(subredditObj);
+// 			if (RESUtils.proEnabled()) {
+// 				if (typeof(modules['subredditManager'].RESPro) == 'undefined') {
+// 					if (RESStorage.getItem('RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser()) != null) {
+// 						var temp = safeJSON.parse(RESStorage.getItem('RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser()), 'RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser());
+// 					} else {
+// 						var temp = { add: {}, del: {} };
+// 					}
+// 					modules['subredditManager'].RESPro = temp;
+// 				}
+// 				if (typeof(modules['subredditManager'].RESPro.add) == 'undefined') {
+// 					modules['subredditManager'].RESPro.add = {}
+// 				}
+// 				if (typeof(modules['subredditManager'].RESPro.del) == 'undefined') {
+// 					modules['subredditManager'].RESPro.del = {}
+// 				}
+// 				// add this subreddit next time we sync...
+// 				modules['subredditManager'].RESPro.add[subreddit] = true;
+// 				// make sure we don't run a delete on this subreddit next time we sync...
+// 				if (typeof(modules['subredditManager'].RESPro.del[subreddit]) != 'undefined') delete modules['subredditManager'].RESPro.del[subreddit];
+// 				RESStorage.setItem('RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser(), JSON.stringify(modules['subredditManager'].RESPro));
+// 			}
+// 			RESStorage.setItem('RESmodules.subredditManager.subredditShortcuts.'+RESUtils.loggedInUser(), JSON.stringify(modules['subredditManager'].mySubredditShortcuts));
+// 			modules['subredditManager'].redrawShortcuts();
+// 			modules['subredditManager'].populateSubredditDropdown();
+// 			if (RESUtils.proEnabled()) {
+// 				modules['RESPro'].saveModuleData('subredditManager');
+// 			}
+// 			RESUtils.notification({ 
+// 				header: 'Subreddit Manager Notification', 
+// 				message: 'Subreddit shortcut added. You can edit by double clicking, or trash by dragging to the trash can.'
+// 			});
+// 		}
+// 	},
+// 	removeSubredditShortcut: function(subreddit) {
+// 		var idx = -1;
+// 		for (var i=0, len=modules['subredditManager'].mySubredditShortcuts.length; i<len; i++) {
+// 			if (modules['subredditManager'].mySubredditShortcuts[i].displayName == subreddit) {
+// 				idx = i;
+// 				break;
+// 			}
+// 		}
+// 		if (idx != -1) {
+// 			modules['subredditManager'].mySubredditShortcuts.splice(idx,1);
+// 			if (RESUtils.proEnabled()) {
+// 				if (typeof(modules['subredditManager'].RESPro) == 'undefined') {
+// 					if (RESStorage.getItem('RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser()) != null) {
+// 						var temp = safeJSON.parse(RESStorage.getItem('RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser()), 'RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser());
+// 					} else {
+// 						var temp = { add: {}, del: {} };
+// 					}
+// 					modules['subredditManager'].RESPro = temp;
+// 				}
+// 				if (typeof(modules['subredditManager'].RESPro.add) == 'undefined') {
+// 					modules['subredditManager'].RESPro.add = {}
+// 				}
+// 				if (typeof(modules['subredditManager'].RESPro.del) == 'undefined') {
+// 					modules['subredditManager'].RESPro.del = {}
+// 				}
+// 				// delete this subreddit next time we sync...
+// 				modules['subredditManager'].RESPro.del[subreddit] = true;
+// 				// make sure we don't run an add on this subreddit
+// 				if (typeof(modules['subredditManager'].RESPro.add[subreddit]) != 'undefined') delete modules['subredditManager'].RESPro.add[subreddit];
+// 				RESStorage.setItem('RESmodules.subredditManager.subredditShortcuts.RESPro.'+RESUtils.loggedInUser(), JSON.stringify(modules['subredditManager'].RESPro));
+// 			}
+// 			RESStorage.setItem('RESmodules.subredditManager.subredditShortcuts.'+RESUtils.loggedInUser(), JSON.stringify(modules['subredditManager'].mySubredditShortcuts));
+// 			modules['subredditManager'].redrawShortcuts();
+// 			modules['subredditManager'].populateSubredditDropdown();
+// 			if (RESUtils.proEnabled()) {
+// 				modules['RESPro'].saveModuleData('subredditManager');
+// 			}
+// 		}
+// 	},
+// 	setLastViewtime: function() {
+// 		var check = RESStorage.getItem('RESmodules.subredditManager.subredditsLastViewed.'+RESUtils.loggedInUser());
+// 		if (check == null) {
+// 			this.subredditsLastViewed = {};
+// 		} else {
+// 			this.subredditsLastViewed = safeJSON.parse(check, 'RESmodules.subredditManager.subredditsLastViewed.'+RESUtils.loggedInUser());
+// 		}
+// 		var now = new Date();
+// 		var thisReddit = RESUtils.currentSubreddit().toLowerCase();
+// 		this.subredditsLastViewed[thisReddit] = {
+// 			last_visited: now.getTime()
+// 		}
+// 		RESStorage.setItem('RESmodules.subredditManager.subredditsLastViewed.'+RESUtils.loggedInUser(),JSON.stringify(this.subredditsLastViewed));
+// 	}
+// }; // note: you NEED this semicolon at the end!
 
 // RES Pro needs some work still... not ready yet.
 /*
@@ -15062,509 +15061,509 @@ modules['RESPro'] = {
 }; 
 */
 
-modules['dashboard'] = {
-	moduleID: 'dashboard',
-	moduleName: 'RES Dashboard',
-	category: 'UI',
-	options: {
-		defaultPosts: {
-			type: 'text',
-			value: 3,
-			description: 'Number of posts to show by default in each widget'
-		},
-		defaultSort: {
-			type: 'enum',
-			values: [
-				{ name: 'hot', value: 'hot' },
-				{ name: 'new', value: 'new' },
-				{ name: 'controversial', value: 'controversial' },
-				{ name: 'top', value: 'top' }
-			],
-			value: 'hot',
-			description: 'Default sort method for new widgets'
-		}
-	},
-	description: 'RES Dashboard',
-	isEnabled: function() {
-		return RESConsole.getModulePrefs(this.moduleID);
-	},
-	include: Array(
-		/^https?:\/\/([-\w\.]+\.)?reddit\.com\/[-\w\.\/]*/i
-	),
-	isMatchURL: function() {
-		return RESUtils.isMatchURL(this.moduleID);
-	},
-	go: function() {
-		if ((this.isEnabled()) && (this.isMatchURL())) {
-			$('#RESDropdownOptions').prepend('<li id="DashboardLink"><a href="/r/Dashboard">my dashboard</a></li>');
-			if (RESUtils.currentSubreddit()) {
-				RESUtils.addCSS('.RESDashboardToggle {}');
-				try {
-					this.widgets = JSON.parse(RESStorage.getItem('RESmodules.dashboard.' + RESUtils.loggedInUser())) || [];
-				} catch (e) {
-					this.widgets = [];
-				}
-				// one more safety check... not sure how people's widgets[] arrays are breaking.
-				if (!(this.widgets instanceof Array)) {
-					this.widgets = [];
-				}
-				if (RESUtils.currentSubreddit('dashboard')) {
-					$('#noresults, #header-bottom-left .tabmenu').hide();
-					$('#header-bottom-left .redditname a').html('My Dashboard');
-					this.drawDashboard();
-				}
-				this.addDashboardShortcuts();
-			}
-		}
-	},
-	loader: 'data:image/gif;base64,R0lGODlhEAAQAPQAAP///2+NyPb3+7zK5e3w95as1rPD4W+NyKC02oOdz8/Z7Nnh8HqVzMbS6XGOyI2l06m73gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAAFdyAgAgIJIeWoAkRCCMdBkKtIHIngyMKsErPBYbADpkSCwhDmQCBethRB6Vj4kFCkQPG4IlWDgrNRIwnO4UKBXDufzQvDMaoSDBgFb886MiQadgNABAokfCwzBA8LCg0Egl8jAggGAA1kBIA1BAYzlyILczULC2UhACH5BAkKAAAALAAAAAAQABAAAAV2ICACAmlAZTmOREEIyUEQjLKKxPHADhEvqxlgcGgkGI1DYSVAIAWMx+lwSKkICJ0QsHi9RgKBwnVTiRQQgwF4I4UFDQQEwi6/3YSGWRRmjhEETAJfIgMFCnAKM0KDV4EEEAQLiF18TAYNXDaSe3x6mjidN1s3IQAh+QQJCgAAACwAAAAAEAAQAAAFeCAgAgLZDGU5jgRECEUiCI+yioSDwDJyLKsXoHFQxBSHAoAAFBhqtMJg8DgQBgfrEsJAEAg4YhZIEiwgKtHiMBgtpg3wbUZXGO7kOb1MUKRFMysCChAoggJCIg0GC2aNe4gqQldfL4l/Ag1AXySJgn5LcoE3QXI3IQAh+QQJCgAAACwAAAAAEAAQAAAFdiAgAgLZNGU5joQhCEjxIssqEo8bC9BRjy9Ag7GILQ4QEoE0gBAEBcOpcBA0DoxSK/e8LRIHn+i1cK0IyKdg0VAoljYIg+GgnRrwVS/8IAkICyosBIQpBAMoKy9dImxPhS+GKkFrkX+TigtLlIyKXUF+NjagNiEAIfkECQoAAAAsAAAAABAAEAAABWwgIAICaRhlOY4EIgjH8R7LKhKHGwsMvb4AAy3WODBIBBKCsYA9TjuhDNDKEVSERezQEL0WrhXucRUQGuik7bFlngzqVW9LMl9XWvLdjFaJtDFqZ1cEZUB0dUgvL3dgP4WJZn4jkomWNpSTIyEAIfkECQoAAAAsAAAAABAAEAAABX4gIAICuSxlOY6CIgiD8RrEKgqGOwxwUrMlAoSwIzAGpJpgoSDAGifDY5kopBYDlEpAQBwevxfBtRIUGi8xwWkDNBCIwmC9Vq0aiQQDQuK+VgQPDXV9hCJjBwcFYU5pLwwHXQcMKSmNLQcIAExlbH8JBwttaX0ABAcNbWVbKyEAIfkECQoAAAAsAAAAABAAEAAABXkgIAICSRBlOY7CIghN8zbEKsKoIjdFzZaEgUBHKChMJtRwcWpAWoWnifm6ESAMhO8lQK0EEAV3rFopIBCEcGwDKAqPh4HUrY4ICHH1dSoTFgcHUiZjBhAJB2AHDykpKAwHAwdzf19KkASIPl9cDgcnDkdtNwiMJCshACH5BAkKAAAALAAAAAAQABAAAAV3ICACAkkQZTmOAiosiyAoxCq+KPxCNVsSMRgBsiClWrLTSWFoIQZHl6pleBh6suxKMIhlvzbAwkBWfFWrBQTxNLq2RG2yhSUkDs2b63AYDAoJXAcFRwADeAkJDX0AQCsEfAQMDAIPBz0rCgcxky0JRWE1AmwpKyEAIfkECQoAAAAsAAAAABAAEAAABXkgIAICKZzkqJ4nQZxLqZKv4NqNLKK2/Q4Ek4lFXChsg5ypJjs1II3gEDUSRInEGYAw6B6zM4JhrDAtEosVkLUtHA7RHaHAGJQEjsODcEg0FBAFVgkQJQ1pAwcDDw8KcFtSInwJAowCCA6RIwqZAgkPNgVpWndjdyohACH5BAkKAAAALAAAAAAQABAAAAV5ICACAimc5KieLEuUKvm2xAKLqDCfC2GaO9eL0LABWTiBYmA06W6kHgvCqEJiAIJiu3gcvgUsscHUERm+kaCxyxa+zRPk0SgJEgfIvbAdIAQLCAYlCj4DBw0IBQsMCjIqBAcPAooCBg9pKgsJLwUFOhCZKyQDA3YqIQAh+QQJCgAAACwAAAAAEAAQAAAFdSAgAgIpnOSonmxbqiThCrJKEHFbo8JxDDOZYFFb+A41E4H4OhkOipXwBElYITDAckFEOBgMQ3arkMkUBdxIUGZpEb7kaQBRlASPg0FQQHAbEEMGDSVEAA1QBhAED1E0NgwFAooCDWljaQIQCE5qMHcNhCkjIQAh+QQJCgAAACwAAAAAEAAQAAAFeSAgAgIpnOSoLgxxvqgKLEcCC65KEAByKK8cSpA4DAiHQ/DkKhGKh4ZCtCyZGo6F6iYYPAqFgYy02xkSaLEMV34tELyRYNEsCQyHlvWkGCzsPgMCEAY7Cg04Uk48LAsDhRA8MVQPEF0GAgqYYwSRlycNcWskCkApIyEAOwAAAAAAAAAAAA==',
-	drawDashboard: function() {
-		RESUtils.addCSS('.RESDashboardComponent { position: relative; border: 1px solid #cccccc; border-radius: 3px 3px 3px 3px; overflow: hidden; margin-bottom: 10px; }');
-		RESUtils.addCSS('.RESDashboardComponentHeader { box-sizing: border-box; padding: 5px 0px 5px 0px; background-color: #f0f3fc; height: 38px; }');
-		RESUtils.addCSS('.RESDashboardComponentScrim { position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; z-index: 5; display: none; }');
-		RESUtils.addCSS('.RESDashboardComponentLoader { box-sizing: border-box; position: absolute; background-color: #f2f9ff; border: 1px solid #b9d7f4; border-radius: 3px 3px 3px 3px; width: 314px; height: 40px; left: 50%; top: 50%; margin-left: -167px; margin-top: -20px; text-align: center; padding-top: 11px; }');
-		RESUtils.addCSS('.RESDashboardComponentLoader span { position: relative; top: -6px; left: 5px; } ');
-		RESUtils.addCSS('.RESDashboardComponentContainer { padding: 10px 15px 0px 15px; min-height: 100px; }');
-		RESUtils.addCSS('.RESDashboardComponentContainer.minimized { display: none; }');
-		RESUtils.addCSS('.RESDashboardComponent a.widgetPath, .addNewWidget { display: inline-block; margin-left: 0px; margin-top: 7px; color: #000000; font-weight: bold; }');
-		RESUtils.addCSS('.RESDashboardComponent a.widgetPath { margin-left: 15px; vertical-align: top; width: 120px; overflow: hidden; text-overflow: ellipsis; }');
-		RESUtils.addCSS('#RESDashboardAddComponent { box-sizing: border-box; padding: 5px 8px 5px 8px; vertical-align: middle; background-color: #cee3f8; border: 1px solid #336699;}');
-		// RESUtils.addCSS('#RESDashboardComponentScrim, #RESDashboardComponentLoader { background-color: #cccccc; opacity: 0.3; border: 1px solid red; display: none; }');
-		RESUtils.addCSS('#addRedditFormContainer, #addMailWidgetContainer, #addUserFormContainer { display: none; }');
-		RESUtils.addCSS('#addWidgetButtons, #addRedditFormContainer, #addMailWidgetContainer, #addUserFormContainer { width: 550px; height: 28px; float: right; text-align: right; }');
-		RESUtils.addCSS('#addUserForm, #addRedditForm { display: inline-block }');
-		RESUtils.addCSS('#addUser { width: 200px; height: 24px; }');
-		RESUtils.addCSS('#addRedditFormContainer ul.token-input-list-facebook { float: left; }');
-		RESUtils.addCSS('#addReddit { width: 115px; background-color: #ffffff; border: 1px solid #96bfe8; margin-left: 6px; margin-right: 6px; padding: 1px 2px 1px 2px; }');
-		RESUtils.addCSS('.addButton { cursor: pointer; display: inline-block; width: auto; padding-top: 3px; padding-bottom: 3px; padding-left: 5px; padding-right: 5px; font-size: 11px; color: #ffffff; border: 1px solid #636363; border-radius: 3px 3px 3px 3px; -moz-border-radius: 3px 3px 3px 3px; -webkit-border-radius: 3px 3px 3px 3px; background-color: #5cc410; margin-top: 3px; margin-left: 5px; }');
-		RESUtils.addCSS('.backToWidgetTypes { display: inline-block; vertical-align: top; margin-top: 8px; font-weight: bold; color: #000000; cursor: pointer; }');
-		RESUtils.addCSS('.RESDashboardComponentHeader ul { font-family: Verdana; font-size: 13px; box-sizing: border-box; height: 14px; line-height: 22px; display: inline-block; margin-top: 2px; }');
-		RESUtils.addCSS('.RESDashboardComponentHeader ul li { box-sizing: border-box; vertical-align: middle; height: 24px; display: inline-block; cursor: pointer; padding: 0px 6px 0px 6px; border: 1px solid #c7c7c7; background-color: #ffffff; color: #6c6c6c; border-radius: 3px 3px 3px 3px; }');
-		RESUtils.addCSS('.RESDashboardComponent.minimized ul li { display: none; }');
-		RESUtils.addCSS('.RESDashboardComponent.minimized li.RESClose, .RESDashboardComponent.minimized li.minimize { display: inline-block; }');
-		RESUtils.addCSS('ul.widgetSortButtons li { margin-right: 10px; }');
-		RESUtils.addCSS('.RESDashboardComponentHeader ul li.active, .RESDashboardComponentHeader ul li:hover { background-color: #a6ccf1; color: #ffffff; border-color: #699dcf; }');
-		RESUtils.addCSS('ul.widgetStateButtons li { margin-left: 10px; }');
-		RESUtils.addCSS('ul.widgetStateButtons li.disabled { background-color: #dddddd; }');
-		RESUtils.addCSS('ul.widgetStateButtons li.disabled:hover { cursor: auto; background-color: #dddddd; color: #6c6c6c; border: 1px solid #c7c7c7; }');
-		RESUtils.addCSS('ul.widgetSortButtons { margin-left: 10px; }');
-		RESUtils.addCSS('ul.widgetStateButtons { float: right; margin-right: 8px; }');
-		RESUtils.addCSS('ul.widgetStateButtons li.updateTime { cursor: auto; background: none; border: none; color: #afafaf; font-size: 9px; }');
-		RESUtils.addCSS('ul.widgetStateButtons li.minimize, ul.widgetStateButtons li.close { font-size: 24px; }');
-		RESUtils.addCSS('.minimized ul.widgetStateButtons li.minimize { font-size: 14px; }');
-		RESUtils.addCSS('ul.widgetStateButtons li.refresh { margin-left: 3px; width: 24px; position:relative; padding: 0px 0px; }');
-		RESUtils.addCSS('ul.widgetStateButtons li.refresh div { height: 16px; width: 16px; position: absolute; left: 4px; top: 4px; background-image: url(\'http://f.thumbs.redditmedia.com/ykyGgtUvyXldPc3A.png\'); background-repeat: no-repeat; background-position: -16px -209px; }');
+// modules['dashboard'] = {
+// 	moduleID: 'dashboard',
+// 	moduleName: 'RES Dashboard',
+// 	category: 'UI',
+// 	options: {
+// 		defaultPosts: {
+// 			type: 'text',
+// 			value: 3,
+// 			description: 'Number of posts to show by default in each widget'
+// 		},
+// 		defaultSort: {
+// 			type: 'enum',
+// 			values: [
+// 				{ name: 'hot', value: 'hot' },
+// 				{ name: 'new', value: 'new' },
+// 				{ name: 'controversial', value: 'controversial' },
+// 				{ name: 'top', value: 'top' }
+// 			],
+// 			value: 'hot',
+// 			description: 'Default sort method for new widgets'
+// 		}
+// 	},
+// 	description: 'RES Dashboard',
+// 	isEnabled: function() {
+// 		return RESConsole.getModulePrefs(this.moduleID);
+// 	},
+// 	include: Array(
+// 		/^https?:\/\/([-\w\.]+\.)?reddit\.com\/[-\w\.\/]*/i
+// 	),
+// 	isMatchURL: function() {
+// 		return RESUtils.isMatchURL(this.moduleID);
+// 	},
+// 	go: function() {
+// 		if ((this.isEnabled()) && (this.isMatchURL())) {
+// 			$('#RESDropdownOptions').prepend('<li id="DashboardLink"><a href="/r/Dashboard">my dashboard</a></li>');
+// 			if (RESUtils.currentSubreddit()) {
+// 				RESUtils.addCSS('.RESDashboardToggle {}');
+// 				try {
+// 					this.widgets = JSON.parse(RESStorage.getItem('RESmodules.dashboard.' + RESUtils.loggedInUser())) || [];
+// 				} catch (e) {
+// 					this.widgets = [];
+// 				}
+// 				// one more safety check... not sure how people's widgets[] arrays are breaking.
+// 				if (!(this.widgets instanceof Array)) {
+// 					this.widgets = [];
+// 				}
+// 				if (RESUtils.currentSubreddit('dashboard')) {
+// 					$('#noresults, #header-bottom-left .tabmenu').hide();
+// 					$('#header-bottom-left .redditname a').html('My Dashboard');
+// 					this.drawDashboard();
+// 				}
+// 				this.addDashboardShortcuts();
+// 			}
+// 		}
+// 	},
+// 	loader: 'data:image/gif;base64,R0lGODlhEAAQAPQAAP///2+NyPb3+7zK5e3w95as1rPD4W+NyKC02oOdz8/Z7Nnh8HqVzMbS6XGOyI2l06m73gAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAAFdyAgAgIJIeWoAkRCCMdBkKtIHIngyMKsErPBYbADpkSCwhDmQCBethRB6Vj4kFCkQPG4IlWDgrNRIwnO4UKBXDufzQvDMaoSDBgFb886MiQadgNABAokfCwzBA8LCg0Egl8jAggGAA1kBIA1BAYzlyILczULC2UhACH5BAkKAAAALAAAAAAQABAAAAV2ICACAmlAZTmOREEIyUEQjLKKxPHADhEvqxlgcGgkGI1DYSVAIAWMx+lwSKkICJ0QsHi9RgKBwnVTiRQQgwF4I4UFDQQEwi6/3YSGWRRmjhEETAJfIgMFCnAKM0KDV4EEEAQLiF18TAYNXDaSe3x6mjidN1s3IQAh+QQJCgAAACwAAAAAEAAQAAAFeCAgAgLZDGU5jgRECEUiCI+yioSDwDJyLKsXoHFQxBSHAoAAFBhqtMJg8DgQBgfrEsJAEAg4YhZIEiwgKtHiMBgtpg3wbUZXGO7kOb1MUKRFMysCChAoggJCIg0GC2aNe4gqQldfL4l/Ag1AXySJgn5LcoE3QXI3IQAh+QQJCgAAACwAAAAAEAAQAAAFdiAgAgLZNGU5joQhCEjxIssqEo8bC9BRjy9Ag7GILQ4QEoE0gBAEBcOpcBA0DoxSK/e8LRIHn+i1cK0IyKdg0VAoljYIg+GgnRrwVS/8IAkICyosBIQpBAMoKy9dImxPhS+GKkFrkX+TigtLlIyKXUF+NjagNiEAIfkECQoAAAAsAAAAABAAEAAABWwgIAICaRhlOY4EIgjH8R7LKhKHGwsMvb4AAy3WODBIBBKCsYA9TjuhDNDKEVSERezQEL0WrhXucRUQGuik7bFlngzqVW9LMl9XWvLdjFaJtDFqZ1cEZUB0dUgvL3dgP4WJZn4jkomWNpSTIyEAIfkECQoAAAAsAAAAABAAEAAABX4gIAICuSxlOY6CIgiD8RrEKgqGOwxwUrMlAoSwIzAGpJpgoSDAGifDY5kopBYDlEpAQBwevxfBtRIUGi8xwWkDNBCIwmC9Vq0aiQQDQuK+VgQPDXV9hCJjBwcFYU5pLwwHXQcMKSmNLQcIAExlbH8JBwttaX0ABAcNbWVbKyEAIfkECQoAAAAsAAAAABAAEAAABXkgIAICSRBlOY7CIghN8zbEKsKoIjdFzZaEgUBHKChMJtRwcWpAWoWnifm6ESAMhO8lQK0EEAV3rFopIBCEcGwDKAqPh4HUrY4ICHH1dSoTFgcHUiZjBhAJB2AHDykpKAwHAwdzf19KkASIPl9cDgcnDkdtNwiMJCshACH5BAkKAAAALAAAAAAQABAAAAV3ICACAkkQZTmOAiosiyAoxCq+KPxCNVsSMRgBsiClWrLTSWFoIQZHl6pleBh6suxKMIhlvzbAwkBWfFWrBQTxNLq2RG2yhSUkDs2b63AYDAoJXAcFRwADeAkJDX0AQCsEfAQMDAIPBz0rCgcxky0JRWE1AmwpKyEAIfkECQoAAAAsAAAAABAAEAAABXkgIAICKZzkqJ4nQZxLqZKv4NqNLKK2/Q4Ek4lFXChsg5ypJjs1II3gEDUSRInEGYAw6B6zM4JhrDAtEosVkLUtHA7RHaHAGJQEjsODcEg0FBAFVgkQJQ1pAwcDDw8KcFtSInwJAowCCA6RIwqZAgkPNgVpWndjdyohACH5BAkKAAAALAAAAAAQABAAAAV5ICACAimc5KieLEuUKvm2xAKLqDCfC2GaO9eL0LABWTiBYmA06W6kHgvCqEJiAIJiu3gcvgUsscHUERm+kaCxyxa+zRPk0SgJEgfIvbAdIAQLCAYlCj4DBw0IBQsMCjIqBAcPAooCBg9pKgsJLwUFOhCZKyQDA3YqIQAh+QQJCgAAACwAAAAAEAAQAAAFdSAgAgIpnOSonmxbqiThCrJKEHFbo8JxDDOZYFFb+A41E4H4OhkOipXwBElYITDAckFEOBgMQ3arkMkUBdxIUGZpEb7kaQBRlASPg0FQQHAbEEMGDSVEAA1QBhAED1E0NgwFAooCDWljaQIQCE5qMHcNhCkjIQAh+QQJCgAAACwAAAAAEAAQAAAFeSAgAgIpnOSoLgxxvqgKLEcCC65KEAByKK8cSpA4DAiHQ/DkKhGKh4ZCtCyZGo6F6iYYPAqFgYy02xkSaLEMV34tELyRYNEsCQyHlvWkGCzsPgMCEAY7Cg04Uk48LAsDhRA8MVQPEF0GAgqYYwSRlycNcWskCkApIyEAOwAAAAAAAAAAAA==',
+// 	drawDashboard: function() {
+// 		RESUtils.addCSS('.RESDashboardComponent { position: relative; border: 1px solid #cccccc; border-radius: 3px 3px 3px 3px; overflow: hidden; margin-bottom: 10px; }');
+// 		RESUtils.addCSS('.RESDashboardComponentHeader { box-sizing: border-box; padding: 5px 0px 5px 0px; background-color: #f0f3fc; height: 38px; }');
+// 		RESUtils.addCSS('.RESDashboardComponentScrim { position: absolute; top: 0px; bottom: 0px; left: 0px; right: 0px; z-index: 5; display: none; }');
+// 		RESUtils.addCSS('.RESDashboardComponentLoader { box-sizing: border-box; position: absolute; background-color: #f2f9ff; border: 1px solid #b9d7f4; border-radius: 3px 3px 3px 3px; width: 314px; height: 40px; left: 50%; top: 50%; margin-left: -167px; margin-top: -20px; text-align: center; padding-top: 11px; }');
+// 		RESUtils.addCSS('.RESDashboardComponentLoader span { position: relative; top: -6px; left: 5px; } ');
+// 		RESUtils.addCSS('.RESDashboardComponentContainer { padding: 10px 15px 0px 15px; min-height: 100px; }');
+// 		RESUtils.addCSS('.RESDashboardComponentContainer.minimized { display: none; }');
+// 		RESUtils.addCSS('.RESDashboardComponent a.widgetPath, .addNewWidget { display: inline-block; margin-left: 0px; margin-top: 7px; color: #000000; font-weight: bold; }');
+// 		RESUtils.addCSS('.RESDashboardComponent a.widgetPath { margin-left: 15px; vertical-align: top; width: 120px; overflow: hidden; text-overflow: ellipsis; }');
+// 		RESUtils.addCSS('#RESDashboardAddComponent { box-sizing: border-box; padding: 5px 8px 5px 8px; vertical-align: middle; background-color: #cee3f8; border: 1px solid #336699;}');
+// 		// RESUtils.addCSS('#RESDashboardComponentScrim, #RESDashboardComponentLoader { background-color: #cccccc; opacity: 0.3; border: 1px solid red; display: none; }');
+// 		RESUtils.addCSS('#addRedditFormContainer, #addMailWidgetContainer, #addUserFormContainer { display: none; }');
+// 		RESUtils.addCSS('#addWidgetButtons, #addRedditFormContainer, #addMailWidgetContainer, #addUserFormContainer { width: 550px; height: 28px; float: right; text-align: right; }');
+// 		RESUtils.addCSS('#addUserForm, #addRedditForm { display: inline-block }');
+// 		RESUtils.addCSS('#addUser { width: 200px; height: 24px; }');
+// 		RESUtils.addCSS('#addRedditFormContainer ul.token-input-list-facebook { float: left; }');
+// 		RESUtils.addCSS('#addReddit { width: 115px; background-color: #ffffff; border: 1px solid #96bfe8; margin-left: 6px; margin-right: 6px; padding: 1px 2px 1px 2px; }');
+// 		RESUtils.addCSS('.addButton { cursor: pointer; display: inline-block; width: auto; padding-top: 3px; padding-bottom: 3px; padding-left: 5px; padding-right: 5px; font-size: 11px; color: #ffffff; border: 1px solid #636363; border-radius: 3px 3px 3px 3px; -moz-border-radius: 3px 3px 3px 3px; -webkit-border-radius: 3px 3px 3px 3px; background-color: #5cc410; margin-top: 3px; margin-left: 5px; }');
+// 		RESUtils.addCSS('.backToWidgetTypes { display: inline-block; vertical-align: top; margin-top: 8px; font-weight: bold; color: #000000; cursor: pointer; }');
+// 		RESUtils.addCSS('.RESDashboardComponentHeader ul { font-family: Verdana; font-size: 13px; box-sizing: border-box; height: 14px; line-height: 22px; display: inline-block; margin-top: 2px; }');
+// 		RESUtils.addCSS('.RESDashboardComponentHeader ul li { box-sizing: border-box; vertical-align: middle; height: 24px; display: inline-block; cursor: pointer; padding: 0px 6px 0px 6px; border: 1px solid #c7c7c7; background-color: #ffffff; color: #6c6c6c; border-radius: 3px 3px 3px 3px; }');
+// 		RESUtils.addCSS('.RESDashboardComponent.minimized ul li { display: none; }');
+// 		RESUtils.addCSS('.RESDashboardComponent.minimized li.RESClose, .RESDashboardComponent.minimized li.minimize { display: inline-block; }');
+// 		RESUtils.addCSS('ul.widgetSortButtons li { margin-right: 10px; }');
+// 		RESUtils.addCSS('.RESDashboardComponentHeader ul li.active, .RESDashboardComponentHeader ul li:hover { background-color: #a6ccf1; color: #ffffff; border-color: #699dcf; }');
+// 		RESUtils.addCSS('ul.widgetStateButtons li { margin-left: 10px; }');
+// 		RESUtils.addCSS('ul.widgetStateButtons li.disabled { background-color: #dddddd; }');
+// 		RESUtils.addCSS('ul.widgetStateButtons li.disabled:hover { cursor: auto; background-color: #dddddd; color: #6c6c6c; border: 1px solid #c7c7c7; }');
+// 		RESUtils.addCSS('ul.widgetSortButtons { margin-left: 10px; }');
+// 		RESUtils.addCSS('ul.widgetStateButtons { float: right; margin-right: 8px; }');
+// 		RESUtils.addCSS('ul.widgetStateButtons li.updateTime { cursor: auto; background: none; border: none; color: #afafaf; font-size: 9px; }');
+// 		RESUtils.addCSS('ul.widgetStateButtons li.minimize, ul.widgetStateButtons li.close { font-size: 24px; }');
+// 		RESUtils.addCSS('.minimized ul.widgetStateButtons li.minimize { font-size: 14px; }');
+// 		RESUtils.addCSS('ul.widgetStateButtons li.refresh { margin-left: 3px; width: 24px; position:relative; padding: 0px 0px; }');
+// 		RESUtils.addCSS('ul.widgetStateButtons li.refresh div { height: 16px; width: 16px; position: absolute; left: 4px; top: 4px; background-image: url(\'http://f.thumbs.redditmedia.com/ykyGgtUvyXldPc3A.png\'); background-repeat: no-repeat; background-position: -16px -209px; }');
 
-		// add each subreddit widget...
-		// add the "add widget" form...
-		this.attachAddComponent();
-		this.initUpdateQueue();
-	},
-	initUpdateQueue: function() {
-		modules['dashboard'].updateQueue = [];
-		for (i in this.widgets) if (this.widgets[i]) this.addWidget(this.widgets[i]);
-		setTimeout(function () {
-			$('#RESDashboard').dragsort({ dragSelector: "div.RESDashboardComponentHeader", dragSelectorExclude: 'a, li, li.refresh > div', dragEnd: modules['dashboard'].saveOrder, placeHolderTemplate: "<div class='placeHolder'><div></div></div>" });
-		}, 300);
-	},
-	addToUpdateQueue: function(updateFunction) {
-		modules['dashboard'].updateQueue.push(updateFunction);
-		if (!modules['dashboard'].updateQueueTimer) {
-			modules['dashboard'].updateQueueTimer = setInterval(modules['dashboard'].processUpdateQueue, 2000);
-			setTimeout(modules['dashboard'].processUpdateQueue, 100);
-		}
-	},
-	processUpdateQueue: function() {
-		var thisUpdate = modules['dashboard'].updateQueue.pop();
-		thisUpdate();
-		if (modules['dashboard'].updateQueue.length < 1) {
-			clearInterval(modules['dashboard'].updateQueueTimer);
-			delete modules['dashboard'].updateQueueTimer;
-		}
-	},
-	saveOrder: function() {
-		var data = $("#siteTable li.RESDashboardComponent").map(function() { return $(this).attr("id"); }).get();
-		data.reverse();
-		var newOrder = [];
-		for (var i=0, len=modules['dashboard'].widgets.length; i<len; i++) {
-			var newIndex = data.indexOf(modules['dashboard'].widgets[i].basePath.replace(/(\/|\+)/g, '_'));
-			newOrder[newIndex] = modules['dashboard'].widgets[i];
-		}
-		modules['dashboard'].widgets = newOrder;
-		delete newOrder;
-		RESStorage.setItem('RESmodules.dashboard.' + RESUtils.loggedInUser(), JSON.stringify(modules['dashboard'].widgets));
-	},
-	attachAddComponent: function() {
-		this.siteTable = $('#siteTable.linklisting');
-		this.dashboardAddComponent = $('<div id="RESDashboardAddComponent" class="RESDashboardComponent" />');
-		$(this.dashboardAddComponent).html(' \
-			<div class="addNewWidget">Add a new widget</div> \
-			<div id="addWidgetButtons"> \
-				<div class="addButton" id="addMailWidget">+mail widget</div> \
-				<div class="addButton" id="addUserWidget">+user widget</div> \
-				<div class="addButton" id="addRedditWidget">+subreddit widget</div> \
-			</div> \
-			<div id="addMailWidgetContainer"> \
-				<div class="backToWidgetTypes">&laquo; back</div> \
-				<div class="addButton widgetShortcut" widgetPath="/message/inbox/">+inbox</div> \
-				<div class="addButton widgetShortcut" widgetPath="/message/unread/">+unread</div> \
-				<div class="addButton widgetShortcut" widgetPath="/message/messages/">+messages</div> \
-				<div class="addButton widgetShortcut" widgetPath="/message/comments/">+comment replies</div> \
-				<div class="addButton widgetShortcut" widgetPath="/message/selfreply/">+post replies</div> \
-			</div> \
-			<div id="addUserFormContainer" class="addUserForm"> \
-				<div class="backToWidgetTypes">&laquo; back</div> \
-				<form id="addUserForm"><input type="text" id="addUser"><input type="submit" class="addButton" value="+add"></form> \
-			</div> \
-			<div id="addRedditFormContainer" class="addRedditForm"> \
-				<div class="backToWidgetTypes">&laquo; back</div> \
-				<form id="addRedditForm"><input type="text" id="addReddit"><input type="submit" class="addButton" value="+add"></form> \
-			</div> \
-		');
-		$(this.dashboardAddComponent).find('.backToWidgetTypes').click(function(e) {
-			$(this).parent().fadeOut(function() {
-				$('#addWidgetButtons').fadeIn();
-			});
-		});
-		$(this.dashboardAddComponent).find('.widgetShortcut').click(function(e) {
-			var thisBasePath = $(this).attr('widgetPath');
-			modules['dashboard'].addWidget({
-				basePath: thisBasePath
-			}, true);
-			$('#addMailWidgetContainer').fadeOut(function() {
-				$('#addWidgetButtons').fadeIn();
-			});
-		});
-		$(this.dashboardAddComponent).find('#addRedditWidget').click(function(e) {
-			$('#addWidgetButtons').fadeOut(function() {
-				$('#addRedditFormContainer').fadeIn();
-			});
-		});
-		$(this.dashboardAddComponent).find('#addMailWidget').click(function(e) {
-			$('#addWidgetButtons').fadeOut(function() {
-				$('#addMailWidgetContainer').fadeIn();
-			});
-		});;
-		$(this.dashboardAddComponent).find('#addUserWidget').click(function(e) {
-			$('#addWidgetButtons').fadeOut(function() {
-				$('#addUserFormContainer').fadeIn();
-			});
-		});;
-		var thisEle = $(this.dashboardAddComponent).find('#addReddit');
-		$(thisEle).tokenInput('/api/search_reddit_names.json', {
-			method: "POST",
-			queryParam: "query",
-			theme: "facebook",
-			onResult: function(response) {
-						var names = response.names;
-						var results = [];
-						for (var i=0, len=names.length; i<len; i++) {
-							results.push({id: names[i], name: names[i]});
-						}
-						if (names.length == 0) {
-							var failedQueryValue = $('#token-input-addReddit').val();
-							results.push({id: failedQueryValue, name: failedQueryValue, failedResult: true});
-						}
-						return results;
-					},
-			/* prePopulate: prepop, */
-			searchingText: 'Searching for matching reddits - may take a few seconds...',
-			hintText: 'Type one or more subreddits for which to create a widget.',
-			resultsFormatter: function(item) { 
-				var thisDesc = item[this.propertyToSearch];
-				if (item['failedResult']) thisDesc += ' - [this subreddit may not exist, ensure proper spelling]';
-				return "<li>" + thisDesc + "</li>" 
-			}
-		});
+// 		// add each subreddit widget...
+// 		// add the "add widget" form...
+// 		this.attachAddComponent();
+// 		this.initUpdateQueue();
+// 	},
+// 	initUpdateQueue: function() {
+// 		modules['dashboard'].updateQueue = [];
+// 		for (i in this.widgets) if (this.widgets[i]) this.addWidget(this.widgets[i]);
+// 		setTimeout(function () {
+// 			$('#RESDashboard').dragsort({ dragSelector: "div.RESDashboardComponentHeader", dragSelectorExclude: 'a, li, li.refresh > div', dragEnd: modules['dashboard'].saveOrder, placeHolderTemplate: "<div class='placeHolder'><div></div></div>" });
+// 		}, 300);
+// 	},
+// 	addToUpdateQueue: function(updateFunction) {
+// 		modules['dashboard'].updateQueue.push(updateFunction);
+// 		if (!modules['dashboard'].updateQueueTimer) {
+// 			modules['dashboard'].updateQueueTimer = setInterval(modules['dashboard'].processUpdateQueue, 2000);
+// 			setTimeout(modules['dashboard'].processUpdateQueue, 100);
+// 		}
+// 	},
+// 	processUpdateQueue: function() {
+// 		var thisUpdate = modules['dashboard'].updateQueue.pop();
+// 		thisUpdate();
+// 		if (modules['dashboard'].updateQueue.length < 1) {
+// 			clearInterval(modules['dashboard'].updateQueueTimer);
+// 			delete modules['dashboard'].updateQueueTimer;
+// 		}
+// 	},
+// 	saveOrder: function() {
+// 		var data = $("#siteTable li.RESDashboardComponent").map(function() { return $(this).attr("id"); }).get();
+// 		data.reverse();
+// 		var newOrder = [];
+// 		for (var i=0, len=modules['dashboard'].widgets.length; i<len; i++) {
+// 			var newIndex = data.indexOf(modules['dashboard'].widgets[i].basePath.replace(/(\/|\+)/g, '_'));
+// 			newOrder[newIndex] = modules['dashboard'].widgets[i];
+// 		}
+// 		modules['dashboard'].widgets = newOrder;
+// 		delete newOrder;
+// 		RESStorage.setItem('RESmodules.dashboard.' + RESUtils.loggedInUser(), JSON.stringify(modules['dashboard'].widgets));
+// 	},
+// 	attachAddComponent: function() {
+// 		this.siteTable = $('#siteTable.linklisting');
+// 		this.dashboardAddComponent = $('<div id="RESDashboardAddComponent" class="RESDashboardComponent" />');
+// 		$(this.dashboardAddComponent).html(' \
+// 			<div class="addNewWidget">Add a new widget</div> \
+// 			<div id="addWidgetButtons"> \
+// 				<div class="addButton" id="addMailWidget">+mail widget</div> \
+// 				<div class="addButton" id="addUserWidget">+user widget</div> \
+// 				<div class="addButton" id="addRedditWidget">+subreddit widget</div> \
+// 			</div> \
+// 			<div id="addMailWidgetContainer"> \
+// 				<div class="backToWidgetTypes">&laquo; back</div> \
+// 				<div class="addButton widgetShortcut" widgetPath="/message/inbox/">+inbox</div> \
+// 				<div class="addButton widgetShortcut" widgetPath="/message/unread/">+unread</div> \
+// 				<div class="addButton widgetShortcut" widgetPath="/message/messages/">+messages</div> \
+// 				<div class="addButton widgetShortcut" widgetPath="/message/comments/">+comment replies</div> \
+// 				<div class="addButton widgetShortcut" widgetPath="/message/selfreply/">+post replies</div> \
+// 			</div> \
+// 			<div id="addUserFormContainer" class="addUserForm"> \
+// 				<div class="backToWidgetTypes">&laquo; back</div> \
+// 				<form id="addUserForm"><input type="text" id="addUser"><input type="submit" class="addButton" value="+add"></form> \
+// 			</div> \
+// 			<div id="addRedditFormContainer" class="addRedditForm"> \
+// 				<div class="backToWidgetTypes">&laquo; back</div> \
+// 				<form id="addRedditForm"><input type="text" id="addReddit"><input type="submit" class="addButton" value="+add"></form> \
+// 			</div> \
+// 		');
+// 		$(this.dashboardAddComponent).find('.backToWidgetTypes').click(function(e) {
+// 			$(this).parent().fadeOut(function() {
+// 				$('#addWidgetButtons').fadeIn();
+// 			});
+// 		});
+// 		$(this.dashboardAddComponent).find('.widgetShortcut').click(function(e) {
+// 			var thisBasePath = $(this).attr('widgetPath');
+// 			modules['dashboard'].addWidget({
+// 				basePath: thisBasePath
+// 			}, true);
+// 			$('#addMailWidgetContainer').fadeOut(function() {
+// 				$('#addWidgetButtons').fadeIn();
+// 			});
+// 		});
+// 		$(this.dashboardAddComponent).find('#addRedditWidget').click(function(e) {
+// 			$('#addWidgetButtons').fadeOut(function() {
+// 				$('#addRedditFormContainer').fadeIn();
+// 			});
+// 		});
+// 		$(this.dashboardAddComponent).find('#addMailWidget').click(function(e) {
+// 			$('#addWidgetButtons').fadeOut(function() {
+// 				$('#addMailWidgetContainer').fadeIn();
+// 			});
+// 		});;
+// 		$(this.dashboardAddComponent).find('#addUserWidget').click(function(e) {
+// 			$('#addWidgetButtons').fadeOut(function() {
+// 				$('#addUserFormContainer').fadeIn();
+// 			});
+// 		});;
+// 		var thisEle = $(this.dashboardAddComponent).find('#addReddit');
+// 		$(thisEle).tokenInput('/api/search_reddit_names.json', {
+// 			method: "POST",
+// 			queryParam: "query",
+// 			theme: "facebook",
+// 			onResult: function(response) {
+// 						var names = response.names;
+// 						var results = [];
+// 						for (var i=0, len=names.length; i<len; i++) {
+// 							results.push({id: names[i], name: names[i]});
+// 						}
+// 						if (names.length == 0) {
+// 							var failedQueryValue = $('#token-input-addReddit').val();
+// 							results.push({id: failedQueryValue, name: failedQueryValue, failedResult: true});
+// 						}
+// 						return results;
+// 					},
+// 			/* prePopulate: prepop, */
+// 			searchingText: 'Searching for matching reddits - may take a few seconds...',
+// 			hintText: 'Type one or more subreddits for which to create a widget.',
+// 			resultsFormatter: function(item) { 
+// 				var thisDesc = item[this.propertyToSearch];
+// 				if (item['failedResult']) thisDesc += ' - [this subreddit may not exist, ensure proper spelling]';
+// 				return "<li>" + thisDesc + "</li>" 
+// 			}
+// 		});
 		
-		$(this.dashboardAddComponent).find('#addRedditForm').submit(
-			function(e) {
-				e.preventDefault();
-				var thisBasePath = $('#addReddit').val();
-				if (thisBasePath != '') {
-					if (thisBasePath.indexOf(',') != -1) {
-						thisBasePath = thisBasePath.replace(/\,/g,'+');
-					}
-					modules['dashboard'].addWidget({
-						basePath: thisBasePath
-					}, true);
-					// $('#addReddit').val('').blur();
-					$('#addReddit').tokenInput('clear');
-					$('#addRedditFormContainer').fadeOut(function() {
-						$('#addWidgetButtons').fadeIn();
-					});
-				}
-			}
-		);
-		$(this.dashboardAddComponent).find('#addUserForm').submit(
-			function(e) {
-				e.preventDefault();
-				var thisBasePath = '/user/'+$('#addUser').val();
-				modules['dashboard'].addWidget({
-					basePath: thisBasePath
-				}, true);
-				$('#addUser').val('').blur();
-				$('#addUserFormContainer').fadeOut(function() {
-					$('#addWidgetButtons').fadeIn();
-				});
+// 		$(this.dashboardAddComponent).find('#addRedditForm').submit(
+// 			function(e) {
+// 				e.preventDefault();
+// 				var thisBasePath = $('#addReddit').val();
+// 				if (thisBasePath != '') {
+// 					if (thisBasePath.indexOf(',') != -1) {
+// 						thisBasePath = thisBasePath.replace(/\,/g,'+');
+// 					}
+// 					modules['dashboard'].addWidget({
+// 						basePath: thisBasePath
+// 					}, true);
+// 					// $('#addReddit').val('').blur();
+// 					$('#addReddit').tokenInput('clear');
+// 					$('#addRedditFormContainer').fadeOut(function() {
+// 						$('#addWidgetButtons').fadeIn();
+// 					});
+// 				}
+// 			}
+// 		);
+// 		$(this.dashboardAddComponent).find('#addUserForm').submit(
+// 			function(e) {
+// 				e.preventDefault();
+// 				var thisBasePath = '/user/'+$('#addUser').val();
+// 				modules['dashboard'].addWidget({
+// 					basePath: thisBasePath
+// 				}, true);
+// 				$('#addUser').val('').blur();
+// 				$('#addUserFormContainer').fadeOut(function() {
+// 					$('#addWidgetButtons').fadeIn();
+// 				});
 				
-			}
-		);
-		$(this.siteTable).append(this.dashboardAddComponent);
-		this.dashboardUL = $('<ul id="RESDashboard"></ul>');
-		$(this.siteTable).append(this.dashboardUL);
-	},
-	addWidget: function(optionsObject, isNew) {
-		if (optionsObject.basePath.slice(0,1) != '/') optionsObject.basePath = '/r/'+optionsObject.basePath;
-		var exists=false;
-		for (var i=0, len=this.widgets.length; i<len; i++) {
-			if (this.widgets[i].basePath == optionsObject.basePath) {
-				exists=true;
-				break;
-			}
-		}
-		// hide any shortcut button for this widget, since it exists... wait a second, though, or it causes rendering stupidity.
-		setTimeout(function() {
-			$('.widgetShortcut[widgetPath="'+optionsObject.basePath+'"]').hide();
-		}, 1000);
-		if (exists && isNew) {
-			alert('A widget for '+optionsObject.basePath+' already exists!');
-		} else {
-			var thisWidget = new this.widgetObject(optionsObject);
-			thisWidget.init();
-			modules['dashboard'].saveWidget(thisWidget.optionsObject());
-		}
-	},
-	removeWidget: function(optionsObject) {
-		var exists = false;
-		for (var i=0, len=modules['dashboard'].widgets.length; i<len; i++) {
-			if (modules['dashboard'].widgets[i].basePath == optionsObject.basePath) {
-				exists = true;
-				$('#'+modules['dashboard'].widgets[i].basePath.replace(/\/|\+/g,'_')).fadeOut('slow', function(ele) {
-					$(this).detach();
-				});
-				modules['dashboard'].widgets.splice(i,1);
-				// show any shortcut button for this widget, since we've now deleted it...
-				setTimeout(function() {
-					$('.widgetShortcut[widgetPath="'+optionsObject.basePath+'"]').show();
-				}, 1000);
-				break;
-			}
-		}
-		if (!exists) RESUtils.notification('Error, the widget you just tried to remove does not seem to exist.');
-		RESStorage.setItem('RESmodules.dashboard.' + RESUtils.loggedInUser(), JSON.stringify(modules['dashboard'].widgets));
-	},
-	saveWidget: function(optionsObject, init) {
-		var exists = false;
-		for (var i=0, len=modules['dashboard'].widgets.length; i<len; i++) {
-			if (modules['dashboard'].widgets[i].basePath == optionsObject.basePath) {
-				exists = true;
-				modules['dashboard'].widgets[i] = optionsObject;
-			}
-		}
-		if (!exists) modules['dashboard'].widgets.push(optionsObject);
-		RESStorage.setItem('RESmodules.dashboard.' + RESUtils.loggedInUser(), JSON.stringify(modules['dashboard'].widgets));
-	},
-	widgetObject: function(widgetOptions) {
-		var thisWidget = this; // keep a reference because the this keyword can mean different things in different scopes...
-		thisWidget.basePath = widgetOptions.basePath;
-		thisWidget.numPosts = widgetOptions.numPosts || modules['dashboard'].options.defaultPosts.value;
-		thisWidget.sortBy = widgetOptions.sortBy || modules['dashboard'].options.defaultSort.value;
-		thisWidget.minimized = widgetOptions.minimized || false;
-		thisWidget.widgetEle = $('<li class="RESDashboardComponent" id="'+thisWidget.basePath.replace(/\/|\+/g,'_')+'"><div class="RESDashboardComponentScrim"><div class="RESDashboardComponentLoader"><img id="dashboardLoader" src="'+modules['dashboard'].loader+'"><span>querying the server. one moment please.</span></div></div></li>');
-		thisWidget.header = $('<div class="RESDashboardComponentHeader"><a class="widgetPath" title="'+thisWidget.basePath+'" href="'+thisWidget.basePath+'">'+thisWidget.basePath+'</a></div>');
-		thisWidget.sortControls = $('<ul class="widgetSortButtons"><li sort="hot">hot</li><li sort="new">new</li><li sort="controversial">controversial</li><li sort="top">top</li></ul>');
-		// return an optionsObject, which is what we'll store in the modules['dashboard'].widgets array.
-		thisWidget.optionsObject = function() {
-			return {
-				basePath: thisWidget.basePath,
-				numPosts: thisWidget.numPosts,
-				sortBy: thisWidget.sortBy,
-				minimized: thisWidget.minimized 
-			}
-		}
-		// set the sort by properly...
-		$(thisWidget.sortControls).find('li[sort='+thisWidget.sortBy+']').addClass('active');
-		$(thisWidget.sortControls).find('li').click(function(e) {
-			thisWidget.sortChange($(e.target).attr('sort'));
-		});
-		$(thisWidget.header).append(thisWidget.sortControls);
-		if ((thisWidget.basePath.indexOf('/r/') != 0) && (thisWidget.basePath.indexOf('/user/') != 0)) {
-			setTimeout(function() {
-				$(thisWidget.sortControls).hide();
-			}, 100);
-		}
-		thisWidget.stateControls = $('<ul class="widgetStateButtons"><li class="updateTime"></li><li action="refresh" class="refresh"><div action="refresh"></div></li><li action="addRow">+row</li><li action="subRow">-row</li><li action="minimize" class="minimize">-</li><li action="delete" class="RESClose">X</li></ul>');
-		$(thisWidget.stateControls).find('li').click(function (e) {
-			switch ($(e.target).attr('action')) {
-				case 'refresh':
-					thisWidget.update();
-					break;
-				case 'addRow':
-					if (thisWidget.numPosts == 10) break;
-					thisWidget.numPosts++;
-					if (thisWidget.numPosts == 10) $(thisWidget.stateControls).find('li[action=addRow]').addClass('disabled');
-					$(thisWidget.stateControls).find('li[action=subRow]').removeClass('disabled');
-					modules['dashboard'].saveWidget(thisWidget.optionsObject());
-					thisWidget.update();
-					break;
-				case 'subRow':
-					if (thisWidget.numPosts == 0) break;
-					thisWidget.numPosts--;
-					if (thisWidget.numPosts == 1) $(thisWidget.stateControls).find('li[action=subRow]').addClass('disabled');
-					$(thisWidget.stateControls).find('li[action=addRow]').removeClass('disabled');
-					modules['dashboard'].saveWidget(thisWidget.optionsObject());
-					thisWidget.update();
-					break;
-				case 'minimize':
-					$(thisWidget.widgetEle).toggleClass('minimized');
-					if ($(thisWidget.widgetEle).hasClass('minimized')) {
-						$(e.target).html('+');
-						thisWidget.minimized = true;
-					} else {
-						$(e.target).html('-');
-						thisWidget.minimized = false;
-						thisWidget.update();
-					}
-					$(thisWidget.contents).parent().slideToggle();
-					modules['dashboard'].saveWidget(thisWidget.optionsObject());
-					break;
-				case 'delete':
-					modules['dashboard'].removeWidget(thisWidget.optionsObject());
-					break;
-			}
-		});
-		$(thisWidget.header).append(thisWidget.stateControls);
-		thisWidget.sortChange = function(sortBy) {
-			thisWidget.sortBy = sortBy;
-			$(thisWidget.header).find('ul.widgetSortButtons li').removeClass('active');
-			$(thisWidget.header).find('ul.widgetSortButtons li[sort='+sortBy+']').addClass('active');
-			thisWidget.update();
-			modules['dashboard'].saveWidget(thisWidget.optionsObject());
-		}
-		thisWidget.update = function() {
-			if (thisWidget.basePath.match(/\/user\//)) {
-				thisWidget.sortPath = (thisWidget.sortBy == 'hot') ? '/' : '?sort='+thisWidget.sortBy;
-			} else if (thisWidget.basePath.match(/\/r\//)) {
-				thisWidget.sortPath = (thisWidget.sortBy == 'hot') ? '/' : '/'+thisWidget.sortBy+'/';
-			} else {
-				thisWidget.sortPath = '';
-			}
-			thisWidget.url = location.protocol + '//' + location.hostname + '/' + thisWidget.basePath + thisWidget.sortPath;
-			$(thisWidget.contents).fadeTo('fast',0.25);
-			$(thisWidget.scrim).fadeIn();
-			$.ajax({
-				url: thisWidget.url,
-				data: {
-					limit: thisWidget.numPosts
-				},
-				success: thisWidget.populate,
-				error: thisWidget.error
-			});
-		}
-		thisWidget.container = $('<div class="RESDashboardComponentContainer"><div class="RESDashboardComponentContents"></div></div>');
-		if (thisWidget.minimized) {
-			$(thisWidget.container).addClass('minimized');
-			$(thisWidget.stateControls).find('li.minimize').addClass('minimized').html('+');
-		}
-		thisWidget.scrim = $(thisWidget.widgetEle).find('.RESDashboardComponentScrim');
-		thisWidget.contents = $(thisWidget.container).find('.RESDashboardComponentContents');
-		thisWidget.init = function() {
-			if (RESUtils.currentSubreddit('dashboard')) {
-				thisWidget.draw();
-				if (!thisWidget.minimized) modules['dashboard'].addToUpdateQueue(thisWidget.update);
-			}
-		}
-		thisWidget.draw = function() {
-			$(thisWidget.widgetEle).append(thisWidget.header);
-			$(thisWidget.widgetEle).append(thisWidget.container);
-			if (thisWidget.minimized) $(thisWidget.widgetEle).addClass('minimized');
-			modules['dashboard'].dashboardUL.prepend(thisWidget.widgetEle);
-			// $(thisWidget.scrim).fadeIn();
-		}
-		thisWidget.populate = function(response) {
-			var widgetContent = $(response).find('#siteTable');
-			$(widgetContent).attr('id','siteTable_'+thisWidget.basePath.replace(/\/|\+/g,'_'));
-			if (widgetContent.length == 2) widgetContent = widgetContent[1];
-			$(widgetContent).attr('url',thisWidget.url+'?limit='+thisWidget.numPosts);
-			if ((widgetContent) && ($(widgetContent).html() != '')) {
-				$(thisWidget.contents).html(widgetContent);
-				$(thisWidget.contents).fadeTo('fast',1);
-				$(thisWidget.scrim).fadeOut();
-				$(thisWidget.stateControls).find('.updateTime').html('updated: '+RESUtils.niceDateTime());
-			} else {
-				if (thisWidget.url.indexOf('/message/') != -1) {
-					$(thisWidget.contents).html('<div class="widgetNoMail">No messages were found.</div>');
-				} else {
-					$(thisWidget.contents).html('<div class="error">There were no results returned for this widget. If you made a typo, simply close the widget to delete it. If reddit is just under heavy load, try clicking refresh in a few moments.</div>');
-				}
-				$(thisWidget.contents).fadeTo('fast',1);
-				$(thisWidget.scrim).fadeOut();
-				$(thisWidget.stateControls).find('.updateTime').html('updated: '+RESUtils.niceDateTime());
-			}
-		}
-		thisWidget.error = function(xhr, err) {
-			// alert('There was an error loading data for this widget. Did you type a bad path, perhaps? Removing this widget automatically.');
-			// modules['dashboard'].removeWidget(thisWidget.optionsObject());
-			if (xhr.status == 404) {
-				$(thisWidget.contents).html('<div class="error">This widget received a 404 not found error. You may have made a typo when adding it.</div>');
-			} else {
-				$(thisWidget.contents).html('<div class="error">There was an error loading data for this widget. Reddit may be under heavy load, or you may have provided an invalid path.</div>');
-			}
-			$(thisWidget.scrim).fadeOut();
-			$(thisWidget.contents).fadeTo('fast',1);
-		}
-	},
-	addDashboardShortcuts: function() {
-		RESUtils.addCSS('.RESDashboardToggle { margin-right: 5px; color: white; background-image: url(/static/bg-button-add.png); cursor: pointer; text-align: center; width: 68px; font-weight: bold; font-size: 10px; border: 1px solid #444444; padding: 1px 6px; border-radius: 3px 3px 3px 3px;  }');
-		RESUtils.addCSS('.RESDashboardToggle.remove { background-image: url(/static/bg-button-remove.png) }');
-		var subButton = document.querySelector('.fancy-toggle-button');
-		if (! ($('#subButtons').length>0)) {
-			this.subButtons = $('<div id="subButtons"></div>');
-			$(subButton).wrap(this.subButtons);
-		}
-		var dashboardToggle = document.createElement('span');
-		dashboardToggle.setAttribute('class','RESDashboardToggle');
-		dashboardToggle.setAttribute('subreddit',RESUtils.currentSubreddit());
-		var exists=false;
-		for (var i=0, len=this.widgets.length; i<len; i++) {
-			if ((this.widgets[i]) && (this.widgets[i].basePath.toLowerCase() == '/r/'+RESUtils.currentSubreddit().toLowerCase())) {
-				exists=true;
-				break;
-			}
-		}
-		if (exists) {
-			dashboardToggle.innerHTML = '-dashboard';
-			dashboardToggle.setAttribute('title','Remove this subreddit from your dashboard');
-			addClass(dashboardToggle,'remove');
-		} else {
-			dashboardToggle.innerHTML = '+dashboard';
-			dashboardToggle.setAttribute('title','Add this subreddit to your dashboard');
-		}
-		dashboardToggle.addEventListener('click', modules['dashboard'].toggleDashboard, false);
-		$('#subButtons').append(dashboardToggle);
-	},
-	toggleDashboard: function(e) {
-		var thisBasePath = '/r/'+e.target.getAttribute('subreddit');
-		if (hasClass(e.target,'remove')) {
-			modules['dashboard'].removeWidget({
-				basePath: thisBasePath
-			}, true);
-			e.target.innerHTML = '+dashboard';
-			removeClass(e.target,'remove');
-		} else {
-			modules['dashboard'].addWidget({
-				basePath: thisBasePath
-			}, true);
-			e.target.innerHTML = '-dashboard';
-			RESUtils.notification({ 
-				header: 'Dashboard Notification', 
-				message: 'Dashboard widget added for '+thisBasePath+' <p><a class="RESNotificationButtonBlue" href="/r/Dashboard">view the dashboard</a></p><div class="clear"></div>'
-			});
-			addClass(e.target,'remove');
-		}
-	}
-}; 
+// 			}
+// 		);
+// 		$(this.siteTable).append(this.dashboardAddComponent);
+// 		this.dashboardUL = $('<ul id="RESDashboard"></ul>');
+// 		$(this.siteTable).append(this.dashboardUL);
+// 	},
+// 	addWidget: function(optionsObject, isNew) {
+// 		if (optionsObject.basePath.slice(0,1) != '/') optionsObject.basePath = '/r/'+optionsObject.basePath;
+// 		var exists=false;
+// 		for (var i=0, len=this.widgets.length; i<len; i++) {
+// 			if (this.widgets[i].basePath == optionsObject.basePath) {
+// 				exists=true;
+// 				break;
+// 			}
+// 		}
+// 		// hide any shortcut button for this widget, since it exists... wait a second, though, or it causes rendering stupidity.
+// 		setTimeout(function() {
+// 			$('.widgetShortcut[widgetPath="'+optionsObject.basePath+'"]').hide();
+// 		}, 1000);
+// 		if (exists && isNew) {
+// 			alert('A widget for '+optionsObject.basePath+' already exists!');
+// 		} else {
+// 			var thisWidget = new this.widgetObject(optionsObject);
+// 			thisWidget.init();
+// 			modules['dashboard'].saveWidget(thisWidget.optionsObject());
+// 		}
+// 	},
+// 	removeWidget: function(optionsObject) {
+// 		var exists = false;
+// 		for (var i=0, len=modules['dashboard'].widgets.length; i<len; i++) {
+// 			if (modules['dashboard'].widgets[i].basePath == optionsObject.basePath) {
+// 				exists = true;
+// 				$('#'+modules['dashboard'].widgets[i].basePath.replace(/\/|\+/g,'_')).fadeOut('slow', function(ele) {
+// 					$(this).detach();
+// 				});
+// 				modules['dashboard'].widgets.splice(i,1);
+// 				// show any shortcut button for this widget, since we've now deleted it...
+// 				setTimeout(function() {
+// 					$('.widgetShortcut[widgetPath="'+optionsObject.basePath+'"]').show();
+// 				}, 1000);
+// 				break;
+// 			}
+// 		}
+// 		if (!exists) RESUtils.notification('Error, the widget you just tried to remove does not seem to exist.');
+// 		RESStorage.setItem('RESmodules.dashboard.' + RESUtils.loggedInUser(), JSON.stringify(modules['dashboard'].widgets));
+// 	},
+// 	saveWidget: function(optionsObject, init) {
+// 		var exists = false;
+// 		for (var i=0, len=modules['dashboard'].widgets.length; i<len; i++) {
+// 			if (modules['dashboard'].widgets[i].basePath == optionsObject.basePath) {
+// 				exists = true;
+// 				modules['dashboard'].widgets[i] = optionsObject;
+// 			}
+// 		}
+// 		if (!exists) modules['dashboard'].widgets.push(optionsObject);
+// 		RESStorage.setItem('RESmodules.dashboard.' + RESUtils.loggedInUser(), JSON.stringify(modules['dashboard'].widgets));
+// 	},
+// 	widgetObject: function(widgetOptions) {
+// 		var thisWidget = this; // keep a reference because the this keyword can mean different things in different scopes...
+// 		thisWidget.basePath = widgetOptions.basePath;
+// 		thisWidget.numPosts = widgetOptions.numPosts || modules['dashboard'].options.defaultPosts.value;
+// 		thisWidget.sortBy = widgetOptions.sortBy || modules['dashboard'].options.defaultSort.value;
+// 		thisWidget.minimized = widgetOptions.minimized || false;
+// 		thisWidget.widgetEle = $('<li class="RESDashboardComponent" id="'+thisWidget.basePath.replace(/\/|\+/g,'_')+'"><div class="RESDashboardComponentScrim"><div class="RESDashboardComponentLoader"><img id="dashboardLoader" src="'+modules['dashboard'].loader+'"><span>querying the server. one moment please.</span></div></div></li>');
+// 		thisWidget.header = $('<div class="RESDashboardComponentHeader"><a class="widgetPath" title="'+thisWidget.basePath+'" href="'+thisWidget.basePath+'">'+thisWidget.basePath+'</a></div>');
+// 		thisWidget.sortControls = $('<ul class="widgetSortButtons"><li sort="hot">hot</li><li sort="new">new</li><li sort="controversial">controversial</li><li sort="top">top</li></ul>');
+// 		// return an optionsObject, which is what we'll store in the modules['dashboard'].widgets array.
+// 		thisWidget.optionsObject = function() {
+// 			return {
+// 				basePath: thisWidget.basePath,
+// 				numPosts: thisWidget.numPosts,
+// 				sortBy: thisWidget.sortBy,
+// 				minimized: thisWidget.minimized 
+// 			}
+// 		}
+// 		// set the sort by properly...
+// 		$(thisWidget.sortControls).find('li[sort='+thisWidget.sortBy+']').addClass('active');
+// 		$(thisWidget.sortControls).find('li').click(function(e) {
+// 			thisWidget.sortChange($(e.target).attr('sort'));
+// 		});
+// 		$(thisWidget.header).append(thisWidget.sortControls);
+// 		if ((thisWidget.basePath.indexOf('/r/') != 0) && (thisWidget.basePath.indexOf('/user/') != 0)) {
+// 			setTimeout(function() {
+// 				$(thisWidget.sortControls).hide();
+// 			}, 100);
+// 		}
+// 		thisWidget.stateControls = $('<ul class="widgetStateButtons"><li class="updateTime"></li><li action="refresh" class="refresh"><div action="refresh"></div></li><li action="addRow">+row</li><li action="subRow">-row</li><li action="minimize" class="minimize">-</li><li action="delete" class="RESClose">X</li></ul>');
+// 		$(thisWidget.stateControls).find('li').click(function (e) {
+// 			switch ($(e.target).attr('action')) {
+// 				case 'refresh':
+// 					thisWidget.update();
+// 					break;
+// 				case 'addRow':
+// 					if (thisWidget.numPosts == 10) break;
+// 					thisWidget.numPosts++;
+// 					if (thisWidget.numPosts == 10) $(thisWidget.stateControls).find('li[action=addRow]').addClass('disabled');
+// 					$(thisWidget.stateControls).find('li[action=subRow]').removeClass('disabled');
+// 					modules['dashboard'].saveWidget(thisWidget.optionsObject());
+// 					thisWidget.update();
+// 					break;
+// 				case 'subRow':
+// 					if (thisWidget.numPosts == 0) break;
+// 					thisWidget.numPosts--;
+// 					if (thisWidget.numPosts == 1) $(thisWidget.stateControls).find('li[action=subRow]').addClass('disabled');
+// 					$(thisWidget.stateControls).find('li[action=addRow]').removeClass('disabled');
+// 					modules['dashboard'].saveWidget(thisWidget.optionsObject());
+// 					thisWidget.update();
+// 					break;
+// 				case 'minimize':
+// 					$(thisWidget.widgetEle).toggleClass('minimized');
+// 					if ($(thisWidget.widgetEle).hasClass('minimized')) {
+// 						$(e.target).html('+');
+// 						thisWidget.minimized = true;
+// 					} else {
+// 						$(e.target).html('-');
+// 						thisWidget.minimized = false;
+// 						thisWidget.update();
+// 					}
+// 					$(thisWidget.contents).parent().slideToggle();
+// 					modules['dashboard'].saveWidget(thisWidget.optionsObject());
+// 					break;
+// 				case 'delete':
+// 					modules['dashboard'].removeWidget(thisWidget.optionsObject());
+// 					break;
+// 			}
+// 		});
+// 		$(thisWidget.header).append(thisWidget.stateControls);
+// 		thisWidget.sortChange = function(sortBy) {
+// 			thisWidget.sortBy = sortBy;
+// 			$(thisWidget.header).find('ul.widgetSortButtons li').removeClass('active');
+// 			$(thisWidget.header).find('ul.widgetSortButtons li[sort='+sortBy+']').addClass('active');
+// 			thisWidget.update();
+// 			modules['dashboard'].saveWidget(thisWidget.optionsObject());
+// 		}
+// 		thisWidget.update = function() {
+// 			if (thisWidget.basePath.match(/\/user\//)) {
+// 				thisWidget.sortPath = (thisWidget.sortBy == 'hot') ? '/' : '?sort='+thisWidget.sortBy;
+// 			} else if (thisWidget.basePath.match(/\/r\//)) {
+// 				thisWidget.sortPath = (thisWidget.sortBy == 'hot') ? '/' : '/'+thisWidget.sortBy+'/';
+// 			} else {
+// 				thisWidget.sortPath = '';
+// 			}
+// 			thisWidget.url = location.protocol + '//' + location.hostname + '/' + thisWidget.basePath + thisWidget.sortPath;
+// 			$(thisWidget.contents).fadeTo('fast',0.25);
+// 			$(thisWidget.scrim).fadeIn();
+// 			$.ajax({
+// 				url: thisWidget.url,
+// 				data: {
+// 					limit: thisWidget.numPosts
+// 				},
+// 				success: thisWidget.populate,
+// 				error: thisWidget.error
+// 			});
+// 		}
+// 		thisWidget.container = $('<div class="RESDashboardComponentContainer"><div class="RESDashboardComponentContents"></div></div>');
+// 		if (thisWidget.minimized) {
+// 			$(thisWidget.container).addClass('minimized');
+// 			$(thisWidget.stateControls).find('li.minimize').addClass('minimized').html('+');
+// 		}
+// 		thisWidget.scrim = $(thisWidget.widgetEle).find('.RESDashboardComponentScrim');
+// 		thisWidget.contents = $(thisWidget.container).find('.RESDashboardComponentContents');
+// 		thisWidget.init = function() {
+// 			if (RESUtils.currentSubreddit('dashboard')) {
+// 				thisWidget.draw();
+// 				if (!thisWidget.minimized) modules['dashboard'].addToUpdateQueue(thisWidget.update);
+// 			}
+// 		}
+// 		thisWidget.draw = function() {
+// 			$(thisWidget.widgetEle).append(thisWidget.header);
+// 			$(thisWidget.widgetEle).append(thisWidget.container);
+// 			if (thisWidget.minimized) $(thisWidget.widgetEle).addClass('minimized');
+// 			modules['dashboard'].dashboardUL.prepend(thisWidget.widgetEle);
+// 			// $(thisWidget.scrim).fadeIn();
+// 		}
+// 		thisWidget.populate = function(response) {
+// 			var widgetContent = $(response).find('#siteTable');
+// 			$(widgetContent).attr('id','siteTable_'+thisWidget.basePath.replace(/\/|\+/g,'_'));
+// 			if (widgetContent.length == 2) widgetContent = widgetContent[1];
+// 			$(widgetContent).attr('url',thisWidget.url+'?limit='+thisWidget.numPosts);
+// 			if ((widgetContent) && ($(widgetContent).html() != '')) {
+// 				$(thisWidget.contents).html(widgetContent);
+// 				$(thisWidget.contents).fadeTo('fast',1);
+// 				$(thisWidget.scrim).fadeOut();
+// 				$(thisWidget.stateControls).find('.updateTime').html('updated: '+RESUtils.niceDateTime());
+// 			} else {
+// 				if (thisWidget.url.indexOf('/message/') != -1) {
+// 					$(thisWidget.contents).html('<div class="widgetNoMail">No messages were found.</div>');
+// 				} else {
+// 					$(thisWidget.contents).html('<div class="error">There were no results returned for this widget. If you made a typo, simply close the widget to delete it. If reddit is just under heavy load, try clicking refresh in a few moments.</div>');
+// 				}
+// 				$(thisWidget.contents).fadeTo('fast',1);
+// 				$(thisWidget.scrim).fadeOut();
+// 				$(thisWidget.stateControls).find('.updateTime').html('updated: '+RESUtils.niceDateTime());
+// 			}
+// 		}
+// 		thisWidget.error = function(xhr, err) {
+// 			// alert('There was an error loading data for this widget. Did you type a bad path, perhaps? Removing this widget automatically.');
+// 			// modules['dashboard'].removeWidget(thisWidget.optionsObject());
+// 			if (xhr.status == 404) {
+// 				$(thisWidget.contents).html('<div class="error">This widget received a 404 not found error. You may have made a typo when adding it.</div>');
+// 			} else {
+// 				$(thisWidget.contents).html('<div class="error">There was an error loading data for this widget. Reddit may be under heavy load, or you may have provided an invalid path.</div>');
+// 			}
+// 			$(thisWidget.scrim).fadeOut();
+// 			$(thisWidget.contents).fadeTo('fast',1);
+// 		}
+// 	},
+// 	addDashboardShortcuts: function() {
+// 		RESUtils.addCSS('.RESDashboardToggle { margin-right: 5px; color: white; background-image: url(/static/bg-button-add.png); cursor: pointer; text-align: center; width: 68px; font-weight: bold; font-size: 10px; border: 1px solid #444444; padding: 1px 6px; border-radius: 3px 3px 3px 3px;  }');
+// 		RESUtils.addCSS('.RESDashboardToggle.remove { background-image: url(/static/bg-button-remove.png) }');
+// 		var subButton = document.querySelector('.fancy-toggle-button');
+// 		if (! ($('#subButtons').length>0)) {
+// 			this.subButtons = $('<div id="subButtons"></div>');
+// 			$(subButton).wrap(this.subButtons);
+// 		}
+// 		var dashboardToggle = document.createElement('span');
+// 		dashboardToggle.setAttribute('class','RESDashboardToggle');
+// 		dashboardToggle.setAttribute('subreddit',RESUtils.currentSubreddit());
+// 		var exists=false;
+// 		for (var i=0, len=this.widgets.length; i<len; i++) {
+// 			if ((this.widgets[i]) && (this.widgets[i].basePath.toLowerCase() == '/r/'+RESUtils.currentSubreddit().toLowerCase())) {
+// 				exists=true;
+// 				break;
+// 			}
+// 		}
+// 		if (exists) {
+// 			dashboardToggle.innerHTML = '-dashboard';
+// 			dashboardToggle.setAttribute('title','Remove this subreddit from your dashboard');
+// 			addClass(dashboardToggle,'remove');
+// 		} else {
+// 			dashboardToggle.innerHTML = '+dashboard';
+// 			dashboardToggle.setAttribute('title','Add this subreddit to your dashboard');
+// 		}
+// 		dashboardToggle.addEventListener('click', modules['dashboard'].toggleDashboard, false);
+// 		$('#subButtons').append(dashboardToggle);
+// 	},
+// 	toggleDashboard: function(e) {
+// 		var thisBasePath = '/r/'+e.target.getAttribute('subreddit');
+// 		if (hasClass(e.target,'remove')) {
+// 			modules['dashboard'].removeWidget({
+// 				basePath: thisBasePath
+// 			}, true);
+// 			e.target.innerHTML = '+dashboard';
+// 			removeClass(e.target,'remove');
+// 		} else {
+// 			modules['dashboard'].addWidget({
+// 				basePath: thisBasePath
+// 			}, true);
+// 			e.target.innerHTML = '-dashboard';
+// 			RESUtils.notification({ 
+// 				header: 'Dashboard Notification', 
+// 				message: 'Dashboard widget added for '+thisBasePath+' <p><a class="RESNotificationButtonBlue" href="/r/Dashboard">view the dashboard</a></p><div class="clear"></div>'
+// 			});
+// 			addClass(e.target,'remove');
+// 		}
+// 	}
+// }; 
 
 
 /* END MODULES */

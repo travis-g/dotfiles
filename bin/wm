@@ -1,8 +1,14 @@
 #!/bin/zsh
 
+function usage(){
+echo "Usage: $(basename $0) [bspwm|twm|swm|dwm]...
+Window manager launcher script.
+"
+exit $1
+}
+
 case $1 in
-	help) echo -e "Usage: $(basename $0) [bspwm|twm|swm|dwm]..."
-		echo -e "Window Manager launcher script.\n"; exit 0;;
+	help)	usage 0;;
 	bspwm)
 		export PATH=$PATH:~/.config/bspwm
 		export DESKTOP_SESSION=bspwm
@@ -13,7 +19,5 @@ case $1 in
 			mkfifo "$PANEL_FIFO"
 			bspwm "$PANEL_FIFO" -p W || break
 		done;;
-	twm)
-		export DESKTOP_SESSION=twm
-		while true; do twm || break; done;;
+	*)	echo "Unrecognized option(s)!"; usage 1;;
 esac

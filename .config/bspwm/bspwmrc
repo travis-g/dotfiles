@@ -13,7 +13,7 @@ bspc desktop -n 1
 bspc config split_ratio				$SPLIT_RATIO
 bspc config border_width			$BORDER_WIDTH
 #bspc config top_padding				$PANEL_HEIGHT
-bspc config window_gap				$WINDOW_GAP	
+bspc config window_gap				$WINDOW_GAP
 
 
 # Behavior
@@ -57,11 +57,11 @@ bspc rule -a lxappearance floating=on manage=on
 # limit to 10 for sxhkdrc hotkey use
 case $HOSTNAME in
 	"ax-l")
-		bspc monitor DVI-I-1 -d 0 1
-		bspc monitor HDMI-0 -d 2 3
-		bspc monitor -f primary
-		# set up montiors
+		# set up monitors
 		/home/t/bin/displayconf.sh &
+		bspc monitor HDMI-0 -d 0 1
+		bspc monitor DVI-D-0 -d 2 3
+		bspc monitor -f primary
 		;;
 	"ken-th")
 		bspc monitor -d 0 1 2 3

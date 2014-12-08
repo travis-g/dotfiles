@@ -1,8 +1,6 @@
 -- Global variables for luakit
 globals = {
-    homepage            = "file:///home/t/newtab.html",
- -- homepage            = "http://luakit.org/",
- -- homepage            = "http://github.com/mason-larobina/luakit",
+    homepage            = "http://tjg.io/newtab/",
     scroll_step         = 40,
     zoom_step           = 0.1,
     max_cmd_history     = 100,
@@ -87,4 +85,4 @@ domain_props = { --[[
     }, ]]
 }
 
--- vim: et:sw=4:ts=8:sts=4:tw=80
+-- vim: set ts=8 sw=4 tw=80 et :

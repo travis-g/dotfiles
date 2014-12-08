@@ -71,12 +71,12 @@ input[type="text"]:focus { width: 150px; opacity: 1.0; transition: 0.3s ease; cu
     text-align: center; visibility: hidden;
 }
 #switch:hover { opacity: 1.0; transition: 0.3s ease-out; }
-    .switch {
-        display: inline-block; width: 10px; height: 10px;
-        border: 1px solid transparent; border-radius: 10px;
-        background: transparent; transition: 0.3s ease-in;
-        cursor: default; /* (pointer|default) */
-    }
+.switch {
+    display: inline-block; width: 10px; height: 10px;
+    border: 1px solid transparent; border-radius: 10px;
+    background: transparent; transition: 0.3s ease-in;
+    cursor: default; /* (pointer|default) */
+}
 
 #shadow-top {
     position: fixed; top: 0; left: 0; width: 100%; height: 5px; margin-top: -5px;
@@ -87,16 +87,6 @@ input[type="text"]:focus { width: 150px; opacity: 1.0; transition: 0.3s ease; cu
     background: #000; box-shadow: 0 0 100px 0 #000; opacity: 0.5;
 }
 
-#waifu-left {
-    position: fixed; display: none; bottom: 0; left: 0;
-    max-width: 512px; max-height: 256px;
-    opacity: 0.9; /* Settings waifu-left */
-}
-#waifu-right {
-    position: fixed; display: none; bottom: 0; right: 0;
-    max-width: 512px; max-height: 256px;
-    opacity: 0.9; /* Settings waifu-right */
-}
 </style>
 <script type="text/javascript" language="javascript">
 var $=function(id) { return document.getElementById(id); };
@@ -129,7 +119,7 @@ var enableScroll    = true;                 // Enable/Disable the posibility to 
 var enableTags      = true;                 // Show/Hide switch buttons/tags
 var enableKeys      = true;                 // Allow key navigation when search field is not active
 var enableTouch     = true;                 // Enable touch screen support
-var enableTitle     = true;                // Enable clickable box titles/content
+var enableTitle     = false;                 // Enable clickable box titles/content
 
 var invertScroll    = false;                // Invert mouse wheel
 var useScrollLock   = true;                 // Delay next scroll trigger (prevents box skip)
@@ -170,7 +160,6 @@ var boxSetup=[ // Format: ["Title", "#color"],
     ["Entertainment",       "#FBA922"],
     ["Other",               "#969896"],
     // ["Apps",                ""],
-    // ["Porn",                ""],
 ];
 
 // Link setup (separate with "---", "---" (must not exceed boxSetup))
@@ -232,7 +221,7 @@ var links=[
     ["Homestuck",                       "http://mspaintadventures.com"],
     // ["I Am Bored",                      "http://www.i-am-bored.com"],
     // ["StumbleUpon",                     "http://stumbleupon.com"],
-    // ["YouTube",                         "http://youtube.com"],
+    ["YouTube",                         "http://youtube.com"],
 
     ["---",                             "---"],
 
@@ -243,34 +232,23 @@ var links=[
     ["M&T",                             "https://www.mtb.com/"],
     ["Dropbox",                         "https://www.dropbox.com"],
     ["MyCapitol",                       "https://mycapitol.captechu.edu/ics/"],
+    ["Humble Bundle",                   "https://humblebundle.com"],
     ["PayPal",                          "http://www.paypal.com/"],
-    ["Webmail",                         "https://webmail.troweprice.com"],
-    ["MyPC",                            "https://mypc.troweprice.com"],
+    ["Keep",                            "https://keep.google.com",
     ["put.io",                          "https://put.io"],
-    ["",""],
-    ["Userstyles",                      "http://userstyles.org"],
-    ["Greasy Fork",                     "https://greasyfork.org"],
-    ["OpenUserJS",                      "https://openuserjs.org/"],
-    // ["Humble Bundle",                   "https://www.humblebundle.com/"],
+    // ["",""],
+    // ["Userstyles",                      "http://userstyles.org"],
+    // ["Greasy Fork",                     "https://greasyfork.org"],
+    // ["OpenUserJS",                      "https://openuserjs.org/"],
 
     ["---",                             "---"],
 
     // Apps
     // ["StackEdit",                       "https://stackedit.io"],
     // ["Sunrise",                         "https://calendar.sunrise.am"],
-    // ["Keep",                            "https://keep.google.com",
     // ["2048",                            "http://gabrielecirulli.github.io/2048/"],
     // ["Coffitivity",                     "http://coffitivity.com"],
     
-
-    // ["---",                             "---"],
-    //
-    // Porn
-    // ["Intporn 2.0",                     "http://www.intporn.org/forums/gay-porn-vids"],
-    // ["/hm/",                            "https://www.4chan.org/hm/"],
-    // ["Gay-Torrents.org",                "https://gay-torrents.org"],
-    // ["Gay Torrents Live",               "https://www.gay-torrents.net"],
-    // ["TongaBonga",                      "http://www.tongabonga.com"],
 ];
 
 // + ------------------------------------- Settings (JS) - END ------------------------------------- +
@@ -546,9 +524,6 @@ document.ontouchmove= function(e) { // touch navigation
     <div id="boxes"></div>
 </div>
 <div id="switch"></div>
-
-<img src="" id="waifu-left" />
-<img src="" id="waifu-right" />
 
 <div id="shadow-top"></div>
 <div id="shadow-bot"></div>

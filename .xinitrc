@@ -20,7 +20,7 @@ fi
 
 export BROWSER=luakit
 
-#udiskie &
+udiskie &
 dunst &
 zsh ./.fehbg
 

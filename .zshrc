@@ -11,7 +11,7 @@ promptinit
 PROMPT="─── "
 RPROMPT=""
 
-setopt AUTO_CD
+#setopt AUTO_CD
 setopt completealiases
 setopt append_history
 setopt hist_verify
@@ -31,6 +31,6 @@ alias egrep='egrep --color=auto'
 alias inst='yaourt'
 alias search='yaourt'
 alias remove='sudo pacman -Rns'
-alias info='yaourt -Qi'
+#alias info='yaourt -Qi'
 
 alias git='hub'

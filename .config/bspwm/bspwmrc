@@ -12,9 +12,9 @@ bspc config window_gap				$WINDOW_GAP
 
 
 # Behavior
-bspc config borderless_monocle			true
+bspc config borderless_monocle		true
 bspc config gapless_monocle			true
-bspc config focus_follows_pointer		true
+bspc config focus_follows_pointer	true
 bspc config auto_alternate			true
 bspc config auto_cancel				true
 
@@ -39,7 +39,7 @@ bspc config normal_private_border_color		$COLOR_BORDER_PRIVATE
 
 
 # Rules
-bspc rule -a multimc5 pseudo_tiled=on
+bspc rule -a MultiMC5 floating=on manage=on
 bspc rule -a lxappearance floating=on manage=on
 
 
@@ -47,13 +47,14 @@ bspc rule -a lxappearance floating=on manage=on
 ##############################################
 # limit to 10 for sxhkdrc hotkey use
 case $HOSTNAME in
-	"ax-l")
+        "ax-l")
 		# set up desktops
-		bspc monitor DVI-D-0 -d 0 1
+        #bspc monitor DVI-D-0 -d 0 1
+        bspc monitor DVI-I-1 -d 0 1
 		bspc monitor HDMI-0 -d 2 3
-		bspc monitor -f primary
+		#bspc monitor -f primary
 		# set up monitors
-		/home/t/bin/displayconf.sh &
+		#/home/t/bin/displayconf.sh &
 		;;
 	"ken-th")
 		bspc monitor -d 0 1 2 3
@@ -64,4 +65,4 @@ esac
 export PATH=$PATH:~/.config/bspwm
 #panel &
 
-# vim: set et:sts=4:ts=4:sw=4
+# vim: set et sts=4 ts=4 sw=4:

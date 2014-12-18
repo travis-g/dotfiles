@@ -125,7 +125,7 @@ ctrl + shift + Escape
 	urxvt -e htop
 
 super + space
-	dmenu_run
+	dmenu_run -nb "#1d1f21" -nf "#373b41" -sb "#282a2e" -sf "#b4b7b4"
 
 super + l
 	slock

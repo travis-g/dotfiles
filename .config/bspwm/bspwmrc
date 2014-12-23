@@ -2,22 +2,22 @@
 
 # Color definitions
 # rgb hex       # argb hex format
-BK0='#1D1F21'   # BK0='#FF1D1F21'
-BK1='#282A2E'   # BK1='#FF282A2E'
-GY0='#373B41'   # GY0='#FF373B41'
-GY1='#969896'   # GY1='#FF969896'
-GY2='#B4B7B4'   # GY2='#FFB4B7B4'
-GY3='#DC5C8C6'  # GY3='#FFDC5C8C6'
-WT0='#E0E0E0'   # WT0='#FFE0E0E0'
-WT1='#FFFFFF'   # WT1='#FFFFFFFF'
-RD='#CC342B'    # RD='#FFCC342B'
-OR='#F96A38'    # OR='#FFF96A38'
-YL='#FBA922'    # YL='#FFFBA922'
-GN='#198844'    # GN='#FF198844'
-CY='#3971ED'    # CY='#FF3971ED'
-BL='#3971ED'    # BL='#FF3971ED'
-MG='#A36AC7'    # MG='#FFA36AC7'
-                # CL='#00FFFFFF'
+BK0 =   '#1D1F21'   # BK0 = '#FF1D1F21'
+BK1 =   '#282A2E'   # BK1 = '#FF282A2E'
+GY0 =   '#373B41'   # GY0 = '#FF373B41'
+GY1 =   '#969896'   # GY1 = '#FF969896'
+GY2 =   '#B4B7B4'   # GY2 = '#FFB4B7B4'
+GY3 =   '#C5C8C6'   # GY3 = '#FFC5C8C6'
+WT0 =   '#E0E0E0'   # WT0 = '#FFE0E0E0'
+WT1 =   '#FFFFFF'   # WT1 = '#FFFFFFFF'
+RD =    '#CC342B'   # RD =  '#FFCC342B'
+OR =    '#F96A38'   # OR =  '#FFF96A38'
+YL =    '#FBA922'   # YL =  '#FFFBA922'
+GN =    '#198844'   # GN =  '#FF198844'
+CY =    '#3971ED'   # CY =  '#FF3971ED'
+BL =    '#3971ED'   # BL =  '#FF3971ED'
+MG =    '#A36AC7'   # MG =  '#FFA36AC7'
+                    # CL =  '#00FFFFFF'
 
 # Panel/bar
 # fonts
@@ -33,32 +33,28 @@ DWEEP="-*-dweep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*"
 # geometry
 PANEL_HEIGHT=12
 
+# colors
 # COLOR_FG=$GY2
 # COLOR_BG=$BK0
-
 # COLOR_FOCUSED_FG=$WT0
-
 # COLOR_OCCUPIED_FG=$GY2
 # COLOR_FREE_FG=$GY0
 # COLOR_URGENT_FG=$RD
-
 # COLOR_LAYOUT_FG=$GY0
 # COLOR_TITLE_FG=$GY2
-
 # COLOR_STATUS_FG=$GY2
 # COLOR_WARN=$RD
 # COLOR_NULL=$GY0
 # COLOR_GOOD=$GN
 
 
-##############################################
-# bspwm
-##############################################
-
+# Bspwm
+# geometry
 SPLIT_RATIO=0.4
 BORDER_WIDTH=2
 WINDOW_GAP=40
 
+# colors
 argb2rgb(){ # remove alpha channel from hex color
     echo $(echo $1 | sed 's/#../#/')
 }

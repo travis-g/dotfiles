@@ -70,7 +70,7 @@ WINDOW_GAP=40
 argb2rgb(){ # remove alpha channel from hex color
 	echo $(echo $1 | sed 's/#../#/')
 }
-COLOR_BORDER=$(argb2rgb $BK1)
+COLOR_BORDER=$(argb2rgb $BK0)
 COLOR_BORDER_FOCUSED=$(argb2rgb $GY0)
 COLOR_BORDER_ACTIVE=$(argb2rgb $GY0)
 COLOR_BORDER_PRESEL=$(argb2rgb $WT0)

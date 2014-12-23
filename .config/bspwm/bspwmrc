@@ -1,68 +1,74 @@
-#! /bin/sh
+#!/bin/sh
 
-. /home/t/.vars_master # source master config file
+# Color definitions
+# rgb hex       # argb hex format
+BK0='#1D1F21'   # BK0='#FF1D1F21'
+BK1='#282A2E'   # BK1='#FF282A2E'
+GY0='#373B41'   # GY0='#FF373B41'
+GY1='#969896'   # GY1='#FF969896'
+GY2='#B4B7B4'   # GY2='#FFB4B7B4'
+GY3='#DC5C8C6'  # GY3='#FFDC5C8C6'
+WT0='#E0E0E0'   # WT0='#FFE0E0E0'
+WT1='#FFFFFF'   # WT1='#FFFFFFFF'
+RD='#CC342B'    # RD='#FFCC342B'
+OR='#F96A38'    # OR='#FFF96A38'
+YL='#FBA922'    # YL='#FFFBA922'
+GN='#198844'    # GN='#FF198844'
+CY='#3971ED'    # CY='#FF3971ED'
+BL='#3971ED'    # BL='#FF3971ED'
+MG='#A36AC7'    # MG='#FFA36AC7'
+                # CL='#00FFFFFF'
 
-bspc desktop -n 0
+# Panel/bar
+# fonts
+UUSHI="-*-uushi-medium-r-normal--11-90-75-75-p-58-iso10646-1"
+LEMON="-benis-lemon-*-*-*-*-*-*-*-*-*-*-*-*"
+TEWI="-lucy-Tewi-medium-*-normal--11-90-75-75-p-58-iso10646-1"
+LIME="-*-lime-*-*-*-*-*-*-*-*-*-*-*-*"
+TERMINUS="-*-terminus-medium-r-normal-*-12-*-*-*-c-*-*-1"
+STLARCH="-*-stlarch-*-*-*-*-*-*-*-*-*-*-*-*"
+ANON_PRO="-*-Anonymous Pro-medium-*-*-*-11-*-*-*-*-*-*-*"
+DWEEP="-*-dweep-medium-r-semicondensed-*-11-*-*-*-*-*-*-*"
 
-# Appearance
-bspc config split_ratio				$SPLIT_RATIO
-bspc config border_width			$BORDER_WIDTH
-#bspc config top_padding				$PANEL_HEIGHT
-bspc config window_gap				$WINDOW_GAP
+# geometry
+PANEL_HEIGHT=12
 
+# COLOR_FG=$GY2
+# COLOR_BG=$BK0
 
-# Behavior
-bspc config borderless_monocle		true
-bspc config gapless_monocle			true
-bspc config focus_follows_pointer	true
-bspc config auto_alternate			true
-bspc config auto_cancel				true
+# COLOR_FOCUSED_FG=$WT0
 
-# Colors
-# normal
-bspc config normal_border_color			$COLOR_BORDER
-bspc config focused_border_color		$COLOR_BORDER_FOCUSED
-bspc config active_border_color			$COLOR_BORDER_ACTIVE
-bspc config presel_border_color			$COLOR_BORDER_PRESEL
-# sticky
-bspc config focused_sticky_border_color		$COLOR_BORDER_STICKY
-bspc config active_sticky_border_color		$COLOR_BORDER_STICKY
-bspc config normal_sticky_border_color		$COLOR_BORDER_STICKY
-# locked
-bspc config focused_locked_border_color		$COLOR_BORDER_LOCKED
-bspc config active_locked_border_color		$COLOR_BORDER_LOCKED
-bspc config normal_locked_border_color		$COLOR_BORDER_LOCKED
-# private
-bspc config focused_private_border_color	$COLOR_BORDER_PRIVATE
-bspc config active_private_border_color		$COLOR_BORDER_PRIVATE
-bspc config normal_private_border_color		$COLOR_BORDER_PRIVATE
+# COLOR_OCCUPIED_FG=$GY2
+# COLOR_FREE_FG=$GY0
+# COLOR_URGENT_FG=$RD
+
+# COLOR_LAYOUT_FG=$GY0
+# COLOR_TITLE_FG=$GY2
+
+# COLOR_STATUS_FG=$GY2
+# COLOR_WARN=$RD
+# COLOR_NULL=$GY0
+# COLOR_GOOD=$GN
 
 
-# Rules
-bspc rule -a MultiMC5 floating=on manage=on
-bspc rule -a lxappearance floating=on manage=on
-
-
-# Create/name desktops
 ##############################################
-# limit to 10 for sxhkdrc hotkey use
-case $HOSTNAME in
-        "ax-l")
-		# set up desktops
-        #bspc monitor DVI-D-0 -d 0 1
-        bspc monitor DVI-I-1 -d 0 1
-		bspc monitor HDMI-0 -d 2 3
-		#bspc monitor -f primary
-		# set up monitors
-		#/home/t/bin/displayconf.sh &
-		;;
-	"ken-th")
-		bspc monitor -d 0 1 2 3
-		;;
-esac
+# bspwm
+##############################################
 
-# Add panel dir to $PATH
-export PATH=$PATH:~/.config/bspwm
-#panel &
+SPLIT_RATIO=0.4
+BORDER_WIDTH=2
+WINDOW_GAP=40
 
-# vim: set et sts=4 ts=4 sw=4:
+argb2rgb(){ # remove alpha channel from hex color
+    echo $(echo $1 | sed 's/#../#/')
+}
+COLOR_BORDER =          $BK0    # COLOR_BORDER=$(argb2rgb $BK0)
+COLOR_BORDER_FOCUSED =  $GY2    # COLOR_BORDER_FOCUSED=$(argb2rgb $GY0)
+COLOR_BORDER_ACTIVE =   $BK0    # COLOR_BORDER_ACTIVE=$(argb2rgb $GY0)
+COLOR_BORDER_PRESEL =   $WT1    # COLOR_BORDER_PRESEL=$(argb2rgb $WT0)
+COLOR_BORDER_LOCKED =   $YL     # COLOR_BORDER_LOCKED=$(argb2rgb $YL)
+COLOR_BORDER_STICKY =   $MG     # COLOR_BORDER_STICKY=$(argb2rgb $MG)
+COLOR_BORDER_PRIVATE =  $CY     # COLOR_BORDER_PRIVATE=$(argb2rgb $CY)
+COLOR_BORDER_URGENT =   $RD     # COLOR_BORDER_URGENT=$(argb2rgb $RD)
+
+# vim: et ts=4 sts=4 sw=4:

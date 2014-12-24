@@ -1,7 +1,8 @@
 #appcontent,
 #appcontent > #content,
-#appcontent > #content > tabbox > tabpanels {
-	background: #2d2d2d !important;
+#appcontent > #content > tabbox > tabpanels,
+tabbrowser {
+	background: #1d1f21 !important;
 }
 
 #browser { margin-top: -1px !important; }
@@ -9,6 +10,11 @@
 #main-window[stylish-url="about:blank"]:not([onclose^="PrintUtils"]):not([title^="Source Chart"]):not([chromehidden="menubar toolbar directories extrachrome "]) #content browser:not([src]) {
 	opacity: 0 !important;
 }
+#main-window:not([chromehidden*="toolbar"]){
+	margin: 0 !important;
+}
+
+
 
 a:active {
 	outline: none !important;
@@ -34,17 +40,16 @@ tabs#tabbrowser-tabs, tabs#tabbrowser-tabs * {
 	background-image: none !important;
 	margin-top: 0px !important;
 	max-height: 14px !important;
-	min-height: 14px !important;        
+	min-height: 14px !important;
 }
 
 tabs#tabbrowser-tabs {
-	background: #2d2d2d !important;
+	background: #1d1f21 !important;
 	padding-top: 0px !important;
 	margin-left: 0px !important;
-	padding-top: 0px !important;
 	padding-bottom: 0px !important;
 	border-bottom: 0px none !important;
-	text-align: center !important;
+	text-align: left !important;
 	/*box-shadow: inset 0px -4px 2px rgba(0,0,0,0.1) !important;*/
 }
 
@@ -52,16 +57,16 @@ tabs#tabbrowser-tabs {
 	max-height: 14px !important;
 	margin-left: 0px !important;
 	padding-top: 2px !important;
-	color: #515151 !important;
+	color: #969896 !important;
 	border-bottom: 0px none !important;
-	background: #2d2d2d !important;
+	background: #1d1f21 !important;
 	/*box-shadow: inset 0px -4px 2px rgba(0,0,0,0.1) !important;*/
 
 }
 
 .tabbrowser-tab[selected=true] {
-	color: #e8e6df !important;
-	background: #2d2d2d !important;
+	color: #3971ed !important;
+	background: #1d1f21 !important;
 	border-bottom: 0px none !important;
 	box-shadow: none !important;
 }
@@ -71,7 +76,7 @@ tabs#tabbrowser-tabs {
 	margin-right: 3px !important;
 	margin-top: 2px !important;
 	font-size: 10px !important;
-	font-family: Tewi !important;
+	font-family: "gohufont", monospace !important;
 }
 
 /* Hide the new curved tab edges */
@@ -105,7 +110,7 @@ html {
 
 .tabbrowser-tabs:not([drag=detach]) > .tabbrowser-tab:not([pinned])[fadein] {
 	min-width: 30px !important;
-	max-width: 130px !important;
+	max-width: 200px !important;
 }
 
 .searchbar-engine-image {
@@ -116,7 +121,7 @@ html {
 }
 #nav-bar {
 	background-image: none !important;
-	background-color: #2d2d2d !important;
+	background-color: #1d1f21 !important;
 	border: none !important;
 	margin-bottom: 0 !important;
 	padding: 0 !important;

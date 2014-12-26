@@ -39,8 +39,8 @@ tabs#tabbrowser-tabs, tabs#tabbrowser-tabs * {
 	border-bottom: 0px none !important;
 	background-image: none !important;
 	margin-top: 0px !important;
-	max-height: 14px !important;
-	min-height: 14px !important;
+	max-height: 16px !important;
+	min-height: 16px !important;
 }
 
 tabs#tabbrowser-tabs {
@@ -54,7 +54,7 @@ tabs#tabbrowser-tabs {
 }
 
 .tabbrowser-tab {
-	max-height: 14px !important;
+	max-height: 16px !important;
 	margin-left: 0px !important;
 	padding-top: 2px !important;
 	color: #969896 !important;

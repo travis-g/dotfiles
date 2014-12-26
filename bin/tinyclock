@@ -1,0 +1,5 @@
+#!/bin/zsh
+BG="#00000000" #clear
+FG="#FFB4B9B4"
+BAROPTS="-g"130x20+5+2" -f"-*-gohufont-bold-r-normal-*-14-*-*-*-*-*-*-*" -B$BG -F$FG"
+while :; do date '+%I:%M:%S'; sleep 1; done | bar $BAROPTS

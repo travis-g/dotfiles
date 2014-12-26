@@ -18,14 +18,14 @@ fi
 # Source .Xresources
 [[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
 
-export BROWSER=luakit
+export BROWSER=firefox
 
-udiskie &
-dunst &
+#udiskie &
+#dunst &
 zsh ./.fehbg
 
-# Normal cursor
+compton &
+
 xsetroot -cursor_name left_ptr &
 
-# Start wm
 wm bspwm

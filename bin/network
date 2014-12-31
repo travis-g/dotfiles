@@ -1,0 +1,57 @@
+#!/bin/sh
+#
+# z3bra - (c) wtfpl 2014
+
+usage () {
+    cat <<EOF
+usage: $(basename $0) [-hicwdu]
+    -h : print help
+    -i : print out current interface
+    -c : return 0 if connected to a network (default)
+    -w : return 0 if connected over wifi
+    -d : print out size of downloaded packets
+    -u : print out size of uploaded packets
+EOF
+}
+
+# get current interface
+netint() {
+    for int in $(ls /sys/class/net); do
+        if grep -q ${int} /proc/net/route; then
+            echo ${int}
+            return 0
+        fi
+    done
+
+    # no interface up, return loopback
+    echo "lo"
+}
+
+netstate () {
+    grep -q $(netint) /proc/net/route && return 0 || return 1
+}
+
+wireless () {
+    grep -q $(netint) /proc/net/wireless && return 0 || return 1
+}
+
+# get upload/download traffic
+nettraffic() {
+    case $1 in
+        up)     col=10 ;;
+         *)     col=2  ;;
+    esac
+
+    traffic=$(awk "/$(netint)/ {print \$$col}" /proc/net/dev)
+
+    human ${traffic}
+}
+
+case $1 in
+    -h) usage ;;
+    -i) netint ;;
+    -w) wireless ;;
+    -d) nettraffic down ;;
+    -u) nettraffic up ;;
+     *) netstate ;;
+esac

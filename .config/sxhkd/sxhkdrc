@@ -135,13 +135,10 @@ super + l
 #
 
 XF86AudioMute
-	mute
+	volume !
 
 XF86Audio{Raise,Lower}Volume
-	vol_change.sh {up,down} 10; notify-volume
-
-XF86MonBrightness{Up,Down}
-	notify-brightness
+	volume {+,-}
 
 # make sxhkd reload its configuration files:
 alt + shift + Escape

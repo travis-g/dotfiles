@@ -1,5 +1,5 @@
 XDG_DESKTOP_DIR="/home/t/"
-XDG_DOWNLOAD_DIR="/home/t/docs/downloads"
+XDG_DOWNLOAD_DIR="/home/t/downloads"
 XDG_TEMPLATES_DIR="/home/t/docs"
 XDG_PUBLICSHARE_DIR="/home/t/docs/public"
 XDG_DOCUMENTS_DIR="/home/t/docs"

@@ -1,4 +1,4 @@
-#include "/home/t/.colors/base16-google.dark"
+#include "/home/t/.config/theme/base16-google.dark"
 
 ! Font settings
 !urxvt*font: -*-tewi-medium-r-*-*-11-*-*-*-*-*-*-*

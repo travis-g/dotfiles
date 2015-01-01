@@ -39,28 +39,20 @@ bspc config normal_private_border_color     $COLOR_BORDER_PRIVATE
 
 
 # Rules
-bspc rule -a MultiMC5 floating=on manage=on
 bspc rule -a lxappearance floating=on manage=on
+bspc rule -a MPlayer floating=on manage=on
 
 
 # Create/name desktops
-##############################################
-# limit to 10 for sxhkdrc hotkey use
 case $HOSTNAME in
     "ax-l")
-        # set up desktops
         #bspc monitor DVI-D-0 -d 0 1
         bspc monitor DVI-I-1 -d 0 1
         bspc monitor HDMI-0 -d 2 3
-        #bspc monitor -f primary
         ;;
     "ken-th")
         bspc monitor -d 0 1 2 3
         ;;
 esac
-
-# Add panel dir to $PATH
-export PATH=$PATH:~/.config/bspwm
-#panel &
 
 # vim: set et sts=4 ts=4 sw=4:

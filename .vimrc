@@ -1,61 +1,70 @@
-set nocompatible              " be iMproved, required
-filetype off                  " required
+" .vimrc
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-"call vundle#begin('~/some/path/here')
+" GENERAL {{{
+set mouse=
+"set ttymouse=urxvt
 
-" PLUGIN LIST START
-Plugin 'gmarik/Vundle.vim'
+set autoread
+set autowrite
 
-Plugin 'godlygeek/tabular'
-Plugin 'plasticboy/vim-markdown'
+filetype indent on
+" }}}
 
-" PLUGIN END
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
+" BEHAVIOR {{{
+" backup files, don't .swp
+set noswapfile
+set nowritebackup
+set nobackup
+set undofile
+set undodir=$HOME/.vim/undo
 
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" VUNDLE CONFIG END
+set virtualedit=block
 
-" Syntax highlighting
+set tags+=~/.vim/systags
+" }}}
+
+" DISPLAY {{{
 syntax on
 
-" Enable mouse
-set mouse-=a
-set ttymouse=urxvt
+set encoding=utf-8
+set wildmenu
+set modeline
 
-" Line numbers
-"set number
+set statusline=-
+set laststatus=0 noruler " rulerformat=%-28(%=%M%H%R\ %t%<\ %l,%c%V%8(%)%P%)
 
-" PLUGIN CONFIG
-" vim-markdown
-let g:vim_markdown_folding_disabled=1
+set list lcs=tab:│\ ,nbsp:¬
+set fillchars=vert:│,fold:-,stl:─,stlnc:┈
+" }}}
 
-" Syntax by filetype
-augroup markdown
-	au!
-	au BufNewFile,BufRead *.md,*.markdown,*.ghmarkdown setlocal filetype=ghmarkdown
-augroup END
+" FORMATTING {{{
+set smartindent     " smart indent
+set et              " notabs
+set sw=4            " shiftwidth
+set sts=4           " softtabstop
 
-" Append modeline after last line in buffer.
-" Use substitute() instead of printf() to handle '%%s' modeline in LaTeX
-" files.
-function! AppendModeline()
-  let l:modeline = printf(" vim: set ts=%d sw=%d tw=%d %set :",
-	\ &tabstop, &shiftwidth, &textwidth, &expandtab ? '' : 'no')
-  let l:modeline = substitute(&commentstring, "%s", l:modeline, "")
-  call append(line("$"), l:modeline)
-endfunction
-nnoremap <silent> <Leader>ml :call AppendModeline()<CR>
+set lbr             " enable line break
+set sbr=>           " line break indicator
 
-" vim: set ts=8 sw=8 tw=78 noet :
+set splitright      " open vsplits on the right
+set fdm=syntax      " set foldmethod
+" }}}
+
+" MAPPING {{{
+" Treat broken lines separately
+map j gj
+map k gk
+
+" }}}
+
+" AUTOCOMMANDS {{{
+au FileType         make set noet
+
+set omnifunc=syntaxcomplete#Complete
+au FileType c       set omnifunc=ccomplete#Complete
+au FileType cpp     set omnifunc=ccomplete#Complete
+au FileType html    set omnifunc=htmlcomplete#CompleteTags
+au FileType css     set omnifunc=csscomplete#CompleteCSS
+" }}}
+
+" vim: set ts=4 sw=4 sts=4 tw=78 et fdm=marker:

@@ -41,7 +41,7 @@ bspc config normal_private_border_color     $COLOR_BORDER_PRIVATE
 # Rules
 bspc rule -a lxappearance floating=on manage=on
 bspc rule -a MPlayer floating=on manage=on
-
+bspc rule -a Steam floating=on manage=on
 
 # Create/name desktops
 case $HOSTNAME in

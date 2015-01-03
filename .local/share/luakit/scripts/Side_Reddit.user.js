@@ -40,7 +40,7 @@ var lastScrollTop = 0;
 });
 
 zNode1.innerHTML = '<button id="myButton1" type="button">'
-                + 'Ã¢â‚¬Â¡</button>';
+                + '×</button>';
 
 zNode1.setAttribute ('id', 'myContainer1');
 document.getElementById('header-bottom-left').appendChild(zNode1);

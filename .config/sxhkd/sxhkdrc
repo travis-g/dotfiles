@@ -26,7 +26,7 @@ mod1 + ctrl + {h,j,k,l}
 
 # Move window into presel position
 mod1 + shift {a,s,d,f}
-	bspc window -w {left,up,down,right}
+	bspc window -w {left,down,up,right}
 
 # Select windows, or move
 mod1 + {_,shift + }{h,j,k,l}

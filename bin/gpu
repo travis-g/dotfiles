@@ -1,0 +1,34 @@
+#!/bin/sh
+#
+
+usage () {
+    cat <<EOF
+Usage: $(basename $0) [-fhpt]
+    -f  fan speed percentage
+    -h  print help
+    -p  percentage of gpu in use (default)
+    -t  gpu temp in degrees F
+EOF
+}
+
+fanperc () {
+    VAL=`nvidia-settings -q gpucurrentfanspeed -t`
+    echo "${VAL}%"
+}
+
+gpuperc () {
+    VAL=`nvidia-settings -q gpuutilization -t |sed -n 's/^.*\?\([0-9]\+\)/\1/p'`
+    echo "${VAL}%"
+}
+
+gputemp () {
+    VAL=`nvidia-settings -q gpucoretemp -t |head -n1`
+    echo "($VAL * 9 / 5.0 + 32)" | bc
+}
+
+case $1 in
+    -h) usage;;
+    -f) fanperc;;
+    -t) gputemp;;
+     *) gpuperc;;
+esac

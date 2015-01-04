@@ -22,13 +22,10 @@ globals.domain_props = {
         enable_plugins          = false,
         user_stylesheet_uri     = "",
     },
-    --[[
     ["all"] = {
-        enable_scripts          = false,
-        enable_plugins          = false,
-        enable_private_browsing = false,
-        user_stylesheet_uri     = "",
+        user_stylesheet_uri     = "file://" .. luakit.data_dir .. "/styles/userContent.css",
     },
+    --[[
     ["youtube.com"] = {
         enable_scripts = true,
         enable_plugins = true,

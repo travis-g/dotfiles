@@ -1,23 +1,8 @@
 #!/bin/zsh
+#
+# Launch my wm
 
-function usage(){
-echo "Usage: $(basename $0) [bspwm|twm|swm|dwm]...
-Window manager launcher script.
-"
-exit $1
-}
-
-case $1 in
-	help)	usage 0;;
-	bspwm)
-		export PATH=$PATH:~/.config/bspwm
-		export DESKTOP_SESSION=bspwm
-
-		while true; do
-			sxhkd &
-			[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
-			mkfifo "$PANEL_FIFO"
-			bspwm "$PANEL_FIFO" -p W || break
-		done;;
-	*)	echo "Unrecognized option(s)!"; usage 1;;
-esac
+while true; do 
+    sxhkd &
+    exec bspwm || break
+done

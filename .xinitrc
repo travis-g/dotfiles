@@ -1,12 +1,8 @@
 #!/bin/zsh
-
-# Source fonts
-xset +fp /usr/share/fonts/local
-xset +fp /usr/share/fonts/misc
+xrdb ~/.Xresources
+xset +fp /usr/share/fonts/{local,misc}
 xset +fp $HOME/.fonts
 xset fp rehash
-
-PATH=$PATH:~/bin
 
 if [ -d /etc/X11/xinit/xinitrc.d ]; then
   for f in /etc/X11/xinit/xinitrc.d/*; do
@@ -15,17 +11,15 @@ if [ -d /etc/X11/xinit/xinitrc.d ]; then
   unset f
 fi
 
-# Source .Xresources
-[[ -f ~/.Xresources ]] && xrdb -merge ~/.Xresources
+xsetroot -cursor_name left_ptr &
+unclutter -grab -noevents -root &
+urxvtd &
 
-export BROWSER=firefox
+export BROWSER=luakit
+export PATH=$PATH:~/bin
 
-#udiskie &
-#dunst &
 zsh ./.fehbg
 
 compton &
 
-xsetroot -cursor_name left_ptr &
-
-wm bspwm
+wm

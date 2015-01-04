@@ -1,47 +1,30 @@
 #! /bin/sh
 
-. /home/t/.vars_master # source master config file
-
 bspc desktop -n 0
 
-# Appearance
-bspc config split_ratio             $SPLIT_RATIO
-bspc config border_width            $BORDER_WIDTH
-#bspc config top_padding                $PANEL_HEIGHT
-bspc config window_gap              $WINDOW_GAP
+bspc config split_ratio             0.4
+bspc config border_width            2
+bspc config window_gap              40
 
-
-# Behavior
 bspc config borderless_monocle      true
 bspc config gapless_monocle         true
 bspc config focus_follows_pointer   true
 bspc config auto_alternate          true
 bspc config auto_cancel             true
 
-# Colors
-# normal
-bspc config normal_border_color             $COLOR_BORDER
-bspc config focused_border_color            $COLOR_BORDER_FOCUSED
-bspc config active_border_color             $COLOR_BORDER_ACTIVE
-bspc config presel_border_color             $COLOR_BORDER_PRESEL
-# sticky
-bspc config focused_sticky_border_color     $COLOR_BORDER_STICKY
-bspc config active_sticky_border_color      $COLOR_BORDER_STICKY
-bspc config normal_sticky_border_color      $COLOR_BORDER_STICKY
-# locked
-bspc config focused_locked_border_color     $COLOR_BORDER_LOCKED
-bspc config active_locked_border_color      $COLOR_BORDER_LOCKED
-bspc config normal_locked_border_color      $COLOR_BORDER_LOCKED
-# private
-bspc config focused_private_border_color    $COLOR_BORDER_PRIVATE
-bspc config active_private_border_color     $COLOR_BORDER_PRIVATE
-bspc config normal_private_border_color     $COLOR_BORDER_PRIVATE
+## COLORS {{{
+    bspc config normal_border_color     '#1d1f21'
+    bspc config focused_border_color    '#373b41'
+    bspc config active_border_color     '#1d1f21'
+    bspc config presel_border_color     '#ffffff'
+    bspc config urgent_border_color     '#cc342b'
+## }}}
 
-
-# Rules
-bspc rule -a lxappearance floating=on manage=on
-bspc rule -a MPlayer floating=on manage=on
-bspc rule -a Steam floating=on manage=on
+## RULES {{{ 
+    bspc rule -a lxappearance floating=on manage=on
+    bspc rule -a MPlayer floating=on manage=on
+    bspc rule -a Steam floating=on manage=on
+## }}}
 
 # Create/name desktops
 case $HOSTNAME in
@@ -55,4 +38,4 @@ case $HOSTNAME in
         ;;
 esac
 
-# vim: set et sts=4 ts=4 sw=4:
+# vim: set et sts=4 ts=4 sw=4 fdm=marker:

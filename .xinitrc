@@ -13,12 +13,13 @@ fi
 
 xsetroot -cursor_name left_ptr &
 unclutter -grab -noevents -root &
-urxvtd &
+urxvtd -q -o -f &
 
 export BROWSER=luakit
 export PATH=$PATH:~/bin
 
-zsh ./.fehbg
+[[ -e "$HOME/.fehbg" ]] && sh ./.fehbg || \
+   hsetroot -solid \#198844
 
 compton &
 

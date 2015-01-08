@@ -1,4 +1,5 @@
 FIFO script for notifications
 get urxvtd working on ken-th
 make shell config directory
-make .profile & 'alias' script for bash/zsh
+make .profile & 'alias' script for bash/zsh?
+find what's in /etc/skel/

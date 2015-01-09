@@ -1,23 +1,25 @@
-#include "/home/t/.config/theme/base16-google.dark"
+! ~/etc/Xresources
 
-urxvt*font: -*-gohufont-medium-r-normal-*-11-*-*-*-*-*-*-*
-urxvt*boldFont: -*-gohufont-bold-r-normal-*-11-*-*-*-*-*-*-*
+!! rxvt-unicode 
+URxvt*font: -*-gohufont-medium-r-normal-*-11-*-*-*-*-*-*-*
+URxvt*boldFont: -*-gohufont-bold-r-normal-*-11-*-*-*-*-*-*-*
+URxvt*italicFont: -*-gohufont-medium-r-normal-*-11-*-*-*-*-*-*-*
+URxvt*bolditalicFont: -*-gohufont-bold-r-normal-*-11-*-*-*-*-*-*-*
 
-!urxvt*cursorUnderline: 1
-urxvt*cursorBlink: true
-urxvt*scrollBar: false
-urxvt*internalBorder: 3
-urxvt*dynamicColors: on
-urxvt*urgentOnBell: true
-urxvt*savelines: 1000
+URxvt*cursorBlink: true
+URxvt*scrollBar: false
+URxvt*internalBorder: 3
+URxvt*dynamicColors: on
+URxvt*urgentOnBell: true
+URxvt*savelines: 1000
 
-! URxvt extra (requires urxvt-perls)
-urxvt.perl-ext: default,url-select
-urxvt.keysym.M-u: perl:url-select:select_next
-urxvt.url-select.launcher: /usr/bin/luakit
-urxvt.url-select.underline: true
+! extra (requires URxvt-perls)
+URxvt.perl-ext: default,url-select
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.url-select.launcher: /usr/bin/luakit
+URxvt.url-select.underline: true
 
-! XFont configs
+!! XFont configs
 Xft*antialias: true
 Xft*autohint: true
 Xft*hinting: true
@@ -25,3 +27,4 @@ Xft*hintstyle: hintslight
 Xft*lcdfilter: lcdlight
 Xft*rgba: rgb
 Xft*dpi: 96
+

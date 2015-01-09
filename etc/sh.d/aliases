@@ -1,0 +1,45 @@
+## ~/etc/sh.d/aliases
+
+## MAIN {{{
+
+# Are you sure?
+alias rm='rm -I'
+alias cp='cp -vi'
+alias mv='mv -i'
+
+# Coloring
+alias ls='ls --color=auto'
+alias dir='dir --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+## }}}
+
+## PACKAGING {{{
+
+alias inst='yaourt'
+alias search='yaourt'
+alias remove='sudo pacman -Rns'
+
+## }}}
+
+## FUNCTIONS {{{
+
+# systemctl
+function start()    { sudo systemctl start $@;  }
+function stop()     { sudo systemctl stop $@;   }
+function restart()  { sudo systemctl restart $@; }
+#function enable()   { sudo systemctl enable $@; }
+function disable()  { sudo systemctl disable $@; }
+function status()   { sudo systemctl status $@; }
+
+## }}}
+
+## OTHER {{{
+
+alias git='hub'
+
+## }}}
+
+# vim: set et sw=4 ts=4 sts=4 fdm=marker:

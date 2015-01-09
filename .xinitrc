@@ -1,12 +1,14 @@
 #!/bin/zsh
 
 run() {
+    . $HOME/.profile
+    
     xset +fp /usr/share/fonts/{local,misc}
     xset +fp $HOME/.fonts
     xset fp rehash
 
     xrdb -load ~/.Xresources
-    xrdb -merge ~/.config/theme/base16-google.dark
+    xrdb -merge ~/.theme/base16-google.dark
 
     xsetroot -cursor_name left_ptr &
     xsetroot -solid \#198844
@@ -14,10 +16,7 @@ run() {
     unclutter -grab -noevents -root &
     urxvtd -q -o -f &
 
-    export BROWSER=luakit
-    export PATH=$PATH:~/bin
-
-    [[ -e "$HOME/.fehbg" ]] && sh ~/.fehbg
+    test -f ~/.fehbg && sh ~/.fehbg
 
     sxhkd &
     exec bspwm || break

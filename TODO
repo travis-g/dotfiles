@@ -1,5 +1,6 @@
 FIFO script for notifications
 get urxvtd working on ken-th
 make .profile & 'alias' script for bash/zsh?
+enhanced prompt script for zsh
 research configuring in ~/etc for root, +copy.sh
 set XDG_CONFIG_HOME, XDG_DATA_HOME to $HOME/.config

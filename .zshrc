@@ -3,10 +3,11 @@ source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zs
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-# Enable command completion
-autoload -U compinit promptinit
+# Enable command completion & colored prompt
+autoload -U compinit promptinit colors
 compinit
 promptinit
+colors
 
 PROMPT="─── "
 RPROMPT=""

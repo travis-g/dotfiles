@@ -21,4 +21,4 @@ setopt hist_ignore_all_dups
 export PATH=$PATH:~/bin
 export EDITOR=vim
 
-source $HOME/etc/sh.d/aliases
+test -f ~/.sh.d/aliases && source ~/.sh.d/aliases

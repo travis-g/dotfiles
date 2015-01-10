@@ -8,7 +8,7 @@ run() {
     xset fp rehash
 
     xrdb -load ~/.Xresources
-    xrdb -merge ~/.theme/base16-google.dark
+    xrdb -merge ~/.config/theme/base16-google.dark
 
     xsetroot -cursor_name left_ptr &
     xsetroot -solid \#198844

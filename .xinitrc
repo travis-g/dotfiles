@@ -13,7 +13,7 @@ run() {
     xsetroot -cursor_name left_ptr &
     xsetroot -solid \#198844
 
-    unclutter -grab -noevents -root &
+    #unclutter -grab -noevents -root &
     urxvtd -q -o -f &
 
     test -f ~/.fehbg && sh ~/.fehbg

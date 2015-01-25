@@ -18,7 +18,7 @@ setopt append_history
 setopt hist_verify
 setopt hist_ignore_all_dups
 
-export PATH=$PATH:~/bin
-export EDITOR=vim
+#export PATH=$PATH:~/bin:
+#export EDITOR=vim
 
 test -f ~/.sh.d/aliases && source ~/.sh.d/aliases

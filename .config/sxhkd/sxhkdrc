@@ -12,6 +12,10 @@ mod1 + Escape
 mod1 + shift + Escape
 	bspc window -k
 
+# toggle private window
+mod1 + shift + p
+    bspc window -t private
+
 # ╻ ╻╻┏┓╻╺┳┓┏━┓╻ ╻┏━┓
 # ┃╻┃┃┃┗┫ ┃┃┃ ┃┃╻┃┗━┓
 # ┗┻┛╹╹ ╹╺┻┛┗━┛┗┻┛┗━┛

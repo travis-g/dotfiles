@@ -18,12 +18,14 @@ bspc config auto_cancel             true
     bspc config active_border_color     '#1d1f21'
     bspc config presel_border_color     '#ffffff'
     bspc config urgent_border_color     '#cc342b'
+    bspc config focused_private_border_color '#3971ed'
 ## }}}
 
 ## RULES {{{ 
     bspc rule -a lxappearance floating=on manage=on
     bspc rule -a MPlayer floating=on manage=on
     bspc rule -a Steam floating=on manage=on
+    bspc rule -a Wfica private=on manage=on
 ## }}}
 
 # Create/name desktops

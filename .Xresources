@@ -15,6 +15,7 @@ URxvt*savelines: 1000
 
 ! extra (requires URxvt-perls)
 URxvt.perl-ext: default,url-select
+URxvt.perl-ext-common: vtwheel
 URxvt.keysym.M-u: perl:url-select:select_next
 URxvt.url-select.launcher: /usr/bin/luakit
 URxvt.url-select.underline: true

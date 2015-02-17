@@ -9,7 +9,7 @@ compinit
 promptinit
 colors
 
-PROMPT="─── "
+PROMPT="%{$fg_bold[black]%(! $fg[red] )─$fg_bold[black]%(1j $fg[green] )─$fg_bold[black]%(?  $fg[red])─$reset_color%} "
 RPROMPT=""
 
 #setopt AUTO_CD

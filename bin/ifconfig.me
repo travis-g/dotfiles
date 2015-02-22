@@ -1,0 +1,44 @@
+#!/bin/sh
+#
+# Script for http://ifconfig.me
+
+usage () {
+    cat <<EOF
+usage: $(basename $0) [-ahinpu]
+    -a  return all available info
+    -h  show help
+    -i  return external IP address (default)
+    -n  return remote host name
+    -p  return port number
+    -u  return user agent
+EOF
+}
+
+all () {
+    curl ifconfig.me/all
+}
+
+hostname () {
+    curl ifconfig.me/host
+}
+
+ip () {
+    curl ifconfig.me/ip
+}
+
+port () {
+    curl ifconfig.me/port
+}
+
+useragent () {
+    curl ifconfig.me/ua
+}
+
+case $1 in
+    -h) usage;;
+    -a) all;;
+    -n) hostname;;
+    -p) port;;
+    -u) useragent;;
+     *) ip;;
+esac

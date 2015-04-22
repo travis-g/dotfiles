@@ -16,6 +16,7 @@ run() {
     urxvtd -q -o -f &
 
     test -f ~/.fehbg && sh ~/.fehbg
+    which compton && compton
 
     sxhkd &
     exec bspwm || break

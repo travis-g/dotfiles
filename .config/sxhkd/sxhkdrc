@@ -110,7 +110,7 @@ mod4 + space
 	dmenu_run -i -nb "#1d1f21" -nf "#b4b7b4" -sb "#3971ed" -sf "#e0e0e0"
 
 mod4 + l
-        slock
+        xlock
 
 # ┏┳┓┏━╸╺┳┓╻┏━┓
 # ┃┃┃┣╸  ┃┃┃┣━┫

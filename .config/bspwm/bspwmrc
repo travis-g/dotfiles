@@ -37,8 +37,10 @@ case $HOSTNAME in
         bspc monitor HDMI-0 -d 2 3
         ;;
     "ken-th")
-        bspc monitor -d 0 1 2 3
+        bspc monitor -d 0 1
         ;;
+    "ad-ll")
+        bspc monitor -d 0 1 2 3
 esac
 
 # vim: set et sts=4 ts=4 sw=4 fdm=marker:

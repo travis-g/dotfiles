@@ -17,6 +17,10 @@ EOF
 
 test $1 = "-h" && usage && exit 0
 
+# ENV
+CRITICAL=${CRITICAL:-7}
+BAT_BELL=${BAT_BELL:-beep -f 1000 -l 200}
+
 # if battery is under a critical level, $BAT_BELL will be run
 bell () {
     # don't do anything if we're over the critical level, or the battery is
@@ -46,9 +50,6 @@ test -z "$BATN" && exit 1
 # get battery level and status (charging or not)
 BATC=`cat /sys/class/power_supply/${BATN}/capacity`
 BATS=`cat /sys/class/power_supply/${BATN}/status`
-
-CRITICAL=${CRITICAL:-7}
-BAT_BELL=${BAT_BELL:-beep -f 1000 -l 200}
 
 case $1 in
     -h) usage ;;

@@ -1,0 +1,14 @@
+#!/usr/bin/env sh
+
+set -e
+
+# get screen size
+IFS='x' read w h <<< "$(xrandr | awk '/\*/ {print $1}')"
+
+font1="-*-stlarch-medium-*-*--10-*-*-*-*-*-*-*"
+font2="-*-gohufont-medium-*-*--11-*-*-*-*-*-iso10646-1"
+
+while :; do
+    ~/bin/mkbar
+done | lemonbar -f "$font1,$font2" -B\#ff1d1f21 -g $((w-30))x22+15+15
+

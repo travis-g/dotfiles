@@ -1,0 +1,26 @@
+#!/usr/bin/env sh
+
+refresh=1.75
+timefmt="%-I:%M"
+
+barfg='%{F#ffb4b7b4}'
+barmg='%{F#ffffffff}'
+barbg='%{F#ff1d1f21}'
+
+clock() {
+    date "+${timefmt}"
+}
+
+buf="%{l} "
+buf="${buf}${barmg}${barfg}"
+
+buf="${buf}%{c}"
+
+buf="${buf}%{r}"
+
+buf="${buf}${barmg} ${barfg} $(clock) "
+
+echo $buf
+sleep ${refresh}
+
+

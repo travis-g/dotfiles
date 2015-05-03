@@ -19,7 +19,7 @@ run() {
     which compton && compton &
 
     sxhkd &
-    exec bspwm || break
+    WM_NAME="bspwm" && exec bspwm || break
 }
 
 run this circus

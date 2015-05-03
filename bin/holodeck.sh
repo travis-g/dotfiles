@@ -1,4 +1,4 @@
-#! /bin/sh
+#!/usr/bin/env sh
 # 
 #   holodeck.sh - generate Star Trek holodeck background noise.
 #     Requires SoX and relevant libraries.

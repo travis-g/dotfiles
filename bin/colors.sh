@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 xdef="$HOME/.Xresources"
 colors=( $( sed -re '/^!/d; /^$/d; /^#/d; s/(\*color)([0-9]):/\10\2:/g;' $xdef | grep 'color[01][0-9]:' | sort | sed 's/^.*: *//g' ) )
 

@@ -1,7 +1,7 @@
 # vim: set et ts=4 sw=4 sts=4 ft=conf:
 
 # make sxhkd reload its configuration files:
-mod1 + shift + Escape
+ctrl + shift + Escape
 	pkill -USR1 -x sxhkd && sxhkd
 
 # Close window
@@ -15,6 +15,10 @@ mod1 + shift + Escape
 # toggle private window
 mod1 + shift + p
     bspc window -t private
+
+# cycle through windows
+mod1 + Tab
+    bspc window -f next
 
 # ╻ ╻╻┏┓╻╺┳┓┏━┓╻ ╻┏━┓
 # ┃╻┃┃┃┗┫ ┃┃┃ ┃┃╻┃┗━┓

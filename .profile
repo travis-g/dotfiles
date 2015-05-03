@@ -9,4 +9,4 @@ export VISUAL=$EDITOR
 export BROWSER=/usr/bin/luakit
 #export LS_COLORS=
 
-export BAT_BELL=popup "$(battery)% ($(battery -s))"
+#export BAT_BELL="popup '$(battery)% ($(battery -s))'"

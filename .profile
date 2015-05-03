@@ -8,3 +8,5 @@ export EDITOR=/usr/bin/vim
 export VISUAL=$EDITOR
 export BROWSER=/usr/bin/luakit
 #export LS_COLORS=
+
+export BAT_BELL=popup "$(battery)% ($(battery -s))"

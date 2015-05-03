@@ -15,10 +15,10 @@ environment:
 EOF
 }
 
-test $1 = "-h" && usage && exit 0
+test "$1" = "-h" && usage && exit 0
 
 # ENV
-CRITICAL=${CRITICAL:-7}
+CRITICAL=${CRITICAL:-10}
 BAT_BELL=${BAT_BELL:-beep -f 1000 -l 200}
 
 # if battery is under a critical level, $BAT_BELL will be run

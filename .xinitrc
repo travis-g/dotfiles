@@ -11,7 +11,7 @@ run() {
     xrdb -merge ~/.config/theme/base16-google.dark
 
     xsetroot -cursor_name left_ptr &
-    xsetroot -solid \#198844
+    xsetroot -solid \#000
 
     urxvtd -q -o -f &
 

@@ -6,7 +6,7 @@ export PATH=$PATH:~/.gem/ruby/2.2.0/bin
 export PAGER=/usr/bin/less
 export EDITOR=/usr/bin/vim
 export VISUAL=$EDITOR
-export BROWSER=/usr/bin/luakit
+export BROWSER=/usr/bin/google-chrome-stable
 #export LS_COLORS=
 
 #export BAT_BELL="popup '$(battery)% ($(battery -s))'"

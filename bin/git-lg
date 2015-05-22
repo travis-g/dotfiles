@@ -1,3 +1,25 @@
 #!/usr/bin/env sh
-git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+#
+# travis-g - (c) wtfpl 2015
 
+usage() {
+    cat << EOF
+usage: $(basename $0) [options]
+
+    -h, Show this help
+    -a  Show commit authors and dates
+
+EOF
+}
+
+test "$1" = "-h" && usage && exit 0
+
+log() {
+    git log --color --graph --decorate --branches --oneline --remotes --tags --all
+}
+detail() {
+    git log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+}
+
+test "$1" = "-a" && detail
+log

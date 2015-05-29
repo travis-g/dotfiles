@@ -1,5 +1,7 @@
 #!/usr/bin/env sh
-
+#
+# travis-g - WTFPL, v 2.0
+# create the content for bar script
 refresh=1.75
 timefmt="%-I:%M"
 

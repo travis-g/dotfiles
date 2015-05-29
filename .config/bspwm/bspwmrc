@@ -33,8 +33,8 @@ bspc config auto_cancel             true
 case $HOSTNAME in
     "ax-l")
         #bspc monitor DVI-D-0 -d 0 1
-        bspc monitor DVI-I-1 -d 0 1
-        bspc monitor HDMI-0 -d 2 3
+        bspc monitor HDMI-0 -d 0 1
+        bspc monitor DVI-I-1 -d 2 3
         ;;
     "ken-th")
         bspc monitor -d 0 1

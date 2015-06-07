@@ -1,4 +1,0 @@
-refactor all stuff so that theres no conflicts with regular jQuery
-change $.get and $.set so that it works with Storage
-rewrite $.get and remove the callback--seriously look at all the fakeQuery functions
-think about when VES should be split up

@@ -1,4 +1,6 @@
 #!/usr/bin/python2
+#
+# from http://redd.it/35m141
 
 import os
 import xcb

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python2
 # http://ubuntuforums.org/showthread.php?t=1487183
 import sys
 import gtk

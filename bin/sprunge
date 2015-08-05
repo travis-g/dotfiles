@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+
+test -z "$1" && FILE='-' || FILE=$1
+curl -sF "sprunge=<${FILE}" http://sprunge.us

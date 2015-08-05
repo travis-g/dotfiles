@@ -1,21 +1,30 @@
 #!/usr/bin/python2
-# -*- coding: utf-8 -*-
-# vim:ts=2:sw=2:expandtab
 
 import os
 import xcb
 from xcb.xproto import *
 from PIL import Image
 
-# requires:
-# python2
-# python2-pillow (AUR)
-# xpyb (AUR)
+"""
+  requires:
+    python2
+    python2-pillow (AUR)
+    xpyb (AUR)
+"""
+
 
 XCB_MAP_STATE_VIEWABLE = 2
 
+LOCK_IMG = '/tmp/py3lock.png'
+LOCK_CMD = 'i3lock -i '+LOCK_IMG
+
+PIXEL_SIZE = 8 
+
+#options: NEAREST, BILINEAR, BICUBIC, LANCZOS
+RESIZE_METHOD = Image.NEAREST
+
 def screenshot():
-  os.system('import -window root /tmp/.i3lock.png')
+  os.system('import -window root ' + LOCK_IMG)
 
 def xcb_fetch_windows():
   """ Returns an array of rects of currently visible windows. """
@@ -39,16 +48,15 @@ def xcb_fetch_windows():
 def obscure_image(image):
   """ Obscures the given image. """
   size = image.size
-  pixel_size = 9
 
-  image = image.resize((size[0] / pixel_size, size[1] / pixel_size), Image.NEAREST)
-  image = image.resize((size[0], size[1]), Image.NEAREST)
+  image = image.resize((size[0] / PIXEL_SIZE, size[1] / PIXEL_SIZE), RESIZE_METHOD)
+  image = image.resize((size[0], size[1]), RESIZE_METHOD)
 
   return image
 
 def obscure(rects):
   """ Takes an array of rects to obscure from the screenshot. """
-  image = Image.open('/tmp/.i3lock.png')
+  image = Image.open(LOCK_IMG)
 
   for rect in rects:
     area = (
@@ -61,10 +69,10 @@ def obscure(rects):
     cropped = obscure_image(cropped)
     image.paste(cropped, area)
 
-  image.save('/tmp/.i3lock.png')
+  image.save(LOCK_IMG)
 
 def lock_screen():
-  os.system('i3lock -u -i /tmp/.i3lock.png')
+  os.system(LOCK_CMD)
 
 if __name__ == '__main__':
   # 1: Take a screenshot.

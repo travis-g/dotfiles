@@ -19,7 +19,8 @@ run() {
     which compton && compton &
 
     sxhkd &
-    WM_NAME="bspwm" && exec bspwm || break
+    export PANEL_FIFO=/tmp/panel-fifo
+    export WM_NAME="bspwm" && exec bspwm || break
 }
 
 run this circus

@@ -1,0 +1,42 @@
+#!/usr/bin/env sh
+
+. wmconfig
+
+while read -r line; do
+    case $line in
+        S*)
+            sinfo="%{r}${line#?}";;
+        T*) 
+            title="${line#?} ";;
+        W*)
+            winfo="${l}"
+            IFS=':'
+            set -- ${line#?}
+            while [ $# -gt 0 ]; do
+                item=$1
+                name=${item#?}
+                case $item in
+                    [OFU]*) # any active (currently in view) desktop
+                        winfo="$winfo%{U$COLOR_ACTIVE}%{+u} ${name} %{-u}"
+                        ;;
+                    o*) # occupied desktop
+                        winfo="$winfo%{U$COLOR_OCCUPIED}%{+u} ${name} %{-u}"
+                        ;;
+                    f*) # inactive desktop
+                        winfo="$winfo ${name} "
+                        ;;
+                    u*) # urgent desktop
+                        winfo="$winfo%{U$COLOR_URGENT}%{+u} ${name} %{-u}"
+                        ;;
+                    L*) # layout
+                        layout=$(printf "%s" "${name}" | sed 's/\(.\).*/\U\1/')
+                        winfos="$winfos $layout"
+                        ;;
+                esac
+                shift
+            done
+            ;;
+    esac
+    printf "%s\n" "$winfo$title$sinfo"
+done
+

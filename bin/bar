@@ -2,13 +2,31 @@
 
 set -e
 
+trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
+
 # get screen size
 IFS='x' read w h <<< "$(xrandr | awk '/\*/ {print $1}')"
 
-#font1="-*-stlarch-medium-*-*--10-*-*-*-*-*-*-*"
-font2="-*-gohufont-medium-*-*--11-*-*-*-*-*-iso10646-1"
+. wmconfig
 
-while :; do
-    ~/bin/mkbar
-done | lemonbar -f "$font2" -B\#ff1d1f21 -g $((w-30))x22+15+15
+[ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
+mkfifo "$PANEL_FIFO"
+
+bspc control --subscribe > "$PANEL_FIFO" &
+echo "T" > "$PANEL_FIFO" &
+# conky > "$PANEL_FIFO" &
+
+
+#while :; do
+#    mkbar # cat a basic shell script
+#done \
+cat "$PANEL_FIFO" \
+    | fifo2bar \
+    | lemonbar \
+        -f "$FONT2"\
+        -F "$COLOR_FG"\
+        -B "$COLOR_BG"\
+        -g "$PANEL_GEOMETRY"\
+        -u "$LINEHEIGHT" &
+wait
 

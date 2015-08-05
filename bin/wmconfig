@@ -1,0 +1,19 @@
+FONT1="-*-stlarch-medium-*-*--10-*-*-*-*-*-*-*"
+FONT2="-*-gohufont-medium-*-*--11-*-*-*-*-*-iso10646-1"
+
+COLOR_BG='#ff1d1f21'
+COLOR_FG='#ffb4b7b4'
+COLOR_ACTIVE='#ffffffff' # current
+COLOR_OCCUPIED=$COLOR_FG # non-empty
+COLOR_URGENT='#ffcc342b' # urgent
+
+LINEHEIGHT=3
+
+PANEL_H=15
+PANEL_W=''
+PANEL_GEOMETRY="${PANEL_W}x${PANEL_H}+0+0"
+
+POPUP_H=$PANEL_H
+POPUP_W=135
+POPUP_DUR=2
+

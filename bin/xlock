@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-icon="$HOME/.xlock/icon.png"
-tmpbg='/tmp/xlock.png'
+icon="$HOME/.lock/icon.png"
+tmpbg="/tmp/$(basename $0).png"
 
 (( $# )) && { icon=$1; }
 

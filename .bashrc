@@ -10,4 +10,10 @@ HISTCONTROL=ignoreboth
 shopt -s histappend
 
 # Source ~/.bash_aliases
-[[ -f ~/.bash_aliases ]] && . ~/.bash_aliases
+[[ -f ~/.sh.d/aliases ]] && . ~/.sh.d/aliases
+
+# bash prompt
+PS1='─── '
+
+[[ -f ~/.sh.d/style ]] && .~/.sh.d/style
+

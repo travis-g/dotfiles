@@ -1,13 +1,13 @@
 #!/usr/bin/env sh
 
-. wmconfig
+. bar-config
 
 while read -r line; do
     case $line in
         S*)
             sinfo="%{r}${line#?}";;
         T*) 
-            title="${line#?} ";;
+            title="%{c}${line#?} ";;
         W*)
             winfo="${l}"
             IFS=':'

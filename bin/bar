@@ -2,20 +2,21 @@
 
 set -e
 
+[[ $(pgrep -cx brm_bar) > 1 ]] && exit 1
+
 trap 'trap - TERM; kill 0' INT TERM QUIT EXIT
 
 # get screen size
 IFS='x' read w h <<< "$(xrandr | awk '/\*/ {print $1}')"
 
-. wmconfig
+. bar-config
 
 [ -e "$PANEL_FIFO" ] && rm "$PANEL_FIFO"
 mkfifo "$PANEL_FIFO"
 
 bspc control --subscribe > "$PANEL_FIFO" &
-echo "T" > "$PANEL_FIFO" &
-# conky > "$PANEL_FIFO" &
-
+xtitle -sf 'T%s' > "$PANEL_FIFO" &
+conky -c $(dirname $0)/bar-conky > "$PANEL_FIFO" &
 
 #while :; do
 #    mkbar # cat a basic shell script

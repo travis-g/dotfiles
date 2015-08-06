@@ -4,6 +4,7 @@
 
 while true; do 
     sxhkd &
-    export PANEL_FIFO='/tmp/panel-fifo'
+    export PANEL_FIFO=/tmp/panel-fifo
+    export POPUP_FIFO=/tmp/popup-fifo
     exec bspwm || break
 done

@@ -7,4 +7,4 @@ update_interval 2
 update_interval_on_battery 3
 
 TEXT
-Sbat: ${battery_percent}%%  vol: ${execi 1 volume -l}%%  ${time %-I:%M} \
+Su/d: ${execi 1 network -u}/${execi 1 network -d}  bat: ${battery_percent}%%  vol: ${execi 1 volume -l}%%  ${time %-I:%M} \

@@ -9,4 +9,7 @@ export VISUAL=$EDITOR
 export BROWSER=/usr/bin/google-chrome-stable
 #export LS_COLORS=
 
+export PANEL_FIFO=/tmp/panel-fifo
+export POPUP_FIFO=/tmp/popup-fifo
+
 #export BAT_BELL="popup '$(battery)% ($(battery -s))'"

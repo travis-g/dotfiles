@@ -2,9 +2,11 @@
 #
 # Launch my wm
 
+export PANEL_FIFO=/tmp/panel-fifo
+export POPUP_FIFO=/tmp/popup-fifo
+
 while true; do 
     sxhkd &
-    export PANEL_FIFO=/tmp/panel-fifo
-    export POPUP_FIFO=/tmp/popup-fifo
+    export WM_NAME="bspwm" &
     exec bspwm || break
 done

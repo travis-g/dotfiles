@@ -18,6 +18,7 @@ alias egrep='egrep --color=auto'
 
 ## PACKAGING {{{
 
+# AUR aliases
 alias inst='yaourt'
 alias search='yaourt'
 alias remove='sudo pacman -Rns'
@@ -38,6 +39,7 @@ function status()   { sudo systemctl status $@; }
 
 ## OTHER {{{
 
+# https://hub.github.com/
 alias git='hub'
 
 ## }}}

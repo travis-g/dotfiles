@@ -1,0 +1,10 @@
+#!/usr/bin/env bash -x
+# To get a pure array using `jq`:
+#   pingsweep | jq -Rs 'split("\n") | .[0:-1]'
+
+_CIDR=${1-"192.168.1.1/24"}
+
+nmap -sn $_CIDR \
+	| awk '{match($0,/[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+/); ip = substr($0,RSTART,RLENGTH); print ip}' \
+	| sed '/^$/d' # clear blank lines
+

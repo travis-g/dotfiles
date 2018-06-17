@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+# downloads img -> img2txt
+tmp="/tmp/img3txt"
+w=$(tput cols)
+h=$(tput lines)
+curl $1 > "$tmp"
+img2txt -H "$h" "$tmp"
+rm "$tmp"
+

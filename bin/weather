@@ -1,0 +1,13 @@
+#!/bin/sh
+usage() {
+  cat <<EOF
+usage: $(basename "$0") [-h] (now)
+    -h : print help
+EOF
+}
+now() {
+  curl "wttr.in/?0Q"
+}
+
+now
+

@@ -1,0 +1,45 @@
+module.exports = {
+  config: {
+    updateChannel: 'stable',
+    fontSize: 12,
+    fontFamily: 'Menlo, "DejaVu Sans Mono", Consolas, "Lucida Console", monospace',
+    cursorColor: 'rgba(248,28,229,0.8)',
+    cursorShape: 'BEAM',
+    cursorBlink: true,
+    foregroundColor: '#fff',
+    backgroundColor: '#000',
+    borderColor: '#333',
+    css: '',
+    termCSS: '',
+    showHamburgerMenu: '',
+    showWindowControls: '',
+    padding: '12px 14px',
+    colors: {
+      black: '#1d1f21',
+      red: '#cc342b',
+      green: '#198844',
+      yellow: '#fba922',
+      blue: '#3971ed',
+      magenta: '#9C27B0',
+      cyan: '#00BCD4',
+      white: '#c5c8c6',
+      lightBlack: '#969896',
+      lightRed: '#cc342b',
+      lightGreen: '#198844',
+      lightYellow: '#fba922',
+      lightBlue: '#3971ed',
+      lightMagenta: '#9C27B0',
+      lightCyan: '#00BCD4',
+      lightWhite: '#ffffff'
+    },
+    shell: '',
+    shellArgs: ['--login'],
+    env: {},
+    bell: 'SOUND',
+    copyOnSelect: false
+  },
+  plugins: [],
+  localPlugins: [],
+  keymaps: {
+  }
+};

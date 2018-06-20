@@ -1,0 +1,11 @@
+#!/bin/bash
+
+while IFS= read -r line
+do
+        disk=""
+        used=""
+        size=""
+        perc=""
+        printf "%-20s  %4s / %4s\n" "" "" ""
+        mkb ""
+done < <(df -h | grep '^/dev/')

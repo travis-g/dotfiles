@@ -1,0 +1,6 @@
+# spawn a Terminal process
+cmd - return: /Users/t/Applications/Kitty.app/Contents/MacOS/kitty
+
+# lock it up
+cmd - l: m lock
+

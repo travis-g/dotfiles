@@ -8,20 +8,11 @@ alias cp='cp -vi'
 alias mv='mv -i'
 
 # Coloring
-alias ls='ls --color=auto'
+alias ls='ls -G'
 alias dir='dir --color=auto'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
-
-## }}}
-
-## PACKAGING {{{
-
-# AUR aliases
-alias inst='yaourt'
-alias search='yaourt'
-alias remove='sudo pacman -Rns'
 
 ## }}}
 
@@ -34,13 +25,6 @@ function restart()  { sudo systemctl restart $@; }
 #function enable()   { sudo systemctl enable $@; }
 function disable()  { sudo systemctl disable $@; }
 function status()   { sudo systemctl status $@; }
-
-## }}}
-
-## OTHER {{{
-
-# https://hub.github.com/
-alias git='hub'
 
 ## }}}
 

@@ -1,0 +1,20 @@
+#!/bin/sh
+
+_paste() {
+case "$(uname -s)" in
+    "Darwin")
+        pbpaste >/dev/stdout
+        ;;
+esac
+}
+
+[[ "$1" == "paste" ]] && _paste && exit 0
+
+case "$(uname -s)" in
+    "Darwin")
+        pbcopy <"${2:-/dev/stdin}"
+        ;;
+    "Linux")
+        xsel -ib <"${2:-/dev/stdin}"
+        ;;
+esac

@@ -1,0 +1,5 @@
+#!/bin/bash
+command -v m >/dev/null && (
+    m volume | awk '{print $2}'
+)
+

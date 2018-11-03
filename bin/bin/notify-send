@@ -1,0 +1,4 @@
+#!/bin/bash
+
+terminal-notifier -title "$1" -group "$1" -message "$2" -contentImage "$3"
+

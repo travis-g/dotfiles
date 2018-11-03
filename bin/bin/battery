@@ -1,0 +1,14 @@
+#!/bin/bash
+[[ "$1" == "notify" ]] && (
+    BAT=$(gopmset -format=json)
+    terminal-notifier -title Battery Status -message $(jq -r .charge <<<$BAT)
+    exit 0
+)
+if [ -x "$(command -v gopmset)" ] && [ -x "$(command -v jq)" ]
+then
+    gopmset -format=json | jq -r .charge
+elif [ -d /sys/class/power_supply ]
+then
+    cat /sys/class/power_supply/${BATN}/capacity
+fi
+

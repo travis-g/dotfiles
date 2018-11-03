@@ -1,0 +1,24 @@
+#!/bin/sh
+CONF=~/.config/mpd/mpd.conf
+
+_reload() {
+    mpc update >/dev/null
+    #mpc ls | mpc add >/dev/null
+}
+
+case "$1" in
+    "kill")
+        mpd --kill $CONF
+        exit 0
+        ;;
+    "reload")
+        mpc clear
+        _reload
+        ;;
+    *)
+        mpd -v $CONF
+        _reload
+        ;;
+esac
+
+#docker run -i --rm -v music:/opt/music -p 6600:6600 -p 8000:8000 -t narf/mpd

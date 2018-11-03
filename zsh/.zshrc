@@ -9,14 +9,22 @@ compinit
 promptinit
 colors
 
-PROMPT="%{$fg_bold[black]%(! $fg[red] )─$fg_bold[black]%(1j $fg[green] )─$fg_bold[black]%(?  $fg[red])─$reset_color%} "
+# oh-my-zsh
+export ZSH="/users/t/.oh-my-zsh"
+plugins=(
+  git
+)
+source $ZSH/oh-my-zsh.sh
+
+#PROMPT="%{$fg_bold[black]%(! $fg[red] )─$fg_bold[black]%(1j $fg[green] )─$fg_bold[black]%(?  $fg[red])─$reset_color%} "
+PROMPT="%1d%% "
 RPROMPT=""
 
 #setopt AUTO_CD
 setopt completealiases
 setopt append_history
 setopt hist_verify
-setopt hist_ignore_all_dups
+setopt hist_ignore_dups
 
 #export PATH=$PATH:~/bin:
 #export EDITOR=vim

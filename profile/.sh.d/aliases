@@ -3,7 +3,7 @@
 ## MAIN {{{
 
 # Are you sure?
-alias rm='rm -I'
+alias rm='rm -i'
 alias cp='cp -vi'
 alias mv='mv -i'
 

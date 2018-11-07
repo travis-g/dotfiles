@@ -1,4 +1,4 @@
-visualizer.fps=20
+visualizer.fps=60
 
 # "mpd", "pulse" and "alsa"
 audio.sources=mpd
@@ -15,7 +15,7 @@ visualizer.rotation.secs=0
 #audio.low.cutoff.frequency=22050
 #audio.high.cutoff.frequency=30
 
-visualizer.scaling.multiplier=1.0
+# visualizer.scaling.multiplier=1.0
 
 visualizers=spectrum,ellipse,lorenz
 
@@ -28,7 +28,7 @@ visualizer.spectrum.smoothing.mode=monstercat
 
 ##This configures the falloff effect on the spectrum visualizer. Available falloff options are fill,top,none.
 ##Defaults to "fill"
-#visualizer.spectrum.falloff.mode=fill
+visualizer.spectrum.falloff.mode=file
 
 ##Configures how fast the falloff character falls. This is an exponential falloff so values usually look
 ##best 0.9+ and small changes in this value can have a large effect. Defaults to 0.95
@@ -63,7 +63,7 @@ visualizer.spectrum.smoothing.mode=monstercat
 
 
 ##Turns off overriding the user's terminal colors. This is true by default.
-#colors.override.terminal=false
+colors.override.terminal=true
 
 ##Specifies the color scheme. The color scheme must be in ~/.config/vis/colors/ directory. The default scheme is "colors".
-colors.scheme=hot_cold
+colors.scheme=hot_cold,rainbow,basic_colors

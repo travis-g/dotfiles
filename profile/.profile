@@ -15,6 +15,7 @@ export PATH=$PATH:$GOPATH/bin
 
 export PATH="/usr/local/opt/ncurses/bin:$PATH"
 export PATH="/usr/local/opt/openssl/bin:$PATH"
+export PATH="/usr/local/bin:$PATH"
 
 export HISTFILE="$HOME/.zsh_history"
 export HISTSIZE=100

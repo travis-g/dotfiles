@@ -1,0 +1,20 @@
+#!/bin/sh
+DESK=$(chunkc tiling::query --desktop id)
+MODE=$(chunkc tiling::query --desktop mode)
+TAG=$(chunkc tiling::query --window tag)
+ID=$(chunkc tiling::query --window id)
+# INFO=$(chunkc tiling::query --window $ID)
+
+case "$MODE" in
+    "bsp")
+        ICON="﬿" # collage
+        ;;
+    "monocle")
+        ICON="ﱢ" # 
+        ;;
+    "float")
+        ICON="" # זּ
+        ;;
+esac
+
+echo "$DESK:$ICON"

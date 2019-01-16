@@ -1,0 +1,78 @@
+# ┏━╸┏━┓┏━┓┏━╸
+# ┃  ┃ ┃┣┳┛┣╸
+# ┗━╸┗━┛╹┗╸┗━╸
+
+chunkc core::log_file stdout
+chunkc core::log_level warn
+
+# plugin locations
+chunkc core::plugin_dir /usr/local/opt/chunkwm/share/chunkwm/plugins
+
+# enable hotloading, but disable plugins until configured
+chunkc core::hotload 1
+chunkc core::unload tiling.so
+chunkc core::unload ffm.so
+chunkc core::unload border.so
+
+# ╺┳╸╻╻  ╻┏┓╻┏━╸
+#  ┃ ┃┃  ┃┃┗┫┃╺┓
+#  ╹ ╹┗━╸╹╹ ╹┗━┛
+
+# tile windows by default
+chunkc set global_desktop_mode bsp
+
+# offsets/padding
+chunkc set global_desktop_offset_top     10
+chunkc set global_desktop_offset_bottom  10
+chunkc set global_desktop_offset_left    10
+chunkc set global_desktop_offset_right   10
+chunkc set global_desktop_offset_gap     10
+
+chunkc set bsp_optimal_ratio             1.618
+
+chunkc set bsp_split_mode                optimal
+chunkc set bsp_spawn_left                1
+chunkc set bsp_split_ratio               0.45
+
+# ┏┓ ┏━┓┏━┓╺┳┓┏━╸┏━┓┏━┓
+# ┣┻┓┃ ┃┣┳┛ ┃┃┣╸ ┣┳┛┗━┓
+# ┗━┛┗━┛╹┗╸╺┻┛┗━╸╹┗╸┗━┛
+
+# opacity 0 in favor of fading
+chunkc set focused_border_color 0x00617a8d
+
+chunkc set preselect_border_color 0xff984c55
+chunkc set preselect_border_width 8
+chunkc set preselect_border_outline 1
+
+# skip borders
+chunkc set focused_border_skip_floating 1
+chunkc set focused_border_skip_monocle 1
+
+# ┏┳┓┏━┓╻ ╻┏━┓┏━╸
+# ┃┃┃┃ ┃┃ ┃┗━┓┣╸
+# ╹ ╹┗━┛┗━┛┗━┛┗━╸
+
+chunkc set mouse_follows_focus intrinsic
+
+# fn + left mouse to move
+chunkc set mouse_resize_window \"fn 1\"
+
+# ┏━╸╻┏ ╻ ╻┏┳┓   ┏━┓┏━┓
+# ┃  ┣┻┓┃╻┃┃┃┃╺━╸┗━┓┣━┫
+# ┗━╸╹ ╹┗┻┛╹ ╹   ┗━┛╹ ╹
+
+chunkc set window_float_topmost 1
+
+chunkc set window_fade_alpha 0.85
+chunkc set window_fade_duration 0.3
+
+# move window with mouse-drag
+chunkc set window_use_cgs_move 1
+
+chunkc tiling::rule --owner OpenEmu --state float
+
+# Load
+chunkc core::load border.so
+chunkc core::load tiling.so
+chunkc core::load ffm.so

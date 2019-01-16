@@ -25,6 +25,7 @@ setopt completealiases
 setopt append_history
 setopt hist_verify
 setopt hist_ignore_dups
+setopt hist_ignore_space
 
 #export PATH=$PATH:~/bin:
 #export EDITOR=vim

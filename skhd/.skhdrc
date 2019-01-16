@@ -26,11 +26,15 @@ ctrl + alt - j : chunkc tiling::window --use-insertion-point south
 ctrl + alt - k : chunkc tiling::window --use-insertion-point north
 ctrl + alt - l : chunkc tiling::window --use-insertion-point east
 
-# adjust regions
-alt - a : chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge west
-alt - s : chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge south
-alt - d : chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge north
-alt - f : chunkc tiling::window --use-temporary-ratio 0.05 --adjust-window-edge east
+# adjust regions by growing one side and shrinking the other
+alt - a : chunkc tiling::window --use-temporary-ratio 0.05  --adjust-window-edge west;\
+          chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge east
+alt - s : chunkc tiling::window --use-temporary-ratio 0.05  --adjust-window-edge south;\
+          chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge north
+alt - d : chunkc tiling::window --use-temporary-ratio 0.05  --adjust-window-edge north;\
+          chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge south
+alt - f : chunkc tiling::window --use-temporary-ratio 0.05  --adjust-window-edge east;\
+          chunkc tiling::window --use-temporary-ratio -0.05 --adjust-window-edge west
 
 # equilize regions
 shift + alt - 0 : chunkc tiling::desktop --equalize

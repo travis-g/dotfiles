@@ -1,0 +1,2 @@
+#!/bin/sh
+pbpaste | pandoc --from html --to gfm --wrap none | sponge | pbcopy

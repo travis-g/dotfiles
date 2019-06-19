@@ -1,2 +1,2 @@
 #!/bin/sh
-pbpaste | pandoc --from html --to gfm --wrap none | sponge | pbcopy
+pbpaste | pandoc --from html --to markdown-smart --wrap none | sed 's/\\!/!/g' | sponge | pbcopy

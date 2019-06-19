@@ -4,6 +4,9 @@
 set mouse=
 "set ttymouse=urxvt
 
+" set spell per-file type in autocommands
+set spellfile=~/Dropbox/spell.utf-8.add
+
 set autoread
 set autowrite
 
@@ -13,10 +16,12 @@ filetype indent on
 " BEHAVIOR {{{
 " backup files, don't .swp
 set noswapfile
+set directory^=$HOME/.vim/swap//
 set nowritebackup
-set nobackup
+"set nobackup
+set backupdir=$HOME/.vim/backup//
 set undofile
-set undodir=$HOME/.vim/undo
+set undodir=$HOME/.vim/undo//
 
 set virtualedit=block
 
@@ -51,9 +56,11 @@ set fdm=syntax      " set foldmethod
 " }}}
 
 " MAPPING {{{
-" Treat broken lines separately
-map j gj
-map k gk
+" Treat wrapped lines separately by default
+map <Down> gj
+map <Up> gk
+imap <silent> <Down> <C-o>gj
+imap <silent> <Up>   <C-o>gk
 
 " }}}
 
@@ -61,10 +68,20 @@ map k gk
 au FileType         make set noet
 
 set omnifunc=syntaxcomplete#Complete
+au FileType markdown set spell
 au FileType c       set omnifunc=ccomplete#Complete
 au FileType cpp     set omnifunc=ccomplete#Complete
 au FileType html    set omnifunc=htmlcomplete#CompleteTags
 au FileType css     set omnifunc=csscomplete#CompleteCSS
+" }}}
+
+" PLUGINS {{{
+call plug#begin('~/.vim/plugged')
+
+Plug 'junegunn/goyo.vim'
+
+" Initialize
+call plug#end()
 " }}}
 
 " vim: set ts=4 sw=4 sts=4 tw=78 et fdm=marker:

@@ -27,6 +27,9 @@ setopt hist_verify
 setopt hist_ignore_dups
 setopt hist_ignore_space
 
+bindkey "^[[1;3C" forward-word
+bindkey "^[[1;3D" backward-word
+
 #export PATH=$PATH:~/bin:
 #export EDITOR=vim
 

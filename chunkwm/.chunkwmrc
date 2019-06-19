@@ -31,8 +31,8 @@ chunkc set global_desktop_offset_gap     10
 chunkc set bsp_optimal_ratio             1.618
 
 chunkc set bsp_split_mode                optimal
-chunkc set bsp_spawn_left                1
-chunkc set bsp_split_ratio               0.45
+chunkc set bsp_spawn_left                0
+chunkc set bsp_split_ratio               0.55
 
 # ┏┓ ┏━┓┏━┓╺┳┓┏━╸┏━┓┏━┓
 # ┣┻┓┃ ┃┣┳┛ ┃┃┣╸ ┣┳┛┗━┓
@@ -67,10 +67,11 @@ chunkc set window_float_topmost 1
 chunkc set window_fade_alpha 0.85
 chunkc set window_fade_duration 0.3
 
-# move window with mouse-drag
+# move window with fn+mouse-drag
 chunkc set window_use_cgs_move 1
 
 chunkc tiling::rule --owner OpenEmu --state float
+chunkc tiling::rule --owner Reminders --state float
 
 # Load
 chunkc core::load border.so

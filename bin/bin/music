@@ -1,12 +1,31 @@
 #!/bin/sh
 CONF=~/.config/mpd/mpd.conf
 
+_usage() {
+    cat <<EOF
+$(basename $0) - mpd wrapper
+
+By default, starts mpd with a config file.
+
+Config file used: $CONF
+
+Args supported:
+
+kill    kills mpd
+reload  reloads mpd
+EOF
+}
+
 _reload() {
     mpc update >/dev/null
     #mpc ls | mpc add >/dev/null
 }
 
 case "$1" in
+    "-h")
+        _usage
+        exit 0
+        ;;
     "kill")
         mpd --kill $CONF
         exit 0

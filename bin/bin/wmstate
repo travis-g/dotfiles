@@ -10,7 +10,7 @@ case "$MODE" in
         ICON="﬿" # collage
         ;;
     "monocle")
-        ICON="ﱢ" # 
+        ICON=""
         ;;
     "float")
         ICON="" # זּ

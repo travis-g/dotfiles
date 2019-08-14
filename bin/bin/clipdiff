@@ -1,0 +1,4 @@
+#!/bin/bash
+set +x
+icdiff "$1" <(pbpaste)
+

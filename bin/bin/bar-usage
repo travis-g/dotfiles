@@ -1,0 +1,11 @@
+#!/bin/bash
+
+while IFS= read -r line
+do
+        disk="$(echo $line | awk '{print $6}')"
+        used="$(echo $line | awk '{print $3}')"
+        size="$(echo $line | awk '{print $2}')"
+        perc="$(echo $line | awk '{print $5}' | tr -d '%')"
+        printf "%-20s  %4s / %4s\n" "$disk" "$used" "$size"
+        go-mkbar "$perc"
+done < <(df -h | grep '^/dev/')

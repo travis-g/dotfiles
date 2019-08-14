@@ -1,0 +1,18 @@
+#!/bin/bash
+set -eo pipefail
+TMP=$(mktemp -d)
+FILE=$(echo "$1" | sed 's/.*\///')
+curl -s "$1" > $TMP/$FILE
+MIME=$(file -b --mime-type "$TMP/$FILE")
+case $MIME in
+"image/gif")
+    ffmpeg -y -i "$TMP/$FILE" -loglevel fatal -an -c:v libx264 -preset veryslow -auto-alt-ref 0 -f mp4 "$TMP/output.mp4"
+    vipe <&- | madonctl toot -o json --file "$TMP/output.mp4" --stdin  | jq -r .uri
+    ;;
+"video/mp4"|image/*)
+    vipe <&- | madonctl toot -o json --file "$TMP/$FILE" --stdin | jq -r .uri
+    ;;
+*)
+    echo "undefined mime type: $MIME"
+esac
+rm -r $TMP

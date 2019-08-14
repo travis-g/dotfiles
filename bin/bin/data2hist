@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+import sys
+import argparse
+import datetime
+import numpy as np
+import pandas as pd
+
+parser = argparse.ArgumentParser()
+parser.add_argument("--log", help="logarithmically scale results", action="store_true")
+parser.add_argument("-s", "--size", help="number of bins", action="count", default=40)
+args = parser.parse_args()
+
+inputs = [line.strip() for line in sys.stdin]
+
+nums = []
+try:
+    # if times
+    nums = [pd.to_datetime(num, infer_datetime_format=True).tz_localize(None) for num in inputs]
+except:
+    # if values
+    nums = np.array(inputs).astype(np.float)
+
+# create the histogram
+hist, _ = np.histogram(np.array(nums, dtype='datetime64').astype(np.int64), args.size)
+
+# if logarithmic, do it
+if args.log:
+    for i in range(len(hist)):
+        if hist[i] != 0:
+            hist[i] = np.log2(hist[i])
+
+print(" ".join(np.char.mod("%f", np.ravel(hist))))

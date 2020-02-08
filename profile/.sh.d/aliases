@@ -28,6 +28,11 @@ function status()   { sudo systemctl status $@; }
 
 ## }}}
 
+## Aliases {{{
+
 alias roll="dice eval"
+alias mastoctl="madonctl"
+
+## }}}
 
 # vim: set et sw=4 ts=4 sts=4 fdm=marker:

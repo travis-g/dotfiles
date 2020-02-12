@@ -1,0 +1,20 @@
+#!/bin/sh
+INFO="$(yabai -m query --spaces \
+    | jq -re '.[] | select(.focused == 1) | "\(.index) \(.type) \(."native-fullscreen")"')"
+
+IFS=" " read -r INDEX MODE ZOOM <<< "$INFO"
+
+case "$MODE" in
+    "bsp")
+        ICON="﬿" # collage
+        ;;
+    "float")
+        if [ "$ZOOM" -eq 1 ]; then
+            ICON=""
+        else
+            ICON="" # זּ
+        fi
+        ;;
+esac
+
+printf "%s:%s\n" "$INDEX" "$ICON"

@@ -1,4 +1,6 @@
 #!/bin/bash
 
-terminal-notifier -title "$1" -group "$1" -message "$2"
+: ${1:?"no title specified as \$1"}
+: ${2:?"no message specified as \$2"}
 
+terminal-notifier -title "$1" -group "$1" -message "$2"

@@ -29,7 +29,7 @@ shift + cmd - l : yabai -m window --warp east
 # balance size of windows
 shift + alt - 0 : yabai -m space --balance
 
-# aero-snap
+# aero-snap (window must be floating).
 ctrl + alt - up     : yabai -m window --grid 1:1:0:0:1:1
 ctrl + alt - left   : yabai -m window --grid 1:2:0:0:1:1
 ctrl + alt - right  : yabai -m window --grid 1:2:1:0:1:1
@@ -101,10 +101,10 @@ ctrl + alt - right  : yabai -m window --grid 1:2:1:0:1:1
 # shift + ctrl - d : yabai -m window --move rel:20:0
 
 # increase window size
-# shift + alt - a : yabai -m window --resize left:-20:0
-# shift + alt - s : yabai -m window --resize bottom:0:20
-# shift + alt - w : yabai -m window --resize top:0:-20
-# shift + alt - d : yabai -m window --resize right:20:0
+alt - a : yabai -m window --resize left:-30:0
+alt - s : yabai -m window --resize bottom:0:30
+alt - d : yabai -m window --resize top:0:-30
+alt - f : yabai -m window --resize right:30:0
 
 # decrease window size
 # shift + cmd - a : yabai -m window --resize left:20:0
@@ -134,9 +134,6 @@ alt - 0x2F : yabai -m space --rotate 270
 # toggle window parent zoom
 # alt - d : yabai -m window --toggle zoom-parent
 
-# toggle window fullscreen zoom
-alt - f : yabai -m window --toggle zoom-fullscreen
-
 # toggle window native fullscreen
 # shift + alt - f : yabai -m window --toggle native-fullscreen
 
@@ -156,6 +153,7 @@ alt - f : yabai -m window --toggle zoom-fullscreen
 # toggle topmost (keep above other windows)
 alt - o : yabai -m window --toggle topmost
 
+# move and sticky as a small PIP pane
 shift + alt - 2 : yabai -m window --toggle sticky; \
                   yabai -m window --grid 5:5:4:0:1:1
 
@@ -164,7 +162,7 @@ alt - p : yabai -m window --toggle sticky;\
           yabai -m window --toggle topmost;\
           yabai -m window --toggle pip
 
-# change layout of desktop
-ctrl + alt - a : yabai -m space --layout bsp
-# rip monocle: https://github.com/koekeishiya/yabai/issues/83#issuecomment-509105795
+# change layout of desktop (bsp, monocle, float)
+ctrl + alt - a : yabai -m space --layout bsp; /Users/t/bin/monocle off
+ctrl + alt - s : /Users/t/bin/monocle on
 ctrl + alt - d : yabai -m space --layout float

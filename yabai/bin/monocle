@@ -1,0 +1,17 @@
+#!/bin/bash
+# zoom-fullscreens all windows in active space for faux-monocle mode
+
+: ${1:?"supply \"on\" or \"off\" as \$1"}
+
+case "$1" in
+    "on")
+        yabai -m query --windows --space \
+        | jq -re '.[] | select(."zoom-fullscreen" == 0) | .id' \
+        | xargs -I{} yabai -m window {} --toggle zoom-fullscreen
+        ;;
+    "off")
+        yabai -m query --windows --space \
+        | jq -re '.[] | select(."zoom-fullscreen" == 1) | .id' \
+        | xargs -I{} yabai -m window {} --toggle zoom-fullscreen
+    ;;
+esac

@@ -1,2 +1,3 @@
 #!/bin/sh
+set -o pipefail
 pbpaste | pandoc --from markdown+smart --to html --wrap none | sponge | pbcopy

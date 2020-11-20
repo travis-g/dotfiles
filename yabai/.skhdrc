@@ -1,5 +1,5 @@
 # open terminal
-cmd - return : /Users/t/Applications/Kitty.app/Contents/MacOS/kitty --single-instance -d ~
+cmd - return : /usr/local/bin/kitty --single-instance -d ~
 
 # lock it up
 cmd - l : m lock
@@ -144,8 +144,8 @@ alt - 0x2F : yabai -m space --rotate 270
 # alt - e : yabai -m window --toggle split
 
 # float / unfloat window and center on screen
-# alt - t : yabai -m window --toggle float;\
-#           yabai -m window --grid 4:4:1:1:2:2
+alt - t : yabai -m window --toggle float;\
+          yabai -m window --grid 4:4:1:1:2:2
 
 # toggle sticky (show on all spaces)
 # alt - s : yabai -m window --toggle sticky
@@ -163,6 +163,6 @@ alt - p : yabai -m window --toggle sticky;\
           yabai -m window --toggle pip
 
 # change layout of desktop (bsp, monocle, float)
-ctrl + alt - a : yabai -m space --layout bsp; /Users/t/bin/monocle off
-ctrl + alt - s : /Users/t/bin/monocle on
+ctrl + alt - a : yabai -m space --layout bsp
+ctrl + alt - s : yabai -m window --toggle zoom-fullscreen
 ctrl + alt - d : yabai -m space --layout float

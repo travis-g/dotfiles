@@ -51,4 +51,12 @@ yabai -m config left_padding                 10
 yabai -m config right_padding                10
 yabai -m config window_gap                   10
 
+# Rules
+# yabai -m query --windows | jq -r '.[]|[.app,.title]|@csv'
+yabai -m rule --add app="^System Preferences$" manage=off
+yabai -m rule --add app="^System Information$" manage=off
+yabai -m rule --add app="^TeamViewer$" manage=off
+yabai -m rule --add app="^Quitter$" manage=off
+yabai -m rule --add app="^Messages$" manage=off
+
 echo "yabai configuration loaded..."

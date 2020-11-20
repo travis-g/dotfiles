@@ -26,12 +26,19 @@ function restart()  { sudo systemctl restart $@; }
 function disable()  { sudo systemctl disable $@; }
 function status()   { sudo systemctl status $@; }
 
+function mime() {
+    file -b --mime-type "$@"
+}
+
 ## }}}
 
 ## Aliases {{{
 
 alias roll="dice eval"
 alias mastoctl="madonctl"
+
+# Images in terminal
+alias icat="kitty icat --align=left"
 
 ## }}}
 

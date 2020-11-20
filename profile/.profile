@@ -11,6 +11,10 @@ export EDITOR=/usr/bin/vim
 export VISUAL=$EDITOR
 export BROWSER="/Users/t/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome -incognito"
 
+case "$TERM" in
+    *kitty) export TERMCMD="kitty";;
+esac
+
 export GOPATH=~/go
 export PATH=$PATH:$GOPATH/bin
 
@@ -24,6 +28,7 @@ setopt HIST_EXPIRE_DUPS_FIRST
 export HISTSIZE=3000
 export HISTFILESIZE=$HISTSIZE
 
-export HISTIGNORE="(ls|clear|exit)"
+export HISTIGNORE="(ls|clear|exit|fc *)"
 export HISTORY_IGNORE=$HISTIGNORE
 
+export FONT="Hack Nerd Font"

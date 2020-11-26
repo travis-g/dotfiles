@@ -1,0 +1,23 @@
+#!/bin/zsh
+
+TODO=${TODO:-$HOME/TODO}
+
+list() {
+    test -f $TODO && nl $TODO
+}
+
+append() {
+    echo "$*" >> $TODO
+}
+
+delete() {
+    test -n "$1" || exit 1
+    sed -i -e "${1}d" $TODO
+}
+
+test "$1" = '-d' && delete "$2" && exit 0
+
+test -n "$*" && append $* || list
+
+exit 0
+

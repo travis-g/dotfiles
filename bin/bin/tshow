@@ -1,0 +1,61 @@
+#!/bin/bash
+set -euo pipefail
+
+usage () {
+    cat <<EOF
+$(basename $0) FILE - attempts to display a media file as text in the terminal. Supports URLs.
+EOF
+}
+
+CHARS="${CHARS:-ascii}"
+COLOR="${COLORS:-fullgray}" # ffmpeg -i FILE -f caca -list_dither colors -
+DITHER="${DITHER:-fstein}"
+HEIGHT_MULT="2" # how many times taller a character is than its width
+
+if [ "$#" -eq 0 ]; then
+    usage; exit 1
+fi
+
+if [ -f "$1" ]; then
+    path="$1"
+else
+    TMP="$(mktemp -d)"
+    cd "$TMP"
+    FILE="output.$(youtube-dl --print-json --no-warnings -o 'output.%(ext)s' "$1" | \
+        jq -r '.ext')"
+    path="$TMP/$FILE"
+    MIME=$(file -b --mime-type "$path")
+fi
+
+# get terminal window character dimensions
+ty="$(tput lines)"
+tx="$(tput cols)"
+
+# get media dimensions
+data="$(ffprobe \
+    -v error \
+    -select_streams v:0 \
+    -show_entries stream="width,height" \
+    -of json \
+    -i "$path"
+)"
+w="$(jq -r '.streams[0].width' <<<$data)"
+h="$(jq -r '.streams[0].height' <<<$data)"
+
+# get render character dimensions
+y="$ty"
+x="$(printf %.0f $(($ty * $w / $h * ${HEIGHT_MULT})))"
+
+# blank DISPLAY so that the terminal is used
+DISPLAY= ffmpeg \
+    -hide_banner -loglevel warning -nostats \
+    -stream_loop -1 \
+    -i "$path" \
+    -pix_fmt rgb24 \
+    -window_size "${x}x${y}" \
+    -f caca \
+    -algorithm $DITHER \
+    -color $COLOR \
+    -charset $CHARS \
+    -antialias prefilter \
+    - # stdout

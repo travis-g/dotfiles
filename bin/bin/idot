@@ -1,0 +1,28 @@
+#!/bin/bash
+# Renders a DOT diagram to the terminal using Kitty's icat kitten. It attempts
+# to match the terminal's colors, so results will vary for colored diagrams.
+set -euo pipefail
+[[ "$TERM" =~ "kitty" ]] || {
+    printf "TERM isn't kitty!\n" >&2
+    exit 1
+}
+
+# use a monospace font unless there's a font set by the env
+: "${FONT:=monospace}"
+
+# get and set colors
+_colors="$(kitty @ get-colors -c | grep -vE "color\d")"
+_text="$(grep -E ^url_color <<< "$_colors" | awk '{print $2}')"
+_fg="$(grep -E ^foreground <<< "$_colors" | awk '{print $2}')"
+_bg="$(grep -E ^inactive_tab_background <<< "$_colors" | awk '{print $2}')"
+
+# render the diagram as a PNG with the theme
+dot -Tpng -Gdpi=120 \
+    -Gbgcolor="${_bg}00" \
+    -Gfontname="$FONT" -Gfontsize=14px \
+    -Nfontname="$FONT" -Nfontsize=14px \
+    -Efontname="$FONT" -Efontsize=14px \
+    -Gcolor="$_fg" -Gfontcolor="$_fg" \
+    -Ecolor="$_fg" -Efontcolor="$_fg" \
+    -Ncolor="$_fg" -Nfontcolor="$_fg" \
+    | kitty icat --align=left # show it 🐱

@@ -34,6 +34,7 @@ syntax on
 set encoding=utf-8
 set wildmenu
 set modeline
+set modelines=3
 
 set statusline=-
 set laststatus=0 noruler " rulerformat=%-28(%=%M%H%R\ %t%<\ %l,%c%V%8(%)%P%)

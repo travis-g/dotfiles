@@ -18,10 +18,15 @@ esac
 export GOPATH=~/go
 export PATH=$PATH:$GOPATH/bin
 
+export PATH=$PATH:~/.cargo/bin
+
 export PATH="/usr/local/opt/ncurses/bin:$PATH"
 export PATH="/usr/local/opt/openssl/bin:$PATH"
 export PATH="/usr/local/bin:$PATH"
 export PATH="/usr/local/opt/ruby/bin:$PATH"
+export PATH="$PATH:~/Library/Python/3.9/bin"
+
+export PATH="/usr/local/opt/terraform@0.13/bin:$PATH"
 
 export HISTFILE="$HOME/.zsh_history"
 setopt HIST_EXPIRE_DUPS_FIRST
@@ -32,3 +37,6 @@ export HISTIGNORE="(ls|clear|exit|fc *)"
 export HISTORY_IGNORE=$HISTIGNORE
 
 export FONT="Hack Nerd Font"
+
+export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
+

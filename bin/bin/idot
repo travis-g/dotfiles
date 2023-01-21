@@ -9,15 +9,16 @@ set -euo pipefail
 
 # use a monospace font unless there's a font set by the env
 : "${FONT:=monospace}"
+: "${DPI:=120}"
 
-# get and set colors
+# get and set colors from current Kitty session
 _colors="$(kitty @ get-colors -c | grep -vE "color\d")"
 _text="$(grep -E ^url_color <<< "$_colors" | awk '{print $2}')"
 _fg="$(grep -E ^foreground <<< "$_colors" | awk '{print $2}')"
 _bg="$(grep -E ^inactive_tab_background <<< "$_colors" | awk '{print $2}')"
 
 # render the diagram as a PNG with the theme
-dot -Tpng -Gdpi=120 \
+dot -Tpng -Gdpi="$DPI" \
     -Gbgcolor="${_bg}00" \
     -Gfontname="$FONT" -Gfontsize=14px \
     -Nfontname="$FONT" -Nfontsize=14px \
@@ -25,4 +26,5 @@ dot -Tpng -Gdpi=120 \
     -Gcolor="$_fg" -Gfontcolor="$_fg" \
     -Ecolor="$_fg" -Efontcolor="$_fg" \
     -Ncolor="$_fg" -Nfontcolor="$_fg" \
+    < "${1:-/dev/stdin}" \
     | kitty icat --align=left # show it 🐱

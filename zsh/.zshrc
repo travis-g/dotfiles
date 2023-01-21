@@ -1,7 +1,7 @@
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
+
+source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 # Enable command completion & colored prompt
 autoload -U compinit promptinit colors
@@ -12,12 +12,13 @@ colors
 # oh-my-zsh
 export ZSH="/users/t/.oh-my-zsh"
 plugins=(
-  git
+  # git
 )
 source $ZSH/oh-my-zsh.sh
 
 #PROMPT="%{$fg_bold[black]%(! $fg[red] )─$fg_bold[black]%(1j $fg[green] )─$fg_bold[black]%(?  $fg[red])─$reset_color%} "
-PROMPT="%1d%% "
+PROMPT="%(?.;.%F{red};%f) "
+#PROMPT="%1d%% "
 RPROMPT=""
 
 #setopt AUTO_CD
@@ -34,3 +35,9 @@ bindkey "^[[1;3D" backward-word
 #export EDITOR=vim
 
 test -f ~/.sh.d/aliases && source ~/.sh.d/aliases
+if command -v pyenv 1>/dev/null 2>&1; then
+  eval "$(pyenv init -)"
+fi
+
+autoload -U +X bashcompinit && bashcompinit
+complete -o nospace -C /usr/local/bin/vault vault

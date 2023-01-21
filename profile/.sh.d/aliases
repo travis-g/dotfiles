@@ -32,13 +32,30 @@ function mime() {
 
 ## }}}
 
-## Aliases {{{
+## ALIASES {{{
 
+# Convenience
 alias roll="dice eval"
+
+# Annoyance
 alias mastoctl="madonctl"
 
-# Images in terminal
-alias icat="kitty icat --align=left"
+# Kitty TERM
+alias ssh="TERM=xterm ssh"
+
+# File conversions
+alias json2yaml="python3 -c 'import sys,yaml,json; j=json.loads(sys.stdin.read()); print(yaml.safe_dump(j))'" # https://gist.github.com/mboersma/1329671
+
+# Transform funcs
+alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
+alias rotnum="tr '0-9' '5-90-4'"
+
+# Media in terminal
+alias icat="kitty icat --align=left --z-index=-1"
+alias tplay="mpv --really-quiet --loop --profile=sw-fast --vo=tct --vo-tct-256=no"
+
+# Syntax highlighting cat
+alias ccat="highlight -O ansi --force"
 
 ## }}}
 

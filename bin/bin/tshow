@@ -19,6 +19,8 @@ fi
 if [ -f "$1" ]; then
     path="$1"
 else
+    # TODO: fetch by MIME
+    # curl -sIL "$1" | grep -i "content-type:" | awk '{print $NF}'
     TMP="$(mktemp -d)"
     cd "$TMP"
     FILE="output.$(youtube-dl --print-json --no-warnings -o 'output.%(ext)s' "$1" | \

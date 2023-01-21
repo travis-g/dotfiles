@@ -148,7 +148,7 @@ handle_image() {
                 ## ...auto-rotate the image according to the EXIF data.
                 convert -- "${FILE_PATH}" -auto-orient "${IMAGE_CACHE_PATH}" && exit 6
             fi
-
+            
             ## `w3mimgdisplay` will be called for all images (unless overriden
             ## as above), but might fail for unsupported types.
             exit 7;;
@@ -323,6 +323,7 @@ handle_mime() {
             ## Preview as text conversion
             # img2txt --gamma=0.6 --width="${PV_WIDTH}" -- "${FILE_PATH}" && exit 4
             exiftool "${FILE_PATH}" && exit 5
+            explosion "${FILE_PATH}" && exit 5
             exit 1;;
 
         ## Video and audio

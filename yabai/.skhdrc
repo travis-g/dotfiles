@@ -1,8 +1,15 @@
+# https://github.com/koekeishiya/yabai/wiki/Commands
+# grep -E "^[^\s#]" -B1 .skhdrc
+
 # open terminal
 cmd - return : /usr/local/bin/kitty --single-instance -d ~
+shift + cmd - return : /usr/local/bin/kitty -d ~
 
 # lock it up
 cmd - l : m lock
+
+# boss key
+shift + cmd - b : bosskey
 
 # ╻ ╻╻┏┓╻╺┳┓┏━┓╻ ╻┏━┓
 # ┃╻┃┃┃┗┫ ┃┃┃ ┃┃╻┃┗━┓

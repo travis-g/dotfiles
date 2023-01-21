@@ -59,7 +59,9 @@ h1 {
   font-size: 3rem;
   color: var(--accent);
   filter: drop-shadow(0 0 0.75em #ccc);
+  // start hidden
   opacity: 0;
+  transition: all .3s ease;
 }
 
 h1,
@@ -99,7 +101,6 @@ hr {
 
 .show {
   opacity: 1;
-  transition: all .3s ease;
 }
 
 // vim:set ft=scss sts=2 sw=2 ts=2 et:

@@ -51,13 +51,14 @@ body {
 
 body {
   @include flex;
-  padding: 1em;
   max-width: 100%;
 }
 
 h1 {
   font-size: 3rem;
   color: var(--accent);
+  position: absolute;
+  transform: translateY(-100%);
   filter: drop-shadow(0 0 0.75em #ccc);
   // start hidden
   opacity: 0;

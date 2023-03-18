@@ -1,7 +1,8 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-source /usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+zsh_syntax_highlighting=/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[[ -f "$zsh_syntax_highlighting" ]] && source "$zsh_syntax_highlighting"
 
 # Enable command completion & colored prompt
 autoload -U compinit promptinit colors
@@ -14,7 +15,7 @@ export ZSH="/users/t/.oh-my-zsh"
 plugins=(
   # git
 )
-source $ZSH/oh-my-zsh.sh
+[ -d "$ZSH" ] && source $ZSH/oh-my-zsh.sh
 
 #PROMPT="%{$fg_bold[black]%(! $fg[red] )─$fg_bold[black]%(1j $fg[green] )─$fg_bold[black]%(?  $fg[red])─$reset_color%} "
 PROMPT="%(?.;.%F{red};%f) "

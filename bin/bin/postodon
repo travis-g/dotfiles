@@ -1,18 +1,24 @@
 #!/bin/bash
 set -eo pipefail
+
 TMP="$(mktemp -d)"
+trap 'rm -r $TMP' 0
 FILE="$(echo "$1" | sed 's/.*\///')"
-curl -s "$1" > $TMP/$FILE
+if [ -f "$1" ]; then
+    cp "$1" "$TMP/$FILE"
+else
+    curl -s "$1" > "$TMP/$FILE"
+fi
 MIME=$(file -b --mime-type "$TMP/$FILE")
+CW="NSFW gay adult content"
 case $MIME in
-"image/gif")
-    #ffmpeg -y -i "$TMP/$FILE" -loglevel fatal -an -c:v libx264 -preset veryslow -auto-alt-ref 0 -f mp4 "$TMP/output.mp4"
-    vipe <&- | madonctl toot -o json --file "$TMP/$FILE" --stdin  | jq -r .uri
+    "image/gif")
+        #ffmpeg -y -i "$TMP/$FILE" -loglevel fatal -an -c:v libx264 -preset veryslow -auto-alt-ref 0 -f mp4 "$TMP/output.mp4"
+        vipe <&- | madonctl toot -o json --file "$TMP/$FILE" --stdin --sensitive --spoiler "$CW" | jq -r .uri
     ;;
-"video/mp4"|image/*)
-    vipe <&- | madonctl toot -o json --file "$TMP/$FILE" --stdin | jq -r .uri
+    "video/mp4"|image/*)
+        vipe <&- | madonctl toot -o json --file "$TMP/$FILE" --stdin --sensitive --spoiler "$CW" | jq -r .uri
     ;;
-*)
-    echo "unhandled mime type: $MIME"
+    *)
+        echo "unhandled mime type: $MIME"
 esac
-rm -r $TMP

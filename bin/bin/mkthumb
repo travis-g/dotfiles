@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+ffmpeg -ss 15 -i $1 -vf "select=gt(scene\,0.5)" -frames:v 15 -vsync vfr -vf fps=fps=1/300 /tmp/thumb%02d.jpg

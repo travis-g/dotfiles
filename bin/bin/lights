@@ -1,0 +1,25 @@
+#!/bin/sh
+# TODO: convert to osascript
+#!/usr/bin/osascript
+case "$1" in
+    "-h")
+        echo "$(basename $0) [on|off|toggle] - change macOS system dark mode" && exit 0
+        ;;
+    "on")
+        setting="set dark mode to false"
+        ;;
+    "off")
+        setting="set dark mode to true"
+        ;;
+    "toggle")
+        setting="set dark mode to not dark mode"
+        ;;
+    "*")
+        setting="get dark mode"
+        ;;
+esac
+osascript -e 'tell application "System Events"' \
+          -e 'tell appearance preferences' \
+          -e "${setting}"  \
+          -e 'end tell' \
+          -e 'end tell'

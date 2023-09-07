@@ -10,7 +10,6 @@ else
     curl -s "$1" > "$TMP/$FILE"
 fi
 MIME=$(file -b --mime-type "$TMP/$FILE")
-CW="NSFW gay adult content"
 case $MIME in
     "image/gif")
         #ffmpeg -y -i "$TMP/$FILE" -loglevel fatal -an -c:v libx264 -preset veryslow -auto-alt-ref 0 -f mp4 "$TMP/output.mp4"

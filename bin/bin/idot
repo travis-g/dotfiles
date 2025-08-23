@@ -3,7 +3,7 @@
 # to match the terminal's colors, so results will vary for colored diagrams.
 set -euo pipefail
 [[ "$TERM" =~ "kitty" ]] || {
-    printf "TERM isn't kitty!\n" >&2
+    printf "TERM isn't supported!\n" >&2
     exit 1
 }
 

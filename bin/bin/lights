@@ -14,8 +14,8 @@ case "$1" in
     "toggle")
         setting="set dark mode to not dark mode"
         ;;
-    "*")
-        setting="get dark mode"
+    *)
+        setting="get not dark mode"
         ;;
 esac
 osascript -e 'tell application "System Events"' \

@@ -1,0 +1,8 @@
+#!/bin/sh
+set -eux
+: "${1:?no URL provided}"
+yt-dlp \
+    --format-sort "res:1080,fps" \
+    --merge-output-format mkv \
+    --write-sub --write-auto-sub --sub-lang "en.*" \
+    --embed-chapters --sponsorblock-mark all "$1"

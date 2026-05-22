@@ -1,8 +1,19 @@
 #!/bin/sh
 set -eux
 : "${1:?no URL provided}"
+
+# Output template format
+# See: https://github.com/yt-dlp/yt-dlp?tab=readme-ov-file#output-template
+filename="%(playlist&{}|%{uploader})s/%(playlist_index&{} - |)s%(title)s [%(id)s] (%(upload_date)s).%(ext)s"
+
 yt-dlp \
+    -o "$filename" \
     --format-sort "res:1080,fps" \
     --merge-output-format mkv \
-    --write-sub --write-auto-sub --sub-lang "en.*" \
-    --embed-chapters --sponsorblock-mark all "$1"
+    --write-sub --write-auto-sub --sub-lang "en" \
+    --embed-chapters \
+    --sponsorblock-mark all \
+    --write-info-json \
+    --write-thumbnail \
+    --add-metadata \
+    "$1"

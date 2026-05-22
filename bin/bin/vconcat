@@ -1,0 +1,7 @@
+#!/bin/bash
+set -eo pipefail
+TMP="$(mktemp -d)"
+vipe <&- | sed -e "/^$/d;s/\(.*\)/file '\1'/" > files.txt
+trap "rm files.txt" 0
+ffmpeg -v 16 -f concat -safe 0 -i "files.txt" -c copy "$TMP/out.mp4"
+printf "%s\n" "$TMP/out.mp4"

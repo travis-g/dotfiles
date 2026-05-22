@@ -1,0 +1,4 @@
+#!/usr/bin/env sh
+: ${1:?missing target}
+xattr -r -d com.apple.quarantine "$1"
+

@@ -2,7 +2,7 @@
 # See also:
 # https://developer.gnome.org/notification-spec/
 # http://manpages.ubuntu.com/manpages/xenial/man1/notify-send.1.html
-set -euxo pipefail
+set -euo pipefail
 
 THIS="$(basename $0)"
 TITLE="$THIS"

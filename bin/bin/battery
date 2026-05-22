@@ -1,5 +1,5 @@
 #!/bin/bash
-set -eo pipefail
+set -exo pipefail
 [[ "$1" == "notify" ]] && (
     BAT=$(gopmset -format=json)
     terminal-notifier -title Battery Status -message $(jq -r .charge <<<$BAT)

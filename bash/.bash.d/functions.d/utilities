@@ -1,0 +1,38 @@
+# GNU sponge shim
+[[ ! -x "$(command -v sponge)" ]] && function sponge() {
+  temp=$(mktemp) || { echo "mktemp: failed to create temp file" >&2; return 1; }
+  trap 'rm -f "$temp"' EXIT
+  cat > "$temp"
+
+  if [ "$#" -eq 0 ]; then
+    cat "$temp"
+  else
+    cat "$temp" > "$1"
+  fi
+
+  rm -f "$temp"
+}
+
+# File mime type
+function mime() {
+  file -b --mime-type "$@"
+}
+
+# Compression
+compress() {
+  tar -czvf "${1%/}.tar.gz" "${1%/}"
+}
+alias decompress="tar -xzvf"
+
+# File conversions
+alias json2yaml="python3 -c 'import sys,yaml,json; j=json.loads(sys.stdin.read()); print(yaml.safe_dump(j))'" # https://gist.github.com/mboersma/1329671
+
+# Transform funcs
+alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
+alias rotnum="tr '0-9' '5-90-4'"
+
+# Media in terminal
+alias icat="kitty icat --align=left --z-index=-1"
+alias tplay="mpv --really-quiet --loop --profile=sw-fast --vo=tct --vo-tct-256=no"
+
+# vim: set ft=sh ts=2 sw=2 sts=2 et

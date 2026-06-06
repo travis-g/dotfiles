@@ -3,6 +3,7 @@
 
 # open terminal
 cmd - return : /usr/local/bin/kitty --single-instance -d ~
+#cmd - return : /Users/t/Applications/Ghostty.app/Contents/MacOS/ghostty
 shift + cmd - return : /usr/local/bin/kitty -d ~
 
 # lock it up
@@ -155,7 +156,7 @@ alt - t : yabai -m window --toggle float;\
           yabai -m window --grid 4:4:1:1:2:2
 
 # toggle topmost (keep above other windows)
-alt - o : yabai -m window --toggle topmost
+alt - o : yabai -m window --layer (if [ (yabai -m query --windows --window | jq --raw-output .layer) = 'below' ]; echo 'normal'; else; echo 'below'; end)
 
 # move and sticky as a small PIP pane
 shift + alt - 2 : yabai -m window --toggle sticky; \

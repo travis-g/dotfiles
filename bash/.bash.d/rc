@@ -1,0 +1,6 @@
+for file in ~/.bash.d/{envs,shell,aliases,functions,init}; do
+  [[ -f $file ]] && source "$file"
+done
+
+[[ $- == *i* ]] && [[ -f ~/.bash.d/inputrc ]] && [[ -n "$BASH_VERSION" ]] && \
+  bind -f ~/.bash.d/inputrc

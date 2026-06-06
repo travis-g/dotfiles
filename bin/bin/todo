@@ -1,18 +1,18 @@
 #!/bin/zsh
 
-TODO=${TODO:-$HOME/TODO}
+TODO_FILE=${TODO_FILE:-$HOME/TODO_FILE}
 
 list() {
-    test -f $TODO && nl $TODO
+    test -f $TODO_FILE && nl $TODO_FILE
 }
 
 append() {
-    echo "$*" >> $TODO
+    echo "$*" >> $TODO_FILE
 }
 
 delete() {
     test -n "$1" || exit 1
-    sed -i -e "${1}d" $TODO
+    sed -i -e "${1}d" $TODO_FILE
 }
 
 test "$1" = '-d' && delete "$2" && exit 0

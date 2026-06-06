@@ -1,0 +1,15 @@
+# History control
+shopt -s histappend
+HISTCONTROL=ignoreboth
+HISTSIZE=5000
+HISTFILESIZE="${HISTSIZE}"
+
+shopt -s globstar
+
+# Update terminal dimensions
+shopt -s checkwinsize
+
+# Autocompletion
+# if [[ ! -v BASH_COMPLETION_VERSINFO && -f /usr/share/bash-completion/bash_completion ]]; then
+#   source /usr/share/bash-completion/bash_completion
+# fi

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # <bitbar.title>Network Addresses</bitbar.title>
 # <bitbar.author.github>travis-g</bitbar.author.github>
 # <bitbar.version>v1.0</bitbar.version>

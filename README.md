@@ -5,7 +5,7 @@
 [Stow][stow] dotfiles into place:
 
 ```sh
-stow -S -t ~ <package>
+stow -S [PACKAGE]
 ```
 
 [stow]: https://www.gnu.org/software/stow/ "GNU Stow"

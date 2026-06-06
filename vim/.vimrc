@@ -5,7 +5,7 @@ set mouse=
 "set ttymouse=urxvt
 
 " set spell per-file type in autocommands
-set spellfile=~/Dropbox/spell.utf-8.add
+set spellfile=$HOME/Dropbox/spell.utf-8.add
 
 set autoread
 set autowrite
@@ -62,7 +62,6 @@ map <Down> gj
 map <Up> gk
 imap <silent> <Down> <C-o>gj
 imap <silent> <Up>   <C-o>gk
-
 " }}}
 
 " AUTOCOMMANDS {{{
@@ -77,12 +76,16 @@ au FileType css     set omnifunc=csscomplete#CompleteCSS
 " }}}
 
 " PLUGINS {{{
-call plug#begin('~/.vim/plugged')
+" https://github.com/junegunn/vim-plug
+if isdirectory(expand('~/.vim/plugged'))
+  call plug#begin('~/.vim/plugged')
 
-Plug 'junegunn/goyo.vim'
+  Plug 'junegunn/goyo.vim'
+  Plug 'tpope/vim-speeddating'
+  Plug 'jceb/vim-orgmode'
 
-" Initialize
-call plug#end()
+  call plug#end()
+endif
 " }}}
 
-" vim: set ts=4 sw=4 sts=4 tw=78 et fdm=marker:
+" vim: set ts=2 sw=2 sts=2 tw=78 et fdm=marker:

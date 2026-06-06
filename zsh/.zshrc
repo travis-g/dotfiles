@@ -1,5 +1,7 @@
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
+emulate bash
+[[ -f ~/.bashrc ]] && source ~/.bashrc
+emulate zsh
+
 
 zsh_syntax_highlighting=/usr/local/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 [[ -f "$zsh_syntax_highlighting" ]] && source "$zsh_syntax_highlighting"
@@ -32,13 +34,31 @@ setopt hist_ignore_space
 bindkey "^[[1;3C" forward-word
 bindkey "^[[1;3D" backward-word
 
-#export PATH=$PATH:~/bin:
-#export EDITOR=vim
+[[ -f ~/.sh.d/aliases ]] && source ~/.sh.d/aliases
 
-test -f ~/.sh.d/aliases && source ~/.sh.d/aliases
 if command -v pyenv 1>/dev/null 2>&1; then
   eval "$(pyenv init -)"
 fi
+if command -v direnv 1>/dev/null 2>&1; then
+  eval "$(direnv hook zsh)"
+fi
 
 autoload -U +X bashcompinit && bashcompinit
-complete -o nospace -C /usr/local/bin/vault vault
+
+if command -v jj 1>/dev/null 2>&1; then
+  source <(COMPLETE=zsh jj)
+fi
+
+# NVM
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# pnpm
+export PNPM_HOME="/Users/t/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+export PATH="/usr/local/opt/rustup/bin:$PATH"

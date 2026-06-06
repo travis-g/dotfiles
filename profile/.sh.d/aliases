@@ -1,4 +1,5 @@
-## ~/.sh.d/aliases
+#!/bin/sh
+# Aliases and functions for interactive use.
 
 ## MAIN {{{
 
@@ -7,8 +8,15 @@ alias rm='rm -i'
 alias cp='cp -vi'
 alias mv='mv -i'
 
+# Helpers/replacers
+command -v eza > /dev/null && {
+    alias ls='eza -lh --group-directories-first'
+    alias lt='eza --tree --level=2 --long --git'
+    alias lta='lt -a'
+}
+command -v fzf >/dev/null && alias ff="fzf --preview 'bat --style=numbers --color=always {}'"
+
 # Coloring
-alias ls='ls'
 alias dir='dir --color=auto'
 alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
@@ -18,21 +26,36 @@ alias egrep='egrep --color=auto'
 
 ## FUNCTIONS {{{
 
-# systemctl
-function start()    { sudo systemctl start $@;  }
-function stop()     { sudo systemctl stop $@;   }
-function restart()  { sudo systemctl restart $@; }
-#function enable()   { sudo systemctl enable $@; }
-function disable()  { sudo systemctl disable $@; }
-function status()   { sudo systemctl status $@; }
+# sponge command that doesn't require installing moreutils
+sponge() {
+    temp=$(mktemp) || { echo "mktemp: failed to create temp file" >&2; return 1; }
+    trap 'rm -f "$temp"' EXIT
+    cat > "$temp"
 
-function mime() {
+    if [ "$#" -eq 0 ]; then
+        cat "$temp"
+    else
+        cat "$temp" > "$1"
+    fi
+
+    rm -f "$temp"
+}
+
+mime() {
     file -b --mime-type "$@"
+}
+
+# Use neovim if available
+command -v nvim > /dev/null && {
+    alias vim='nvim'
+    n() {
+        if [ "$#" -eq 0 ]; then nvim .; else nvim "$@"; fi
+    }
 }
 
 ## }}}
 
-## ALIASES {{{
+## ALIASES {{
 
 # Convenience
 alias roll="dice eval"
@@ -43,20 +66,6 @@ alias mastoctl="madonctl"
 # Kitty TERM
 alias ssh="TERM=xterm ssh"
 
-# File conversions
-alias json2yaml="python3 -c 'import sys,yaml,json; j=json.loads(sys.stdin.read()); print(yaml.safe_dump(j))'" # https://gist.github.com/mboersma/1329671
-
-# Transform funcs
-alias rot13="tr 'A-Za-z' 'N-ZA-Mn-za-m'"
-alias rotnum="tr '0-9' '5-90-4'"
-
-# Media in terminal
-alias icat="kitty icat --align=left --z-index=-1"
-alias tplay="mpv --really-quiet --loop --profile=sw-fast --vo=tct --vo-tct-256=no"
-
-# Syntax highlighting cat
-alias ccat="highlight -O ansi --force"
-
 ## }}}
 
-# vim: set et sw=4 ts=4 sts=4 fdm=marker:
+# vim: set ft=bash et sw=4 ts=4 sts=4 fdm=marker:

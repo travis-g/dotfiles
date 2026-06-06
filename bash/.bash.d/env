@@ -1,0 +1,15 @@
+# Editor used by CLI
+export SUDO_EDITOR="$EDITOR"
+
+PS1='; '
+
+# Color man pages with bat
+export MANROFFOPT="-c"
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
+export DECK_PATH=$HOME/.local/share/deck
+export PATH=$HOME/bin:$PATH:$HOME/.local/bin:$DECK_PATH/bin
+
+export TRIES_PATH="$HOME/git/tries"
+
+# vim: ft=sh ts=2 sw=2 sts=2

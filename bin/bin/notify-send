@@ -17,4 +17,17 @@ case $# in
         ;;
 esac
 
-terminal-notifier -title "$TITLE" -group "$THIS" -message "$MSG" -sound default
+case "$OSTYPE" in
+    darwin*)
+        terminal-notifier -title "$TITLE" -group "$THIS" -message "$MSG" -sound default
+        ;;
+    linux*)
+        notify-send --app-name="$THIS" --expire-time=5000 --urgency=normal "$TITLE" "$MSG"
+        ;;
+    *)
+        echo "Unsupported OS: $OSTYPE"
+        exit 1
+        ;;
+esac
+
+# vim: ft=sh

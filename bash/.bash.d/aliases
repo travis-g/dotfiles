@@ -1,0 +1,67 @@
+# Coloring
+if [ -x /usr/bin/dircolors ]; then
+  test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
+fi
+alias ls='ls --color=auto'
+alias dir='dir --color=auto'
+alias vdir='vdir --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# File system
+if command -v eza &> /dev/null; then
+  alias ls='eza -lh --group-directories-first'
+  alias lsa='ls -a'
+  alias lt='eza --tree --level=2 --long --git'
+  alias lta='lt -a'
+fi
+
+if command -v nvim &> /dev/null; then
+  n() {
+    if [ "$#" -eq 0 ]; then
+      command nvim .
+    else
+      command nvim "$@"
+    fi
+  }
+fi
+
+if command -v try &> /dev/null; then
+  try() {
+    unset -f try
+    eval "$(command try init ~/git/tries)"
+    try "$@"
+  }
+fi
+
+if command -v yazi &> /dev/null; then
+  y() {
+    local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+    trap 'command rm -f -- "$tmp"' EXIT
+    command yazi "$@" --cwd-file="$tmp"
+    IFS= read -r -d '' cwd < "$tmp"
+    [ "$cwd" != "$PWD" ] && [ -d "$cwd" ] && builtin cd -- "$cwd" || exit 1
+  }
+fi
+
+if command -v zoxide &> /dev/null; then
+  alias cd="zd"
+  zd() {
+    if (( $# == 0 )); then
+      builtin cd ~ || return
+    elif [[ -d $1 ]]; then
+      builtin cd "$1" || return
+    else
+      if ! z "$@"; then
+        echo "Error: Directory not found"
+        return 1
+      fi
+
+      # printf "↪ "
+      pwd
+    fi
+  }
+fi
+
+# vim: set ft=sh ts=2 sw=2 sts=2

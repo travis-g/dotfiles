@@ -1,0 +1,4 @@
+# Source all drop-in function files
+[[ -d ~/.bash.d/functions.d ]] && for f in ~/.bash.d/functions.d/*; do source "$f"; done
+
+# vim: ft=sh ts=2 sw=2 sts=2 et
